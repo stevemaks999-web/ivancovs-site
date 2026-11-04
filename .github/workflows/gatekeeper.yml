@@ -1,0 +1,35 @@
+name: Gatekeeper
+
+on:
+  pull_request:
+    branches: [main, staging]
+  push:
+    branches: [main, staging]
+
+permissions:
+  contents: read
+
+jobs:
+  gatekeeper:
+    name: gatekeeper
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Secret scan (basic patterns)
+        run: |
+          if grep -rIn --exclude-dir=.git --exclude-dir=.github -E \
+            '(-----BEGIN [A-Z ]*PRIVATE KEY-----|AKIA[0-9A-Z]{16}|gh[pousr]_[A-Za-z0-9]{36,}|define\( *.(DB_PASSWORD|AUTH_KEY|SECURE_AUTH_KEY).)' .; then
+            echo "::error::Possible secret found in repository"; exit 1
+          fi
+
+      - name: Forbidden files
+        run: |
+          bad=$(git ls-files | grep -E '(^|/)(\.env|wp-config\.php|id_[a-z0-9]+)$|\.(sql|sql\.gz|pem|key)$' || true)
+          if [ -n "$bad" ]; then echo "::error::Forbidden files: $bad"; exit 1; fi
+
+      - name: PHP lint
+        run: |
+          files=$(git ls-files '*.php')
+          [ -z "$files" ] && { echo "no PHP files"; exit 0; }
+          echo "$files" | xargs -n1 php -l
