@@ -3,6 +3,8 @@ name: Deploy
 on:
   push:
     branches: [staging]        # automatic -> dev.ivancovs.com
+  schedule:
+    - cron: '*/30 * * * *'   # refresh status dashboard on dev
   workflow_dispatch:
     inputs:
       target:
@@ -25,7 +27,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.inputs.target == 'production' && 'main' || github.ref }}
+          ref: ${{ github.event.inputs.target == 'production' && 'main' || 'staging' }}
+      - name: Build status.json
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python3 scripts/build_status.py
       - name: Deploy via cPanel API
         env:
           CPANEL_HOST: ${{ secrets.CPANEL_HOST }}
