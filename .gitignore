@@ -1,0 +1,10 @@
+.env
+.env.*
+*.pem
+*.key
+id_*
+*.sql
+*.sql.gz
+wp-config.php
+status.json.local
+.DS_Store
