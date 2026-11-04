@@ -1,0 +1,12 @@
+{
+  "staging": {
+    "domain": "dev.ivancovs.com",
+    "docroot": "/home/ivancovs/dev.ivancovs.com",
+    "source": "src"
+  },
+  "production": {
+    "domain": "ivancovs.com",
+    "docroot": "/home/ivancovs/public_html/wp-content/themes/ivancovs",
+    "source": "src/wp-content/themes/ivancovs"
+  }
+}
