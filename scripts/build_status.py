@@ -69,9 +69,17 @@ def main():
                       "checks": checks_state(pr["head"]["sha"])})
     issues = [{"number": i["number"], "title": i["title"], "url": i["html_url"], "state": i["state"]}
               for i in api(f"repos/{REPO}/issues?state=all&per_page=50") if "pull_request" not in i]
-    data = {"generated_at": time.strftime("%Y-%m-%d %H:%M UTC", time.gmtime()),
-            "commit": os.environ.get("GITHUB_SHA", ""), "branch": os.environ.get("GITHUB_REF_NAME", ""),
-            "phases": phases(), "pulls": pulls, "issues": issues}
+    branch = os.environ.get("STATUS_BRANCH", "staging")
+    commits = [{"sha": c["sha"][:7], "message": c["commit"]["message"].splitlines()[0],
+                "author": (c.get("author") or {}).get("login") or c["commit"]["author"]["name"],
+                "date": c["commit"]["author"]["date"], "url": c["html_url"]}
+               for c in api(f"repos/{REPO}/commits?sha={branch}&per_page=15")]
+    runs = [{"name": r["name"], "title": r["display_title"], "branch": r["head_branch"], "status": r["status"],
+             "conclusion": r["conclusion"], "event": r["event"], "date": r["created_at"], "url": r["html_url"]}
+            for r in api(f"repos/{REPO}/actions/runs?per_page=12").get("workflow_runs", [])]
+    data = {"generated_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+            "commit": os.environ.get("GITHUB_SHA", ""), "branch": branch,
+            "phases": phases(), "pulls": pulls, "issues": issues, "commits": commits, "runs": runs}
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(data, ensure_ascii=False, indent=1), encoding="utf-8")
     print(f"wrote {OUT} phases={len(data['phases'])} pulls={len(pulls)} issues={len(issues)}")
