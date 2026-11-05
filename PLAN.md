@@ -74,6 +74,7 @@
 - [x] Открыть доступ клиенту без логина
 - [x] Создать проект Google Cloud и включить API: Search Console, Analytics, Tag Manager, Ads
 - [x] Дать дашборду доступ на чтение к Search Console
+- [x] Проверить доступ дашборда к Search Console и GA4 по API
 - [ ] Обновлять статус автоматически каждые 30 минут
 - [ ] Добавить цифры: трафик, клики, расходы и заказы
 
@@ -85,7 +86,7 @@
 - [ ] Обучить Дмитрия работе с заказами и Telegram
 
 ## Фаза 10. Google Analytics и Tag Manager
-- [ ] Создать Google Analytics 4 и Tag Manager
+- [x] Создать Google Analytics 4 и Tag Manager
 - [ ] Настроить цели: просмотр прибора, бронь, оплата, звонок, WhatsApp
 - [ ] Проверить, что цели считаются правильно
 
