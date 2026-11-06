@@ -81,7 +81,7 @@ function ivs_primary_nav() {
 		return;
 	}
 	$items = array(
-		array( '/merinstrumenti/', ivs_t( 'Mērinstrumentu noma', 'Аренда приборов', 'Instrument rental' ) ),
+		array( '/noma/', ivs_t( 'Mērinstrumentu noma', 'Аренда приборов', 'Instrument rental' ) ),
 		array( '/noderigi/', ivs_t( 'Noderīga informācija', 'Полезная информация', 'Useful information' ) ),
 		array( '/apmacibas/', ivs_t( 'Apmācības', 'Обучение', 'Training' ) ),
 		array( '/blog-2/', ivs_t( 'Blogs', 'Блог', 'Blog' ) ),
@@ -134,4 +134,5 @@ function ivs_kits_term() {
 	return $t ? $t : null;
 }
 
+require_once get_template_directory() . '/inc/content.php';
 require_once get_template_directory() . '/inc/woocommerce.php';

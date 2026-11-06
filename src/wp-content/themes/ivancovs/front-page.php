@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 get_header();
 
-$rent = ivs_url( '/merinstrumenti/' );
+$rent = ivs_url( '/noma/' );
 if ( function_exists( 'wc_get_page_permalink' ) && wc_get_page_permalink( 'shop' ) ) {
 	$rent = esc_url( wc_get_page_permalink( 'shop' ) );
 }
@@ -91,7 +91,24 @@ $has_portrait = file_exists( get_theme_file_path( 'assets/dmitrijs.jpg' ) );
 
 <section class="blk" style="padding-top:0"><div class="wrap">
 	<h2><?php ivs_e( 'Atsauksmes', 'Отзывы', 'Testimonials' ); ?></h2>
-	<div class="card cat"><span class="mut"><?php ivs_e( '“Apkures balansēšanas darbi sākot ar izpēti, parametru aprēķiniem un faktisko aprīkojuma iestatīšanu tika uzsākti laikus un veikti kvalitatīvi un bez aizķeršanās.”', '«Работы по балансировке отопления выполнены качественно и в срок. Представитель исполнителя Дмитрий Иванцов действовал компетентно, был отзывчив и дал ценные предложения.»', '“The heating balancing work was started on time and carried out to a high standard, without delays.”' ); ?></span><br><b style="margin-top:8px">G. Kukuts, <?php ivs_e( 'Rīgas valstspilsētas pašvaldības Centrālās administrācijas Nodrošinājuma pārvaldes vadītājs', 'руководитель управления обеспечения Центральной администрации Рижского самоуправления', 'Head of the Provision Department, Riga City Council Central Administration' ); ?></b></div>
+	<div class="grid g3">
+	<?php foreach ( ivs_testimonials() as $tm ) : $lg = ivs_lang(); ?>
+		<div class="card cat">
+			<?php foreach ( $tm['text'][ $lg ] as $para ) : ?><p class="mut" style="margin:0 0 10px"><?php echo esc_html( $para ); ?></p><?php endforeach; ?>
+			<b style="margin-top:6px"><?php echo esc_html( $tm['name'] ); ?></b>
+			<span class="mut"><?php echo esc_html( $tm['role'][ $lg ] ); ?></span>
+		</div>
+	<?php endforeach; ?>
+	</div>
+</div></section>
+
+<section class="blk" style="padding-top:0"><div class="wrap">
+	<h2><?php ivs_e( 'Darba pieredze', 'Опыт работы', 'Work experience' ); ?></h2>
+	<div class="grid">
+	<?php foreach ( ivs_objects() as $o ) : ?>
+		<div class="card cat"><span class="mut"><?php echo esc_html( $o[0] ); ?></span><b><?php echo esc_html( $o[1] ); ?></b><?php if ( $o[2] ) : ?><span class="mut"><?php echo esc_html( $o[2] ); ?></span><?php endif; ?></div>
+	<?php endforeach; ?>
+	</div>
 </div></section>
 
 <section class="blk" style="padding-top:0" id="kontakti"><div class="wrap">
