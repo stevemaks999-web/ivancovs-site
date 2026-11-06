@@ -33,7 +33,7 @@ RU: префикс `/ru/`, EN: `/en/`. Существующие страницы
 | Biezums, vibrācija, ultraskaņa | /noma/biezums-vibracija/ | Толщиномеры, вибро, УЗ-расход/тепло | NK-200, GM100, VM6370, TUF-3000L, Ultrasonic Transducer | 2930 | krāsas biezuma mērītājs (110), siltumenerģijas skaitītājs (90), siltuma skaitītājs (90), толщиномеры (40) |
 | Skaņa, gaisma, elektrība | /noma/skana-gaisma-elektriba/ | Шум, свет, ток, тахометр, лазер | PCE 318, SK8202, Hanmatek CO601, FNIRSI ERD-10, PEAKMETER PM2019A, HoldPeak, Nohawk NP, AL-NK-200, Refraktometrs | 360 | decibelu mērītājs (70), шумомер (20), trokšņu mērītājs (20), skaņas mērītājs (20) |
 
-**Общие запросы на аренду** (13550/мес): ramirent (3600), storent (2900), ramirent noma (880), instrumentu noma (720), cramo (720), storent sia (590). Идут на главную и `/noma/` (title: «Mērinstrumentu noma Rīgā»). Названия Ramirent, Storent, Cramo — это конкуренты, на них не оптимизируем.
+**Общие запросы на аренду** (13550/мес): ramirent (3600), storent (2900), ramirent noma (880), instrumentu noma (720), cramo (720), storent sia (590). Идут на главную и `/noma/` (title: «Аренда приборов в Риге»). Названия Ramirent, Storent, Cramo — это конкуренты, на них не оптимизируем.
 
 ## 3. Правила для страниц
 - Один запрос — одна страница. Категория отвечает на общий запрос («termokamera noma»), страница прибора на модель («testo 417»).
