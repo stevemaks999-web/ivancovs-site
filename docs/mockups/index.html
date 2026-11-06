@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Ivancovs: макеты (главная, каталог, прибор)</title>
+<title>Дмитрий Иванцов: макеты (главная, каталог, прибор)</title>
 <style>
 :root{--ink:#0f1b2d;--mut:#5b6678;--bg:#f5f7fa;--card:#fff;--line:#e2e7ee;--acc:#0b6bcb;--acc2:#0a4f96;--ok:#1a8f4c;--ph1:#e9eef5;--ph2:#f2f5f9;--cell:#eef2f7;--chipon:#0f1b2d;--chipont:#fff}
 [data-theme=dark]{--ink:#e8eef7;--mut:#9aa7ba;--bg:#0b121d;--card:#131d2c;--line:#243247;--acc:#4da3ff;--acc2:#7bb9ff;--ok:#2fb36b;--ph1:#1a2638;--ph2:#1f2c42;--cell:#1b2638;--chipon:#4da3ff;--chipont:#08111f}
@@ -42,6 +42,10 @@ section.blk{padding:44px 0}h2{font-size:26px;margin:0 0 20px}
 footer{background:var(--ink);color:#b8c4d6;padding:36px 0;margin-top:40px;font-size:14px}footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
 .screen{display:none}.screen.on{display:block}
 
+.who{display:flex;gap:16px;align-items:center;margin-bottom:22px}.av{width:76px;height:76px;aspect-ratio:1;border-radius:50%;flex:none;overflow:hidden}.who h1{margin:0 0 4px}.who p{margin:0;color:#c8d6ea;font-size:15px}
+.duo{display:grid;gap:12px;grid-template-columns:1fr 1fr}.duocard{background:#ffffff14;border:1px solid #ffffff2e;border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:6px;color:#fff}.duocard b{font-size:18px}.duocard span{font-size:14px;color:#c8d6ea}.duocard i{font-style:normal;color:#7bb9ff;font-weight:600;margin-top:4px}
+.about{display:flex;gap:20px;padding:20px;align-items:center}.av2{width:110px;height:110px;aspect-ratio:1;border-radius:12px;flex:none}.soc{display:flex;gap:8px;flex-wrap:wrap}.soc span{border:1px solid var(--line);border-radius:99px;padding:5px 12px;font-size:13px}
+@media(max-width:560px){.duo{grid-template-columns:1fr}.about{flex-direction:column;align-items:flex-start}}
 /* Мобильная версия (основная) */
 .burger{display:none;font-size:22px;background:none;border:0;padding:6px}
 .stick{display:none}
@@ -51,7 +55,7 @@ footer{background:var(--ink);color:#b8c4d6;padding:36px 0;margin-top:40px;font-s
  header.site .wrap{height:56px;gap:10px}nav{display:none}.burger{display:block;order:3}
  .lang{font-size:12px;white-space:nowrap}.logo{font-size:18px}
  header.site .btn.wa{display:none}.theme{width:34px;height:34px}
- .hero{padding:28px 0}.hero h1{font-size:26px}.hero p{font-size:15px;margin-bottom:16px}
+ .hero{padding:28px 0}.hero h1{font-size:24px}.hero p{font-size:15px;margin-bottom:16px}
  .search{flex-direction:column}.search input,.search .btn{width:100%;text-align:center}
  .chips span{font-size:12px;padding:4px 10px}
  section.blk{padding:26px 0}h2{font-size:21px;margin-bottom:14px}
@@ -74,7 +78,7 @@ footer{background:var(--ink);color:#b8c4d6;padding:36px 0;margin-top:40px;font-s
 <div class="note"><div class="wrap"><b>Макет для согласования.</b><span class="tabs"><a href="#home">Главная</a><a href="#catalog">Каталог</a><a href="#product">Страница прибора</a></span> Серые блоки: место под фото. Цены и названия условные.</div></div>
 
 <header class="site"><div class="wrap"><a class="logo" href="#home">IVAN<i>COVS</i></a>
-<nav><a href="#catalog">Аренда</a><a href="#catalog">Комплекты</a><a href="#home">Как арендовать</a><a href="#home">Контакты</a></nav>
+<nav><a href="#catalog">Аренда</a><a href="#catalog">Комплекты</a><a href="#home">Как арендовать</a><a href="#home">Услуги</a><a href="#home">Обучение</a><a href="#home">Блог</a><a href="#home">Контакты</a></nav>
 <span class="sp"></span><span class="lang">LV · <b>RU</b> · EN</span><a class="btn wa" href="#home">WhatsApp</a><button class="theme" id="theme" aria-label="Тема">🌙</button><button class="burger" aria-label="Меню">☰</button></div></header>
 <div class="stick"><b>€12 <small class="mut" style="font-weight:400">/ сутки</small></b><a class="btn" href="#product">Забронировать</a><a class="btn wa" href="#product" aria-label="WhatsApp">WhatsApp</a></div>
 
@@ -111,14 +115,19 @@ footer{background:var(--ink);color:#b8c4d6;padding:36px 0;margin-top:40px;font-s
 <section class="blk"><h2>Входит в комплекты</h2><div class="grid g3"><div class="card cat"><b>Наладка вентиляции</b><span class="mut">Testo 417 + 510i + 605i</span></div><div class="card cat"><b>Проверка воздухообмена</b><span class="mut">Testo 417 + 535</span></div><div class="card cat"><b>Проверка квартиры</b><span class="mut">Testo 417 + тепловизор</span></div></div></section></div></div>
 
 <div class="screen on" id="home">
-<section class="hero"><div class="wrap"><h1>Аренда измерительных приборов в Риге</h1><p>Выберите прибор, забронируйте даты и оплатите онлайн. Без звонков.</p>
-<div class="search"><input placeholder="Например: testo 417, тепловизор, CO₂"><a class="btn" href="#catalog">Найти</a></div>
-<div class="chips"><span>46 приборов</span><span>20 комплектов</span><span>9:00–18:00</span><span>Счёт с PVN</span></div></div></section>
+<section class="hero"><div class="wrap"><div class="who"><div class="ph av">фото</div><div><h1>Дмитрий Иванцов</h1><p>Инженер вентиляции и климата в Риге. Проектирую, налаживаю, обучаю и сдаю в аренду профессиональные приборы.</p></div></div>
+<div class="duo"><a class="duocard" href="#catalog"><b>Аренда приборов</b><span>46 приборов и 20 комплектов. Бронь и оплата онлайн.</span><i>Выбрать прибор →</i></a><a class="duocard" href="#home"><b>Услуги эксперта</b><span>Проектирование, наладка вентиляции, сервис, консультации.</span><i>Заказать →</i></a></div>
+<div class="chips"><span>Опыт в вентиляции</span><span>Обучение</span><span>Блог</span><span>9:00–18:00</span></div></div></section>
 <section class="blk"><div class="wrap"><h2>Категории</h2><div class="grid g4">
 <a class="card cat" href="#catalog"><b>Поток воздуха</b><span class="mut">Анемометры, Testo 417/420</span></a><a class="card cat" href="#catalog"><b>Давление</b><span class="mut">Манометры, перепад давления</span></a><a class="card cat" href="#catalog"><b>Температура и влажность</b><span class="mut">Термометры, логгеры</span></a><a class="card cat" href="#catalog"><b>CO₂ и качество воздуха</b><span class="mut">CO₂, частицы</span></a>
 <a class="card cat" href="#catalog"><b>Газы и дым</b><span class="mut">Детекторы, генераторы</span></a><a class="card cat" href="#catalog"><b>Тепловизоры</b><span class="mut">Тепловизоры, эндоскопы</span></a><a class="card cat" href="#catalog"><b>Толщина, вибрация</b><span class="mut">Ультразвук, виброметры</span></a><a class="card cat" href="#catalog"><b>Звук, свет, электричество</b><span class="mut">Шум, ток</span></a></div></div></section>
 <section class="blk" style="padding-top:0"><div class="wrap"><h2>Популярные</h2><div class="grid g4">
 <a class="card" href="#product"><div class="ph">фото</div><div class="b"><h3>Testo 417</h3><div class="price">€12 <small>/ сутки</small></div></div></a><a class="card" href="#product"><div class="ph">фото</div><div class="b"><h3>Testo 535</h3><div class="price">€15 <small>/ сутки</small></div></div></a><a class="card" href="#product"><div class="ph">фото</div><div class="b"><h3>Тепловизор</h3><div class="price">€20 <small>/ сутки</small></div></div></a><a class="card" href="#product"><div class="ph">фото</div><div class="b"><h3>Эндоскоп</h3><div class="price">€8 <small>/ сутки</small></div></div></a></div></div></section>
+<section class="blk" style="padding-top:0"><div class="wrap"><h2>Услуги</h2><div class="grid g4">
+<a class="card cat" href="#home"><b>Проектирование</b><span class="mut">Вентиляция и климат</span></a><a class="card cat" href="#home"><b>Монтаж</b><span class="mut">Системы вентиляции</span></a><a class="card cat" href="#home"><b>Наладка</b><span class="mut">Балансировка, протоколы</span></a><a class="card cat" href="#home"><b>Сервис</b><span class="mut">Обслуживание систем</span></a></div></div></section>
+<section class="blk" style="padding-top:0"><div class="wrap"><div class="card about"><div class="ph av2">фото</div><div><h2 style="margin-bottom:8px">Об эксперте</h2><p class="mut" style="font-size:15px;margin:0 0 12px">Короткий рассказ: опыт, сертификаты, объекты, почему приборы подобраны именно такие. Текст предоставит Дмитрий.</p><div class="soc"><span>Instagram</span><span>YouTube</span><span>LinkedIn</span><span>TikTok</span></div></div></div></div></section>
+<section class="blk" style="padding-top:0"><div class="wrap"><h2>Обучение и блог</h2><div class="grid g3"><a class="card cat" href="#home"><b>Обучение</b><span class="mut">Курсы по вентиляции и кондиционированию</span></a><a class="card cat" href="#home"><b>Полезная информация</b><span class="mut">Нормы, расчёты, шпаргалки</span></a><a class="card cat" href="#home"><b>Блог</b><span class="mut">Последние статьи</span></a></div></div></section>
+<section class="blk" style="padding-top:0"><div class="wrap"><h2>Отзывы</h2><div class="grid g3"><div class="card cat"><span class="mut">«Отзыв клиента об аренде или услуге»</span><br><b style="margin-top:8px">Имя, компания</b></div><div class="card cat"><span class="mut">«Отзыв клиента»</span><br><b style="margin-top:8px">Имя, компания</b></div></div></div></section>
 <section class="blk" style="padding-top:0"><div class="wrap"><h2>Как это работает</h2><div class="grid g4 steps"><div class="card"><b>Выберите</b><p class="mut">Прибор или готовый комплект</p></div><div class="card"><b>Забронируйте</b><p class="mut">Даты 9:00–18:00, без двойных броней</p></div><div class="card"><b>Оплатите</b><p class="mut">Карта или банк, залог для приборов от 500 €</p></div><div class="card"><b>Получите</b><p class="mut">С документом, акт и счёт на почту</p></div></div></div></section>
 </div>
 </main>
