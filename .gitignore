@@ -10,3 +10,4 @@ status.json.local
 .DS_Store
 src/wp-content/plugins/ivancovs-status/status.json
 .secrets/
+__pycache__/
