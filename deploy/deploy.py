@@ -8,7 +8,7 @@ Credentials come from env vars (GitHub Secrets in CI, a local .env for direct ru
   CPANEL_USER   cPanel username
   CPANEL_TOKEN  cPanel API token
 """
-import json, os, sys, time, uuid, zipfile, tempfile
+import json, os, posixpath, sys, time, uuid, zipfile, tempfile
 import urllib.request, urllib.parse
 from pathlib import Path
 
@@ -60,6 +60,12 @@ class Cpanel:
         if res.get("status") != 1:
             sys.exit(f"upload failed: {res.get('errors')}")
 
+    def deploy_zip(self, local: Path, remote_dir: str):
+        remote_zip = f"{remote_dir}/{local.name}"
+        self.upload(local, remote_dir)
+        self.fileop("extract", remote_zip, remote_dir)
+        self.fileop("unlink", remote_zip)
+
     def fileop(self, op, source, dest=None):
         q = {"cpanel_jsonapi_user": self.user, "cpanel_jsonapi_apiversion": "2",
              "cpanel_jsonapi_module": "Fileman", "cpanel_jsonapi_func": "fileop",
@@ -80,12 +86,13 @@ def main():
     cfg = json.loads((ROOT / "deploy/targets.json").read_text()).get(args[0])
     if not cfg:
         sys.exit(f"unknown target {args[0]}")
-    source = ROOT / cfg["source"]
     stamp = time.strftime("%Y%m%d-%H%M%S")
+    source = ROOT / cfg["source"]
     zpath = Path(tempfile.gettempdir()) / f"deploy-{stamp}.zip"
     count = build_zip(source, zpath)
-    print(f"target={args[0]} ({cfg['domain']}) files={count} zip={zpath.stat().st_size}B")
-    if count == 0:
+    extra = cfg.get("files", [])
+    print(f"target={args[0]} ({cfg['domain']}) files={count} extra_files={len(extra)} zip={zpath.stat().st_size}B")
+    if count == 0 and not extra:
         print("nothing to deploy"); return
     if dry:
         print("dry-run: not uploading"); return
@@ -94,11 +101,21 @@ def main():
         c = Cpanel(os.environ["CPANEL_HOST"], os.environ["CPANEL_USER"], os.environ["CPANEL_TOKEN"])
     except KeyError as e:
         sys.exit(f"missing env var {e}")
-    remote_zip = f"{cfg['docroot']}/{zpath.name}"
-    c.upload(zpath, cfg["docroot"])
-    c.fileop("extract", remote_zip, cfg["docroot"])
-    c.fileop("unlink", remote_zip)
+    if count:
+        c.deploy_zip(zpath, cfg["docroot"])
     zpath.unlink(missing_ok=True)
+    # Отдельные файлы вне папки source: {"from": "путь в репозитории", "to": "папка относительно docroot"}
+    for i, item in enumerate(extra):
+        src = ROOT / item["from"]
+        if not src.is_file():
+            sys.exit(f"extra file not found: {item['from']}")
+        remote_dir = posixpath.normpath(posixpath.join(cfg["docroot"], item["to"]))
+        z = Path(tempfile.gettempdir()) / f"deploy-{stamp}-extra{i}.zip"
+        with zipfile.ZipFile(z, "w", zipfile.ZIP_DEFLATED) as zf:
+            zf.write(src, src.name)
+        c.deploy_zip(z, remote_dir)
+        z.unlink(missing_ok=True)
+        print(f"extra: {src.name} -> {item['to']}")
     print("deployed OK")
 
 

@@ -7,6 +7,12 @@
   "production": {
     "domain": "ivancovs.com",
     "docroot": "/home/ivancovs/public_html/wp-content/themes/ivancovs",
-    "source": "src/wp-content/themes/ivancovs"
+    "source": "src/wp-content/themes/ivancovs",
+    "files": [
+      {
+        "from": "src/wp-content/mu-plugins/ivancovs-gtm.php",
+        "to": "../../mu-plugins"
+      }
+    ]
   }
 }
