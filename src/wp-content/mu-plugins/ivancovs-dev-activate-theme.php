@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Ivancovs: включить тему на тестовом сайте
- * Description: Один раз включает тему Ivancovs, только на dev.ivancovs.com. На боевой домен не выкладывается и не срабатывает. После включения можно переключить тему обратно: плагин второй раз не сработает.
+ * Description: Один раз включает тему Ivancovs, только в папке тестовой установки dev.ivancovs.com. На боевой домен не выкладывается и не срабатывает. После включения можно переключить тему обратно: плагин второй раз не сработает.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -9,7 +9,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 add_action( 'init', function () {
-	if ( 'dev.ivancovs.com' !== wp_parse_url( home_url(), PHP_URL_HOST ) ) {
+	// Адрес сайта в базе тестовой установки боевой (редирект на ivancovs.com), поэтому узнаём её по папке.
+	if ( false === strpos( wp_normalize_path( ABSPATH ), '/dev.ivancovs.com/' ) ) {
 		return;
 	}
 	if ( get_option( 'ivs_dev_theme_activated' ) ) {
