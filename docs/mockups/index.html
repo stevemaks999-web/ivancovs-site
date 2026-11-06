@@ -38,20 +38,53 @@ section.blk{padding:44px 0}h2{font-size:26px;margin:0 0 20px}
 .rules{font-size:14px;color:var(--mut);margin:10px 0 16px}.rules li{margin:3px 0}
 footer{background:var(--ink);color:#b8c4d6;padding:36px 0;margin-top:40px;font-size:14px}footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
 .screen{display:none}.screen.on{display:block}
-@media(max-width:860px){.g4{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:1fr}.layout,.prod{grid-template-columns:1fr}nav{display:none}.hero h1{font-size:30px}}
-@media(max-width:480px){.g4{grid-template-columns:1fr}}
+
+/* Мобильная версия (основная) */
+.burger{display:none;font-size:22px;background:none;border:0;padding:6px}
+.chipbar{display:none}.stick{display:none}
+@media(max-width:860px){
+ body{font-size:15px}.wrap{padding:0 14px}
+ .note{font-size:12px;padding:6px 0}.note b{display:block;margin:0}
+ header.site .wrap{height:56px;gap:10px}nav{display:none}.burger{display:block;order:3}
+ .lang{font-size:12px;white-space:nowrap}.logo{font-size:18px}
+ header.site .btn.wa{padding:8px 12px;font-size:14px}
+ .hero{padding:28px 0}.hero h1{font-size:26px}.hero p{font-size:15px;margin-bottom:16px}
+ .search{flex-direction:column}.search input,.search .btn{width:100%;text-align:center}
+ .chips span{font-size:12px;padding:4px 10px}
+ section.blk{padding:26px 0}h2{font-size:21px;margin-bottom:14px}
+ .grid{gap:10px}.g4,.g3{grid-template-columns:repeat(2,1fr)}
+ .cat{padding:14px}.cat b{font-size:15px}.mut{font-size:13px}
+ .card .b{padding:10px 12px}.card h3{font-size:15px}
+ .steps .card{padding:14px}
+ .layout{grid-template-columns:1fr}.side{display:none}
+ .chipbar{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px;margin-bottom:12px;-webkit-overflow-scrolling:touch}
+ .chipbar span{flex:none;background:#fff;border:1px solid var(--line);border-radius:99px;padding:7px 14px;font-size:14px;white-space:nowrap}
+ .chipbar .on{background:var(--ink);color:#fff;border-color:var(--ink)}
+ .bar{gap:8px}.toggle{width:100%}.toggle span{flex:1;text-align:center}
+ h1{font-size:24px!important}
+ .prod{grid-template-columns:1fr;gap:18px}.prod h1{font-size:24px!important}
+ .prod .g4{grid-template-columns:repeat(4,1fr)!important}
+ .cal span{padding:9px 0}
+ .stick{display:flex;position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);padding:10px 14px;gap:10px;align-items:center;z-index:9}
+ .stick b{font-size:18px;flex:none}.stick .btn{flex:1;text-align:center;padding:12px}
+ #product{padding-bottom:70px}.stick{display:none}#product.on~.stick,body.pp .stick{display:flex}
+ footer .wrap{flex-direction:column}
+}
+@media(max-width:380px){.g4,.g3{grid-template-columns:1fr 1fr}}
 </style></head><body>
 <div class="note"><div class="wrap"><b>Макет для согласования.</b><span class="tabs"><a href="#home">Главная</a><a href="#catalog">Каталог</a><a href="#product">Страница прибора</a></span> Серые блоки: место под фото. Цены и названия условные.</div></div>
 
 <header class="site"><div class="wrap"><a class="logo" href="#home">IVAN<i>COVS</i></a>
 <nav><a href="#catalog">Аренда</a><a href="#catalog">Комплекты</a><a href="#home">Как арендовать</a><a href="#home">Контакты</a></nav>
-<span class="sp"></span><span class="lang">LV · <b>RU</b> · EN</span><a class="btn wa" href="#home">WhatsApp</a></div></header>
+<span class="sp"></span><span class="lang">LV · <b>RU</b> · EN</span><a class="btn wa" href="#home">WhatsApp</a><button class="burger" aria-label="Меню">☰</button></div></header>
+<div class="stick"><b>€12 <small class="mut" style="font-weight:400">/ сутки</small></b><a class="btn" href="#product">Забронировать</a></div>
 
 <main>
 <div class="screen" id="catalog">
 <div class="wrap"><div class="crumbs">Главная › Аренда</div>
 <h1 style="margin:0 0 16px;font-size:32px">Аренда измерительных приборов в Риге</h1>
 <div class="bar"><div class="toggle"><span class="on">Приборы (46)</span><span>Комплекты (20)</span></div><input placeholder="Поиск: testo 417, тепловизор, CO₂…"></div>
+<div class="chipbar"><span class="on">Все</span><span>Поток воздуха</span><span>Давление</span><span>Температура</span><span>CO₂</span><span>Газы и дым</span><span>Тепловизоры</span><span>Звук и свет</span></div>
 <div class="layout"><aside class="side"><div class="card"><b>Категории</b><ul><li class="on">Все</li><li>Поток воздуха и вентиляция</li><li>Давление</li><li>Температура и влажность</li><li>CO₂ и качество воздуха</li><li>Газы и дым</li><li>Тепловизоры и эндоскопы</li><li>Толщина, вибрация, ультразвук</li><li>Звук, свет, электричество</li></ul></div>
 <div class="card" style="margin-top:12px"><b>Доступность</b><p class="mut" style="margin:6px 0 0">Даты от / до</p></div></aside>
 <div class="grid g3">
@@ -89,4 +122,4 @@ footer{background:var(--ink);color:#b8c4d6;padding:36px 0;margin-top:40px;font-s
 </div>
 </main>
 <footer><div class="wrap"><div><b style="color:#fff">IVANCOVS</b><br>SIA “Delumix” · Рига</div><div>dmitrijs@ivancovs.com<br>(+371) 2555 32 44</div><div>Политика конфиденциальности</div></div></footer>
-<script>function show(h){if(!document.getElementById(h))h='home';document.querySelectorAll('.screen').forEach(function(s){s.classList.toggle('on',s.id===h)});scrollTo(0,0)}document.addEventListener('click',function(e){var a=e.target.closest('a[href^="#"]');if(!a)return;e.preventDefault();var h=a.getAttribute('href').slice(1);show(h);try{history.replaceState(null,'','#'+h)}catch(x){}});show((location.hash||'#home').slice(1))</script></body></html>
+<script>function show(h){if(!document.getElementById(h))h='home';document.querySelectorAll('.screen').forEach(function(s){s.classList.toggle('on',s.id===h)});document.body.classList.toggle('pp',h==='product');scrollTo(0,0)}document.addEventListener('click',function(e){var a=e.target.closest('a[href^="#"]');if(!a)return;e.preventDefault();var h=a.getAttribute('href').slice(1);show(h);try{history.replaceState(null,'','#'+h)}catch(x){}});show((location.hash||'#home').slice(1))</script></body></html>
