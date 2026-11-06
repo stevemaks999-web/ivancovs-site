@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="lv"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ivancovs: макеты (главная, каталог, прибор)</title>
+<style>
+:root{--ink:#0f1b2d;--mut:#5b6678;--bg:#f5f7fa;--card:#fff;--line:#e2e7ee;--acc:#0b6bcb;--acc2:#0a4f96;--ok:#1a8f4c}
+*{box-sizing:border-box}body{margin:0;font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--ink);background:var(--bg)}
+a{color:inherit;text-decoration:none}.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+.note{background:#fff8e1;border-bottom:1px solid #f0dfa0;font-size:14px;padding:8px 0}
+.note b{margin-right:8px}.tabs a{margin-right:14px;color:var(--acc);text-decoration:underline}
+header.site{background:var(--card);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+header.site .wrap{display:flex;align-items:center;gap:20px;height:64px}
+.logo{font-weight:800;letter-spacing:.5px;font-size:20px}.logo i{color:var(--acc);font-style:normal}
+nav{display:flex;gap:18px;margin-left:12px;color:var(--mut);font-size:15px}
+.sp{flex:1}.lang{font-size:14px;color:var(--mut)}.lang b{color:var(--ink)}
+.btn{display:inline-block;background:var(--acc);color:#fff;padding:11px 20px;border-radius:8px;font-weight:600;border:0;cursor:pointer}
+.btn:hover{background:var(--acc2)}.btn.ghost{background:#fff;color:var(--acc);border:1px solid var(--acc)}
+.btn.wa{background:var(--ok)}
+.hero{background:linear-gradient(135deg,#0f1b2d,#17406e);color:#fff;padding:56px 0}
+.hero h1{font-size:40px;line-height:1.15;margin:0 0 12px}.hero p{color:#c8d6ea;max-width:560px;margin:0 0 24px}
+.search{display:flex;gap:8px;max-width:560px}.search input{flex:1;padding:13px 14px;border-radius:8px;border:0;font-size:16px}
+.chips{margin-top:14px;display:flex;flex-wrap:wrap;gap:8px}.chips span{background:#ffffff1f;padding:5px 12px;border-radius:99px;font-size:14px}
+section.blk{padding:44px 0}h2{font-size:26px;margin:0 0 20px}
+.grid{display:grid;gap:16px}.g4{grid-template-columns:repeat(4,1fr)}.g3{grid-template-columns:repeat(3,1fr)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.ph{aspect-ratio:4/3;background:repeating-linear-gradient(45deg,#e9eef5,#e9eef5 10px,#f2f5f9 10px,#f2f5f9 20px);display:grid;place-items:center;color:#8a95a8;font-size:13px}
+.card .b{padding:14px 16px}.card h3{margin:0 0 4px;font-size:17px}.mut{color:var(--mut);font-size:14px}
+.price{font-weight:700;margin-top:8px}.price small{font-weight:400;color:var(--mut)}
+.cat{padding:20px;text-align:left}.cat b{display:block;margin-bottom:4px}
+.steps{counter-reset:s}.steps .card{padding:20px}.steps .card:before{counter-increment:s;content:counter(s);display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--acc);color:#fff;font-weight:700;margin-bottom:10px}
+.toggle{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#fff}.toggle span{padding:8px 18px;font-size:15px}.toggle .on{background:var(--ink);color:#fff}
+.bar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:20px}.bar input{flex:1;min-width:200px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;font-size:15px}
+.layout{display:grid;grid-template-columns:230px 1fr;gap:24px}.side .card{padding:16px}.side li{list-style:none;padding:6px 0;color:var(--mut);font-size:15px}.side ul{margin:0;padding:0}.side li.on{color:var(--ink);font-weight:700}
+.crumbs{font-size:14px;color:var(--mut);margin:20px 0}
+.prod{display:grid;grid-template-columns:1.1fr 1fr;gap:32px;align-items:start}
+.prod h1{font-size:32px;margin:0 0 6px}.spec{width:100%;border-collapse:collapse;margin:12px 0}.spec td{padding:8px 0;border-bottom:1px solid var(--line);font-size:15px}.spec td:first-child{color:var(--mut);width:46%}
+.book{padding:20px}.book .row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line);font-size:15px}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin:12px 0;text-align:center;font-size:13px}.cal span{padding:7px 0;border-radius:6px;background:#eef2f7}.cal .x{background:#fde4e4;color:#b33;text-decoration:line-through}.cal .s{background:var(--acc);color:#fff}.cal .h{background:none;color:var(--mut);font-weight:600}
+.rules{font-size:14px;color:var(--mut);margin:10px 0 16px}.rules li{margin:3px 0}
+footer{background:var(--ink);color:#b8c4d6;padding:36px 0;margin-top:40px;font-size:14px}footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.screen{display:none}.screen.on{display:block}
+@media(max-width:860px){.g4{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:1fr}.layout,.prod{grid-template-columns:1fr}nav{display:none}.hero h1{font-size:30px}}
+@media(max-width:480px){.g4{grid-template-columns:1fr}}
+</style></head><body>
+<div class="note"><div class="wrap"><b>Макет для согласования.</b><span class="tabs"><a href="#home">Главная</a><a href="#catalog">Каталог</a><a href="#product">Страница прибора</a></span> Серые блоки: место под фото. Цены и названия условные.</div></div>
+
+<header class="site"><div class="wrap"><a class="logo" href="#home">IVAN<i>COVS</i></a>
+<nav><a href="#catalog">Noma</a><a href="#catalog">Komplekti</a><a href="#home">Kā īrēt</a><a href="#home">Kontakti</a></nav>
+<span class="sp"></span><span class="lang"><b>LV</b> · RU · EN</span><a class="btn wa" href="#home">WhatsApp</a></div></header>
+
+<main>
+<div class="screen" id="catalog">
+<div class="wrap"><div class="crumbs">Sākums › Noma</div>
+<h1 style="margin:0 0 16px;font-size:32px">Mērinstrumentu noma Rīgā</h1>
+<div class="bar"><div class="toggle"><span class="on">Instrumenti (46)</span><span>Komplekti (20)</span></div><input placeholder="Meklēt: testo 417, termokamera, CO₂…"></div>
+<div class="layout"><aside class="side"><div class="card"><b>Kategorijas</b><ul><li class="on">Visi</li><li>Gaisa plūsma un ventilācija</li><li>Spiediens</li><li>Temperatūra un mitrums</li><li>CO₂ un gaisa kvalitāte</li><li>Gāzes un dūmi</li><li>Termokameras un endoskopi</li><li>Biezums, vibrācija, ultraskaņa</li><li>Skaņa, gaisma, elektrība</li></ul></div>
+<div class="card" style="margin-top:12px"><b>Pieejamība</b><p class="mut" style="margin:6px 0 0">Datums no / līdz</p></div></aside>
+<div class="grid g3">
+<a class="card" href="#product"><div class="ph">foto</div><div class="b"><h3>Testo 417</h3><div class="mut">Plūsmas mērītājs</div><div class="price">€12 <small>/ diena</small></div></div></a>
+<a class="card" href="#product"><div class="ph">foto</div><div class="b"><h3>Testo 535</h3><div class="mut">CO₂ mērītājs</div><div class="price">€15 <small>/ diena</small></div></div></a>
+<a class="card" href="#product"><div class="ph">foto</div><div class="b"><h3>Testo 440 dP</h3><div class="mut">Spiediena starpības mērītājs</div><div class="price">€25 <small>/ diena</small></div></div></a>
+<a class="card" href="#product"><div class="ph">foto</div><div class="b"><h3>Termokamera</h3><div class="mut">Mobilā termiskā kamera</div><div class="price">€20 <small>/ diena</small></div></div></a>
+<a class="card" href="#product"><div class="ph">foto</div><div class="b"><h3>Endoskops</h3><div class="mut">Ar locāmo kameru</div><div class="price">€8 <small>/ diena</small></div></div></a>
+<a class="card" href="#product"><div class="ph">foto</div><div class="b"><h3>PCE 318</h3><div class="mut">Skaņas līmeņa reģistrators</div><div class="price">€10 <small>/ diena</small></div></div></a>
+</div></div></div></div>
+
+<div class="screen" id="product">
+<div class="wrap"><div class="crumbs">Sākums › Noma › Gaisa plūsma › Testo 417</div>
+<div class="prod"><div><div class="ph" style="aspect-ratio:4/3;border-radius:12px;border:1px solid var(--line)">galvenais foto</div>
+<div class="grid g4" style="margin-top:12px;grid-template-columns:repeat(4,1fr)"><div class="ph" style="border-radius:8px">foto</div><div class="ph" style="border-radius:8px">foto</div><div class="ph" style="border-radius:8px">foto</div><div class="ph" style="border-radius:8px">foto</div></div></div>
+<div><h1>Testo 417 noma Rīgā</h1><p class="mut" style="margin:0">Propellera anemometrs gaisa plūsmas mērīšanai ventilācijas kanālos.</p>
+<table class="spec"><tr><td>Mērījumu diapazons</td><td>0,3 … 35 m/s</td></tr><tr><td>Komplektācija</td><td>Ierīce, futrālis, uzmava</td></tr><tr><td>Kam piemērots</td><td>Ventilācijas ieregulēšana</td></tr></table>
+<div class="card book"><div style="display:flex;justify-content:space-between;align-items:baseline"><b style="font-size:22px">€12 <small class="mut" style="font-weight:400">/ diena</small></b><span class="mut">€60 / nedēļa</span></div>
+<div class="cal"><span class="h">P</span><span class="h">O</span><span class="h">T</span><span class="h">C</span><span class="h">P</span><span class="h">S</span><span class="h">Sv</span><span>9</span><span>10</span><span class="s">11</span><span class="s">12</span><span class="x">13</span><span class="h">14</span><span class="h">15</span></div>
+<div class="row"><span>Izsniegšana / atgriešana</span><span>9:00–18:00</span></div><div class="row"><span>Drošības nauda</span><span>€75 (atmaksā pēc atgriešanas)</span></div>
+<ul class="rules"><li>Jāuzrāda dokuments (pase, tiesības vai ID)</li><li>Brīvdienas: pēc vienošanās</li><li>Rēķins ar PVN 21%</li></ul>
+<a class="btn" style="display:block;text-align:center" href="#product">Rezervēt un maksāt</a><a class="btn ghost" style="display:block;text-align:center;margin-top:8px" href="#product">Jautāt WhatsApp</a></div></div></div>
+<section class="blk"><h2>Piemērots komplektos</h2><div class="grid g3"><div class="card cat"><b>Ventilācijas ieregulēšana</b><span class="mut">Testo 417 + 510i + 605i</span></div><div class="card cat"><b>Gaisa apmaiņas pārbaude</b><span class="mut">Testo 417 + 535</span></div><div class="card cat"><b>Dzīvokļa pārbaude</b><span class="mut">Testo 417 + termokamera</span></div></div></section></div></div>
+
+<div class="screen on" id="home">
+<section class="hero"><div class="wrap"><h1>Mērinstrumentu noma Rīgā</h1><p>Izvēlieties instrumentu, rezervējiet datumus un samaksājiet online. Bez zvaniem.</p>
+<div class="search"><input placeholder="Piemēram: testo 417, termokamera, CO₂"><a class="btn" href="#catalog">Meklēt</a></div>
+<div class="chips"><span>46 instrumenti</span><span>20 komplekti</span><span>9:00–18:00</span><span>Rēķins ar PVN</span></div></div></section>
+<section class="blk"><div class="wrap"><h2>Kategorijas</h2><div class="grid g4">
+<a class="card cat" href="#catalog"><b>Gaisa plūsma</b><span class="mut">Anemometri, Testo 417/420</span></a><a class="card cat" href="#catalog"><b>Spiediens</b><span class="mut">Manometri, difspiediens</span></a><a class="card cat" href="#catalog"><b>Temperatūra un mitrums</b><span class="mut">Termometri, reģistratori</span></a><a class="card cat" href="#catalog"><b>CO₂ un gaisa kvalitāte</b><span class="mut">CO₂, daļiņas</span></a>
+<a class="card cat" href="#catalog"><b>Gāzes un dūmi</b><span class="mut">Detektori, ģeneratori</span></a><a class="card cat" href="#catalog"><b>Termokameras</b><span class="mut">Termokameras, endoskopi</span></a><a class="card cat" href="#catalog"><b>Biezums, vibrācija</b><span class="mut">Ultraskaņa, vibrometri</span></a><a class="card cat" href="#catalog"><b>Skaņa, gaisma, elektrība</b><span class="mut">Troksnis, strāva</span></a></div></div></section>
+<section class="blk" style="padding-top:0"><div class="wrap"><h2>Populārākie</h2><div class="grid g4">
+<a class="card" href="#product"><div class="ph">foto</div><div class="b"><h3>Testo 417</h3><div class="price">€12 <small>/ diena</small></div></div></a><a class="card" href="#product"><div class="ph">foto</div><div class="b"><h3>Testo 535</h3><div class="price">€15 <small>/ diena</small></div></div></a><a class="card" href="#product"><div class="ph">foto</div><div class="b"><h3>Termokamera</h3><div class="price">€20 <small>/ diena</small></div></div></a><a class="card" href="#product"><div class="ph">foto</div><div class="b"><h3>Endoskops</h3><div class="price">€8 <small>/ diena</small></div></div></a></div></div></section>
+<section class="blk" style="padding-top:0"><div class="wrap"><h2>Kā tas darbojas</h2><div class="grid g4 steps"><div class="card"><b>Izvēlieties</b><p class="mut">Instruments vai gatavs komplekts</p></div><div class="card"><b>Rezervējiet</b><p class="mut">Datumi 9:00–18:00, bez dubultām rezervācijām</p></div><div class="card"><b>Samaksājiet</b><p class="mut">Karte vai banka, drošības nauda no 500 € vērtības</p></div><div class="card"><b>Saņemiet</b><p class="mut">Ar dokumentu, akts un rēķins e-pastā</p></div></div></div></section>
+</div>
+</main>
+<footer><div class="wrap"><div><b style="color:#fff">IVANCOVS</b><br>SIA “Delumix” · Rīga</div><div>dmitrijs@ivancovs.com<br>(+371) 2555 32 44</div><div>Privātuma politika</div></div></footer>
+<script>function show(h){if(!document.getElementById(h))h='home';document.querySelectorAll('.screen').forEach(function(s){s.classList.toggle('on',s.id===h)});scrollTo(0,0)}document.addEventListener('click',function(e){var a=e.target.closest('a[href^="#"]');if(!a)return;e.preventDefault();var h=a.getAttribute('href').slice(1);show(h);try{history.replaceState(null,'','#'+h)}catch(x){}});show((location.hash||'#home').slice(1))</script></body></html>
