@@ -55,8 +55,11 @@ add_action( 'after_setup_theme', function () {
 
 add_action( 'wp_enqueue_scripts', function () {
 	$dir = get_template_directory_uri();
-	wp_enqueue_style( 'ivancovs', get_stylesheet_uri(), array(), IVS_THEME_VERSION );
-	wp_enqueue_script( 'ivancovs', $dir . '/assets/theme.js', array(), IVS_THEME_VERSION, array( 'in_footer' => true, 'strategy' => 'defer' ) );
+	// Версия по времени файла: после выкладки браузер и Cloudflare берут свежие стили.
+	$css_ver = (string) filemtime( get_theme_file_path( 'style.css' ) );
+	$js_ver  = (string) filemtime( get_theme_file_path( 'assets/theme.js' ) );
+	wp_enqueue_style( 'ivancovs', get_stylesheet_uri(), array(), $css_ver );
+	wp_enqueue_script( 'ivancovs', $dir . '/assets/theme.js', array(), $js_ver, array( 'in_footer' => true, 'strategy' => 'defer' ) );
 } );
 
 // Тема без мигания: выставляем до отрисовки.
