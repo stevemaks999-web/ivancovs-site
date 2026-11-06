@@ -103,3 +103,11 @@ body.pp main{padding-bottom:70px}
 .entry img{max-width:100%;height:auto}
 .entry a{color:var(--acc);text-decoration:underline}
 .entry h1,.entry h2,.entry h3{color:var(--ink)}
+.entry .vc_row,.entry .wpb_column,.entry .wpb_wrapper,.entry .vc_column-inner,.entry .wpb_text_column{background:transparent!important;color:inherit}
+.ivs-tabs{margin:16px 0}
+.ivs-tab{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:0 0 10px}
+.ivs-tab summary{cursor:pointer;padding:14px 16px;font-weight:700;list-style:none}
+.ivs-tab summary::-webkit-details-marker{display:none}
+.ivs-tab summary:after{content:"+";float:right;color:var(--mut)}
+.ivs-tab[open] summary:after{content:"−"}
+.ivs-tab-body{padding:0 16px 14px}
