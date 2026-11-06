@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Дмитрий Иванцов: макеты (главная, каталог, прибор)</title>
+<style>
+:root{--ink:#0f1b2d;--mut:#5b6678;--bg:#f5f7fa;--card:#fff;--line:#e2e7ee;--acc:#0b6bcb;--acc2:#0a4f96;--ok:#1a8f4c;--ph1:#e9eef5;--ph2:#f2f5f9;--cell:#eef2f7;--chipon:#0f1b2d;--chipont:#fff}
+[data-theme=dark]{--ink:#e8eef7;--mut:#9aa7ba;--bg:#0b121d;--card:#131d2c;--line:#243247;--acc:#4da3ff;--acc2:#7bb9ff;--ok:#2fb36b;--ph1:#1a2638;--ph2:#1f2c42;--cell:#1b2638;--chipon:#4da3ff;--chipont:#08111f}
+[data-theme=dark] .btn{color:#08111f}[data-theme=dark] .btn.ghost{color:var(--acc);background:transparent}[data-theme=dark] .btn.wa{color:#fff}[data-theme=dark] .note{background:#2a2412;border-color:#4a3f1a;color:#e8d9a0}[data-theme=dark] .cal .x{background:#3a1d22;color:#ff9aa5}[data-theme=dark] .search input,[data-theme=dark] .bar input{background:var(--card);color:var(--ink);border:1px solid var(--line)}[data-theme=dark] .hero .search input{border:0}
+*{box-sizing:border-box}body{margin:0;font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--ink);background:var(--bg)}
+a{color:inherit;text-decoration:none}.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+.note{background:#fff8e1;border-bottom:1px solid #f0dfa0;font-size:14px;padding:8px 0}
+.note b{margin-right:8px}.tabs a{margin-right:14px;color:var(--acc);text-decoration:underline}
+header.site{background:var(--card);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+header.site .wrap{display:flex;align-items:center;gap:20px;height:64px}
+.logo{font-weight:800;letter-spacing:.5px;font-size:20px}.logo i{color:var(--acc);font-style:normal}
+nav{display:flex;gap:18px;margin-left:12px;color:var(--mut);font-size:15px}
+.sp{flex:1}.lang{font-size:14px;color:var(--mut)}.lang b{color:var(--ink)}
+.btn{display:inline-block;background:var(--acc);color:#fff;padding:11px 20px;border-radius:8px;font-weight:600;border:0;cursor:pointer}
+.btn:hover{background:var(--acc2)}.btn.ghost{background:#fff;color:var(--acc);border:1px solid var(--acc)}
+.btn.wa{background:var(--ok)}
+.hero{background:linear-gradient(135deg,#0f1b2d,#17406e);color:#fff;padding:56px 0}
+.hero h1{font-size:40px;line-height:1.15;margin:0 0 12px}.hero p{color:#c8d6ea;max-width:560px;margin:0 0 24px}
+.search{display:flex;gap:8px;max-width:560px}.search input{flex:1;padding:13px 14px;border-radius:8px;border:0;font-size:16px}
+.chips{margin-top:14px;display:flex;flex-wrap:wrap;gap:8px}.chips span{background:#ffffff1f;padding:5px 12px;border-radius:99px;font-size:14px}
+section.blk{padding:44px 0}h2{font-size:26px;margin:0 0 20px}
+.grid{display:grid;gap:16px}.g4{grid-template-columns:repeat(4,1fr)}.g3{grid-template-columns:repeat(3,1fr)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.ph{aspect-ratio:4/3;background:repeating-linear-gradient(45deg,var(--ph1),var(--ph1) 10px,var(--ph2) 10px,var(--ph2) 20px);display:grid;place-items:center;color:#8a95a8;font-size:13px}
+.card .b{padding:14px 16px}.card h3{margin:0 0 4px;font-size:17px}.mut{color:var(--mut);font-size:14px}
+.price{font-weight:700;margin-top:8px}.price small{font-weight:400;color:var(--mut)}
+.cat{padding:20px;text-align:left}.cat b{display:block;margin-bottom:4px}
+.steps{counter-reset:s}.steps .card{padding:20px}.steps .card:before{counter-increment:s;content:counter(s);display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--acc);color:#fff;font-weight:700;margin-bottom:10px}
+.theme{background:none;border:1px solid var(--line);color:var(--ink);border-radius:8px;width:36px;height:36px;font-size:17px;cursor:pointer}
+.krow{display:flex;gap:8px;align-items:center;overflow-x:auto;padding-bottom:10px}.krow>b{flex:none;font-size:14px}.krow span,.chipbar span{flex:none;background:var(--card);border:1px solid var(--line);border-radius:99px;padding:7px 14px;font-size:14px;white-space:nowrap}.krow span{border-color:var(--acc);color:var(--acc)}.chipbar{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px;margin-bottom:12px}.chipbar .on{background:var(--chipon);color:var(--chipont);border-color:var(--chipon)}
+.bar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:20px}.bar input{flex:1;min-width:200px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;font-size:15px}
+.layout{display:block}.side .card{padding:16px}.side li{list-style:none;padding:6px 0;color:var(--mut);font-size:15px}.side ul{margin:0;padding:0}.side li.on{color:var(--ink);font-weight:700}
+.crumbs{font-size:14px;color:var(--mut);margin:20px 0}
+.prod{display:grid;grid-template-columns:1.1fr 1fr;gap:32px;align-items:start}
+.prod h1{font-size:32px;margin:0 0 6px}.spec{width:100%;border-collapse:collapse;margin:12px 0}.spec td{padding:8px 0;border-bottom:1px solid var(--line);font-size:15px}.spec td:first-child{color:var(--mut);width:46%}
+.book{padding:20px}.book .row{display:flex;justify-content:space-between;gap:12px;text-align:right;padding:8px 0;border-bottom:1px solid var(--line);font-size:15px}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin:12px 0;text-align:center;font-size:13px}.cal span{padding:7px 0;border-radius:6px;background:var(--cell)}.cal .x{background:#fde4e4;color:#b33;text-decoration:line-through}.cal .s{background:var(--acc);color:var(--chipont)}.cal .h{background:none;color:var(--mut);font-weight:600}
+.rules{font-size:14px;color:var(--mut);margin:10px 0 16px}.rules li{margin:3px 0}
+footer{background:var(--ink);color:#b8c4d6;padding:36px 0;margin-top:40px;font-size:14px}footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.screen{display:none}.screen.on{display:block}
+
+.who{display:flex;gap:16px;align-items:center;margin-bottom:22px}.av{width:76px;height:76px;aspect-ratio:1;border-radius:50%;flex:none;overflow:hidden}.who h1{margin:0 0 4px}.who p{margin:0;color:#c8d6ea;font-size:15px}
+.newsline{display:block;margin-top:14px;color:#7bb9ff;font-size:14px}.duo{display:grid;gap:12px;grid-template-columns:1fr 1fr}.duocard{background:#ffffff14;border:1px solid #ffffff2e;border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:6px;color:#fff}.duocard b{font-size:18px}.duocard span{font-size:14px;color:#c8d6ea}.duocard i{font-style:normal;color:#7bb9ff;font-weight:600;margin-top:4px}
+.about{display:flex;gap:20px;padding:20px;align-items:center}.av2{width:110px;height:110px;aspect-ratio:1;border-radius:12px;flex:none}.soc{display:flex;gap:8px;flex-wrap:wrap}.soc span{border:1px solid var(--line);border-radius:99px;padding:5px 12px;font-size:13px}
+@media(max-width:560px){.who{flex-direction:column;align-items:flex-start;gap:12px}.who h1{font-size:22px!important}.duo{grid-template-columns:1fr}.about{flex-direction:column;align-items:flex-start}}
+/* Мобильная версия (основная) */
+.burger{display:none;font-size:22px;background:none;border:0;padding:6px}
+.stick{display:none}
+@media(max-width:860px){
+ body{font-size:15px}.wrap{padding:0 14px}
+ .note{font-size:12px;padding:6px 0}.note b{display:block;margin:0}
+ header.site .wrap{height:56px;gap:10px}nav{display:none}.burger{display:block;order:3}
+ .lang{font-size:12px;white-space:nowrap}.logo{font-size:18px}
+ header.site .btn.wa{display:none}.theme{width:34px;height:34px}
+ .hero{padding:28px 0}.hero h1{font-size:24px}.hero p{font-size:15px;margin-bottom:16px}
+ .search{flex-direction:column}.search input,.search .btn{width:100%;text-align:center}
+ .chips span{font-size:12px;padding:4px 10px}
+ section.blk{padding:26px 0}h2{font-size:21px;margin-bottom:14px}
+ .grid{gap:10px}.g4,.g3{grid-template-columns:repeat(2,1fr)}
+ .cat{padding:14px}.cat b{font-size:15px}.mut{font-size:13px}
+ .card .b{padding:10px 12px}.card h3{font-size:15px}
+ .steps .card{padding:14px}
+ .bar{gap:8px}
+ h1{font-size:24px!important}
+ .prod{grid-template-columns:1fr;gap:18px}.prod h1{font-size:24px!important}
+ .prod .g4{grid-template-columns:repeat(4,1fr)!important}
+ .cal span{padding:9px 0}
+ .stick{display:flex;position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);padding:10px 14px;gap:10px;align-items:center;z-index:9}
+ .stick b{font-size:18px;flex:none}.stick .btn{flex:1;text-align:center;padding:12px}.stick .btn.wa{flex:none;padding:12px 14px}
+ #product{padding-bottom:70px}.stick{display:none}#product.on~.stick,body.pp .stick{display:flex}
+ footer .wrap{flex-direction:column}
+}
+@media(max-width:380px){.g4,.g3{grid-template-columns:1fr 1fr}}
+</style></head><body>
+<div class="note"><div class="wrap"><b>Макет для согласования.</b><span class="tabs"><a href="#home">Главная</a><a href="#catalog">Каталог</a><a href="#product">Страница прибора</a></span> Серые блоки: место под фото. Цены и названия условные.</div></div>
+
+<header class="site"><div class="wrap"><a class="logo" href="#home">IVAN<i>COVS</i></a>
+<nav><a href="#catalog">Аренда приборов</a><a href="#home">Полезная информация</a><a href="#home">Обучение</a><a href="#home">Блог</a></nav>
+<span class="sp"></span><span class="lang">LV · <b>RU</b> · EN</span><a class="btn wa" href="#home">WhatsApp</a><button class="theme" id="theme" aria-label="Тема">🌙</button><button class="burger" aria-label="Меню">☰</button></div></header>
+<div class="stick"><b>€12 <small class="mut" style="font-weight:400">/ сутки</small></b><a class="btn" href="#product">Забронировать</a><a class="btn wa" href="#product" aria-label="WhatsApp">WhatsApp</a></div>
+
+<main>
+<div class="screen" id="catalog">
+<div class="wrap"><div class="crumbs">Главная › Аренда</div>
+<h1 style="margin:0 0 16px;font-size:32px">Аренда измерительных приборов в Риге</h1>
+<div class="bar"><input placeholder="Поиск: testo 417, тепловизор, CO₂…"></div>
+<div class="krow"><b>Комплекты:</b><span>Наладка вентиляции</span><span>Проверка воздухообмена</span><span>Поиск утечек тепла</span><span>Качество воздуха в офисе</span><span>Поиск утечек газа</span><span>Шум и вибрация</span><span>Проверка электрики</span></div>
+<div class="chipbar"><span class="on">Все приборы</span><span>Поток воздуха</span><span>Давление</span><span>Температура и влажность</span><span>CO₂</span><span>Газы и дым</span><span>Тепловизоры</span><span>Звук и свет</span></div>
+<div class="layout">
+<div class="grid g3">
+<a class="card" href="#product"><div class="ph">фото</div><div class="b"><h3>Testo 417</h3><div class="mut">Измеритель потока</div><div class="price">€12 <small>/ сутки</small></div></div></a>
+<a class="card" href="#product"><div class="ph">фото</div><div class="b"><h3>Testo 535</h3><div class="mut">Измеритель CO₂</div><div class="price">€15 <small>/ сутки</small></div></div></a>
+<a class="card" href="#product"><div class="ph">фото</div><div class="b"><h3>Testo 440 dP</h3><div class="mut">Дифференциальный манометр</div><div class="price">€25 <small>/ сутки</small></div></div></a>
+<a class="card" href="#product"><div class="ph">фото</div><div class="b"><h3>Тепловизор</h3><div class="mut">Мобильный тепловизор</div><div class="price">€20 <small>/ сутки</small></div></div></a>
+<a class="card" href="#product"><div class="ph">фото</div><div class="b"><h3>Эндоскоп</h3><div class="mut">С гибкой камерой</div><div class="price">€8 <small>/ сутки</small></div></div></a>
+<a class="card" href="#product"><div class="ph">фото</div><div class="b"><h3>PCE 318</h3><div class="mut">Регистратор уровня звука</div><div class="price">€10 <small>/ сутки</small></div></div></a>
+</div></div></div></div>
+
+<div class="screen" id="product">
+<div class="wrap"><div class="crumbs">Главная › Аренда › Поток воздуха › Testo 417</div>
+<div class="prod"><div><div class="ph" style="aspect-ratio:4/3;border-radius:12px;border:1px solid var(--line)">главное фото</div>
+<div class="grid g4" style="margin-top:12px;grid-template-columns:repeat(4,1fr)"><div class="ph" style="border-radius:8px">фото</div><div class="ph" style="border-radius:8px">фото</div><div class="ph" style="border-radius:8px">фото</div><div class="ph" style="border-radius:8px">фото</div></div></div>
+<div><h1>Аренда Testo 417 в Риге</h1><p class="mut" style="margin:0">Крыльчатый анемометр для измерения потока воздуха в вентиляционных каналах.</p>
+
+<div class="card book"><div style="display:flex;justify-content:space-between;align-items:baseline"><b style="font-size:22px">€12 <small class="mut" style="font-weight:400">/ сутки</small></b><span class="mut">€60 / неделю</span></div>
+<div class="cal"><span class="h">Пн</span><span class="h">Вт</span><span class="h">Ср</span><span class="h">Чт</span><span class="h">Пт</span><span class="h">Сб</span><span class="h">Вс</span><span>9</span><span>10</span><span class="s">11</span><span class="s">12</span><span class="x">13</span><span class="h">14</span><span class="h">15</span></div>
+<div class="row"><span style="text-align:left">Выдача / возврат</span><span>9:00–18:00</span></div><div class="row"><span>Залог</span><span>€75 (возвращается после возврата прибора)</span></div>
+<ul class="rules"><li>Нужен документ (паспорт, права или ID)</li><li>Выходные: по договорённости</li><li>Счёт с PVN 21%</li></ul>
+<a class="btn" style="display:block;text-align:center" href="#product">Забронировать и оплатить</a><a class="btn wa" style="display:block;text-align:center;margin-top:8px" href="#product">Спросить в WhatsApp</a></div>
+<h2 style="margin-top:24px">Для чего нужен</h2><p class="mut">Измеряет скорость воздуха в вентиляционных каналах и решётках. Нужен при наладке вентиляции и проверке воздухообмена.</p>
+<h2 style="margin-top:20px">Технические данные</h2><table class="spec"><tr><td>Диапазон измерений</td><td>0,3 … 35 m/s</td></tr><tr><td>Комплектация</td><td>Прибор, чехол, насадка</td></tr><tr><td>Для чего</td><td>Наладка вентиляции</td></tr></table></div></div>
+<section class="blk"><h2>Входит в комплекты</h2><div class="grid g3"><div class="card cat"><b>Наладка вентиляции</b><span class="mut">Testo 417 + 510i + 605i</span></div><div class="card cat"><b>Проверка воздухообмена</b><span class="mut">Testo 417 + 535</span></div><div class="card cat"><b>Проверка квартиры</b><span class="mut">Testo 417 + тепловизор</span></div></div></section></div></div>
+
+<div class="screen on" id="home">
+<section class="hero"><div class="wrap"><div class="who"><div class="ph av">фото</div><div><h1>Регулировка, аудиты и экспертизы вентиляционных систем</h1><p>Mg.sc.ing. Дмитрий Иванцов · 25 лет опыта · обучение и консультации · представитель в Латвии производителя текстильных воздухораспределителей</p></div></div>
+<div class="duo"><a class="duocard" href="#home"><b>Услуги</b><span>Регулировка, аудиты, экспертизы, обучение.</span><i>Написать →</i></a><a class="duocard" href="#catalog"><b>Аренда приборов</b><span>Мои рабочие измерительные приборы: бронь и оплата онлайн.</span><i>Выбрать прибор →</i></a></div>
+<a class="newsline" href="#home">Новое: экспертная техническая поддержка эксплуатации HVAC-систем →</a></div></section>
+<section class="blk"><div class="wrap"><h2>Услуги</h2><div class="grid g4">
+<a class="card cat" href="#home"><b>Регулировка</b></a><a class="card cat" href="#home"><b>Аудиты</b></a><a class="card cat" href="#home"><b>Экспертизы</b></a><a class="card cat" href="#home"><b>Обучение</b></a></div>
+<p class="mut" style="margin:14px 0 0">Также: строительный надзор, проектирование, монтаж.</p></div></section>
+<section class="blk" style="padding-top:0"><div class="wrap"><div class="card about"><div class="ph av2">фото</div><div><h2 style="margin-bottom:8px">Компетенция</h2><p class="mut" style="font-size:15px;margin:0 0 6px">Mg.sc.ing. Дмитрий Иванцов</p><p class="mut" style="font-size:14px;margin:0">Сертификат строительной экспертизы № 6-00205<br>Сертификат строительного надзора № 4-06068<br>Рег. № строительной компании 18743</p></div></div>
+<p style="font-size:17px;margin:18px 0 0"><b>Миссия.</b> <span class="mut">Если вентиляционная система установлена, она должна работать безупречно. Потраченные на монтаж и эксплуатацию ресурсы должны окупаться комфортом.</span></p></div></section>
+<section class="blk"><div class="wrap"><h2>Аренда приборов: категории</h2><div class="grid g4">
+<a class="card cat" href="#catalog"><b>Поток воздуха</b><span class="mut">Анемометры, Testo 417/420</span></a><a class="card cat" href="#catalog"><b>Давление</b><span class="mut">Манометры, перепад давления</span></a><a class="card cat" href="#catalog"><b>Температура и влажность</b><span class="mut">Термометры, логгеры</span></a><a class="card cat" href="#catalog"><b>CO₂ и качество воздуха</b><span class="mut">CO₂, частицы</span></a>
+<a class="card cat" href="#catalog"><b>Газы и дым</b><span class="mut">Детекторы, генераторы</span></a><a class="card cat" href="#catalog"><b>Тепловизоры</b><span class="mut">Тепловизоры, эндоскопы</span></a><a class="card cat" href="#catalog"><b>Толщина, вибрация</b><span class="mut">Ультразвук, виброметры</span></a><a class="card cat" href="#catalog"><b>Звук, свет, электричество</b><span class="mut">Шум, ток</span></a></div></div></section>
+<section class="blk" style="padding-top:0"><div class="wrap"><h2>Популярные</h2><div class="grid g4">
+<a class="card" href="#product"><div class="ph">фото</div><div class="b"><h3>Testo 417</h3><div class="price">€12 <small>/ сутки</small></div></div></a><a class="card" href="#product"><div class="ph">фото</div><div class="b"><h3>Testo 535</h3><div class="price">€15 <small>/ сутки</small></div></div></a><a class="card" href="#product"><div class="ph">фото</div><div class="b"><h3>Тепловизор</h3><div class="price">€20 <small>/ сутки</small></div></div></a><a class="card" href="#product"><div class="ph">фото</div><div class="b"><h3>Эндоскоп</h3><div class="price">€8 <small>/ сутки</small></div></div></a></div></div></section>
+<section class="blk" style="padding-top:0"><div class="wrap"><h2>Обучение, полезное, блог</h2><div class="grid g3"><a class="card cat" href="#home"><b>Обучение</b><span class="mut">Обучение и консультации</span></a><a class="card cat" href="#home"><b>Полезная информация</b></a><a class="card cat" href="#home"><b>Блог</b></a></div></div></section>
+<section class="blk" style="padding-top:0"><div class="wrap"><h2>Отзывы</h2><div class="card cat"><span class="mut">«Работы по балансировке отопления выполнены качественно и в срок, с учётом условий договора и пожеланий заказчика. Представитель исполнителя Дмитрий Иванцов действовал компетентно, был отзывчив и дал ценные предложения.»</span><br><b style="margin-top:8px">Г. Кукутс, руководитель управления обеспечения Центральной администрации Рижского самоуправления</b></div></div></section>
+<section class="blk" style="padding-top:0"><div class="wrap"><h2>Контакты</h2><div class="card cat"><b>SIA «Delumix»</b><span class="mut">Lastādijas iela 32, Рига · +371 25553244 · dmitrijs@ivancovs.com</span><div class="soc" style="margin-top:10px"><span>Facebook</span><span>Instagram</span><span>LinkedIn</span><span>YouTube</span><span>TikTok</span><span>Pinterest</span></div></div></div></section>
+<section class="blk" style="padding-top:0"><div class="wrap"><h2>Как это работает</h2><div class="grid g4 steps"><div class="card"><b>Выберите</b><p class="mut">Прибор или готовый комплект</p></div><div class="card"><b>Забронируйте</b><p class="mut">Даты 9:00–18:00, без двойных броней</p></div><div class="card"><b>Оплатите</b><p class="mut">Карта или банк, залог для приборов от 500 €</p></div><div class="card"><b>Получите</b><p class="mut">С документом, акт и счёт на почту</p></div></div></div></section>
+</div>
+</main>
+<footer><div class="wrap"><div><b style="color:#fff">IVANCOVS</b><br>SIA “Delumix” · Рига</div><div>dmitrijs@ivancovs.com<br>(+371) 2555 32 44</div><div>Политика конфиденциальности</div></div></footer>
+<script>function show(h){if(!document.getElementById(h))h='home';document.querySelectorAll('.screen').forEach(function(s){s.classList.toggle('on',s.id===h)});document.body.classList.toggle('pp',h==='product');scrollTo(0,0)}document.addEventListener('click',function(e){var a=e.target.closest('a[href^="#"]');if(!a)return;e.preventDefault();var h=a.getAttribute('href').slice(1);show(h);try{history.replaceState(null,'','#'+h)}catch(x){}});show((location.hash||'#home').slice(1));
+(function(){var b=document.getElementById('theme'),r=document.documentElement;function set(m){r.setAttribute('data-theme',m);b.textContent=m==='dark'?'☀️':'🌙';try{localStorage.setItem('ivt',m)}catch(x){}}
+var s=null;try{s=localStorage.getItem('ivt')}catch(x){}set(s||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'));
+b.addEventListener('click',function(){set(r.getAttribute('data-theme')==='dark'?'light':'dark')})})();
+</script></body></html>
