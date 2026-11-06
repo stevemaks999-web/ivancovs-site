@@ -1,0 +1,40 @@
+name: Deploy
+
+on:
+  push:
+    branches: [staging]        # automatic -> dev.ivancovs.com
+  schedule:
+    - cron: '*/30 * * * *'   # refresh status dashboard on dev
+  workflow_dispatch:
+    inputs:
+      target:
+        description: Where to deploy
+        type: choice
+        options: [staging, production]
+        default: staging
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-${{ github.event.inputs.target || 'staging' }}
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.target || 'staging' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.target == 'production' && 'main' || 'staging' }}
+      - name: Build status.json
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python3 scripts/build_status.py
+      - name: Deploy via cPanel API
+        env:
+          CPANEL_HOST: ${{ secrets.CPANEL_HOST }}
+          CPANEL_USER: ${{ secrets.CPANEL_USER }}
+          CPANEL_TOKEN: ${{ secrets.CPANEL_TOKEN }}
+        run: python3 deploy/deploy.py "${{ github.event.inputs.target || 'staging' }}"
