@@ -285,7 +285,15 @@
   "category": "temperatura-mitrums",
   "photo": "https://ivancovs.com/wp-content/uploads/2025/07/HTM208.png",
   "source_url": "",
-  "status": "todo"
+  "status": "partial",
+  "purpose_ru": "Регистратор температуры на 8 каналов (термопары J, K, T, E, S, N, B, R и др.). Скорее всего Hantek HTM208B/C.",
+  "specs_ru": [
+   "8 каналов, термопара K: −200…+1370 °C, разрешение 0,1 °C",
+   "Цветной экран 320×240, запись на USB-накопитель"
+  ],
+  "kit_ru": "",
+  "source_note": "Hantek: торговые страницы, паспорта нет",
+  "check_ru": "Точность и частоту записи не нашли; уточнить модель (B или C)"
  },
  {
   "id": 19,
@@ -325,7 +333,15 @@
   "category": "temperatura-mitrums",
   "photo": "https://ivancovs.com/wp-content/uploads/2025/07/TASI-TA612.png",
   "source_url": "",
-  "status": "todo"
+  "status": "partial",
+  "purpose_ru": "Термометр-регистратор для термопар (K, J, T).",
+  "specs_ru": [
+   "Модель TA612C имеет 4 канала и USB; TA612A на самом деле одноканальная",
+   "Память до 5000 записей у TA612C"
+  ],
+  "kit_ru": "",
+  "source_note": "Описания на страницах продавцов (manuals.plus)",
+  "check_ru": "На сайте написано «4-канальный» при названии TA612A: проверить на самом приборе, скорее TA612C"
  },
  {
   "id": 23,
@@ -335,7 +351,15 @@
   "category": "gaisa-plusma",
   "photo": "https://ivancovs.com/wp-content/uploads/2025/07/BT-8806-WM-APP.png",
   "source_url": "",
-  "status": "todo"
+  "status": "partial",
+  "purpose_ru": "Чашечный анемометр с Bluetooth: скорость ветра и воздуха, температура, давление, влажность.",
+  "specs_ru": [
+   "Скорость: 0,3…42 м/с, ±5 %",
+   "Вес около 150 г, компас, подсветка"
+  ],
+  "kit_ru": "",
+  "source_note": "Описания продавцов (BTMETER)",
+  "check_ru": "Данные продавцов расходятся; официального паспорта нет"
  },
  {
   "id": 24,
@@ -365,7 +389,17 @@
   "category": "skana-gaisma-elektriba",
   "photo": "https://ivancovs.com/wp-content/uploads/2025/07/FNIRSI-ERD-10_1.png",
   "source_url": "",
-  "status": "todo"
+  "status": "partial",
+  "purpose_ru": "Детектор электромагнитных полей 4-в-1: электрическое, магнитное, радиочастотное поле и температура.",
+  "specs_ru": [
+   "Электрическое поле: 1…1999 В/м",
+   "Магнитное поле: 0,01…99,99 мкТл",
+   "Радиочастоты: 0,1…1999,9 мкВт/см²",
+   "Цветной экран 2,4\", USB-C, вес около 143 г"
+  ],
+  "kit_ru": "",
+  "source_note": "https://www.fnirsi.com/products/erd-10",
+  "check_ru": "Для оценки, не для сертифицированных замеров"
  },
  {
   "id": 27,
@@ -375,7 +409,15 @@
   "category": "gaisa-kvalitate",
   "photo": "https://ivancovs.com/wp-content/uploads/2025/07/DM502-O3.png",
   "source_url": "",
-  "status": "todo"
+  "status": "partial",
+  "purpose_ru": "Многофункциональный анализатор качества воздуха: PM1.0, PM2.5, PM10, TVOC, температура, влажность, AQI. У варианта DM502-O3 ещё озон (O3).",
+  "specs_ru": [
+   "Экран 2,8\", размеры 155×87×35 мм",
+   "Диапазоны озона у продавцов разные (0–5 ppm или 0–50 ppm)"
+  ],
+  "kit_ru": "",
+  "source_note": "Руководство DM502 (ato.com), страницы продавцов",
+  "check_ru": "На фото сайта вариант DM502-O3, но у продавцов есть и вариант с формальдегидом (HCHO): уточнить"
  },
  {
   "id": 28,
@@ -405,7 +447,16 @@
   "category": "temperatura-mitrums",
   "photo": "https://ivancovs.com/wp-content/uploads/2025/07/HP-5000T.png",
   "source_url": "",
-  "status": "todo"
+  "status": "partial",
+  "purpose_ru": "Бесконтактный (безигольчатый) влагомер для древесины и стройматериалов: шаровой датчик, показывает относительное значение 0–100.",
+  "specs_ru": [
+   "Глубина измерения 20–40 мм",
+   "Пороги RISK 0–50 и WET 51–100 настраиваются",
+   "Заряд через USB-C, автовыключение 30 мин"
+  ],
+  "kit_ru": "",
+  "source_note": "Описания продавцов (HOLDPEAK/SISCO)",
+  "check_ru": "Паспорта нет; шкала относительная, не проценты влажности"
  },
  {
   "id": 31,
@@ -445,7 +496,15 @@
   "category": "skana-gaisma-elektriba",
   "photo": "https://ivancovs.com/wp-content/uploads/2025/07/SK8202.png",
   "source_url": "",
-  "status": "todo"
+  "status": "partial",
+  "purpose_ru": "Люксметр (освещённость).",
+  "specs_ru": [
+   "Размеры 100×55×26 мм, 2 батареи AAA",
+   "SK-8202 отличается от SK-8201 индексом цветопередачи и цветовой температурой"
+  ],
+  "kit_ru": "",
+  "source_note": "Руководство SK-8202 (manuals.plus)",
+  "check_ru": "Числовых диапазонов не получили, они в картинках руководства"
  },
  {
   "id": 35,
@@ -475,7 +534,15 @@
   "category": "skana-gaisma-elektriba",
   "photo": "https://ivancovs.com/wp-content/uploads/2025/07/PM2019a.png",
   "source_url": "",
-  "status": "todo"
+  "status": "partial",
+  "purpose_ru": "Гибкий токовый клещи-мультиметр: измерение переменного тока до 3000 А, частота.",
+  "specs_ru": [
+   "Ток до 3000 А AC, гибкий датчик Ø 75 мм",
+   "6000 отсчётов, CAT III 600 В, вес около 340 г"
+  ],
+  "kit_ru": "",
+  "source_note": "Руководство PM2019A/S (manuals.plus), страницы продавцов",
+  "check_ru": "В описаниях расходятся: True RMS и измерение напряжения; уточнить по руководству"
  },
  {
   "id": 38,
@@ -532,7 +599,17 @@
   "category": "spiediens",
   "photo": "https://ivancovs.com/wp-content/uploads/2026/01/Снимок-экрана-2026-01-27-095632.png",
   "source_url": "",
-  "status": "todo"
+  "status": "partial",
+  "purpose_ru": "Цифровой дифманометр (две трубки) для воздуха и неагрессивных газов: вентиляция, фильтры, давление в каналах.",
+  "specs_ru": [
+   "Диапазон ±500 Па, разрешение 5 Па",
+   "Точность ±1 % от шкалы (по таблице руководства, подтвердить)",
+   "Размеры 160×65×35 мм, около 176 г",
+   "13 единиц измерения"
+  ],
+  "kit_ru": "",
+  "source_note": "Руководство GT5101 (ecotao-store.co.za)",
+  "check_ru": "Таблица в руководстве читается плохо: сверить по прибору"
  },
  {
   "id": 43,
@@ -562,7 +639,16 @@
   "category": "biezums-vibracija",
   "photo": "https://ivancovs.com/wp-content/uploads/2026/02/Ultraskanas-biezuma-meritajs.png",
   "source_url": "",
-  "status": "todo"
+  "status": "partial",
+  "purpose_ru": "Ультразвуковой толщиномер: толщина стальных стенок и труб с одной стороны.",
+  "specs_ru": [
+   "Диапазон 1,2…225 мм (сталь), ±(1 % H + 0,1 мм)",
+   "Скорость звука 1000…9999 м/с",
+   "Рабочая температура 0…40 °C"
+  ],
+  "kit_ru": "",
+  "source_note": "Паспорт Benetech GM100 (wiltronics.com.au)",
+  "check_ru": "Производитель может отличаться: на рынке есть другие GM100 с диапазоном до 300 мм"
  },
  {
   "id": 46,
@@ -572,6 +658,14 @@
   "category": "biezums-vibracija",
   "photo": "https://ivancovs.com/wp-content/uploads/2026/02/Pjezoelektriskais-vibracijas-meritajs.png",
   "source_url": "",
-  "status": "todo"
+  "status": "partial",
+  "purpose_ru": "Виброметр с пьезодатчиком: ускорение, скорость, перемещение вибрации машин.",
+  "specs_ru": [
+   "Ускорение 0,1…400 м/с², скорость 0,01…400 мм/с (по описанию варианта VM6370T)",
+   "Вес около 340 г"
+  ],
+  "kit_ru": "",
+  "source_note": "Страницы продавцов (Landtek)",
+  "check_ru": "Частотный диапазон и точность не подтверждены"
  }
 ]
