@@ -111,3 +111,4 @@ body.pp main{padding-bottom:70px}
 .ivs-tab summary:after{content:"+";float:right;color:var(--mut)}
 .ivs-tab[open] summary:after{content:"−"}
 .ivs-tab-body{padding:0 16px 14px}
+.entry .upb_row_bg,.entry .upb_content_color,.entry .upb_content_video{background-color:transparent!important}
