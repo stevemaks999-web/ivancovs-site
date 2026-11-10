@@ -15,7 +15,10 @@
    "Влажность: 0…100 %RH",
    "Связь со смартфоном (Bluetooth), протоколы на месте"
   ],
-  "kit_ru": "Прибор, колпак 610×610 мм, 5 стяжных штанг, USB-кабель, батареи, тележка, протокол поверки"
+  "kit_ru": "Прибор, колпак 610×610 мм, 5 стяжных штанг, USB-кабель, батареи, тележка, протокол поверки",
+  "datasheet_url": "https://static.testo.com/image/upload/HQ/testo-420-data-sheet.pdf",
+  "datasheet_kind": "official",
+  "datasheet_note": "Даташит производителя"
  },
  {
   "id": 2,
@@ -33,7 +36,10 @@
    "Температура: 0…+50 °C, ±0,5 °C",
    "Приложение для смартфона"
   ],
-  "kit_ru": "Анемометр, сумка, протокол, 3 батареи AA"
+  "kit_ru": "Анемометр, сумка, протокол, 3 батареи AA",
+  "datasheet_url": "https://static.testo.com/image/upload/HQ/testo-417-datasheet-en.pdf",
+  "datasheet_kind": "official",
+  "datasheet_note": "Даташит производителя"
  },
  {
   "id": 3,
@@ -50,7 +56,10 @@
    "Вес 229 г, размеры 229×60×28 мм",
    "Работа до 30 ч (3×AA)"
   ],
-  "kit_ru": "Прибор, сумка, протокол, 3 батареи AA"
+  "kit_ru": "Прибор, сумка, протокол, 3 батареи AA",
+  "datasheet_url": "https://static.testo.com/image/upload/HQ/testo-535-datasheet-en.pdf",
+  "datasheet_kind": "official",
+  "datasheet_note": "Даташит производителя"
  },
  {
   "id": 4,
@@ -68,7 +77,10 @@
    "Термопара K: −200…+1370 °C",
    "Расчёт риска сквозняка по EN ISO 7730"
   ],
-  "kit_ru": "Прибор, соединительный шланг, 3 батареи AA, USB-кабель, протокол"
+  "kit_ru": "Прибор, соединительный шланг, 3 батареи AA, USB-кабель, протокол",
+  "datasheet_url": "https://static.testo.com/image/upload/HQ/testo-440-datasheet-1981-1214.pdf",
+  "datasheet_kind": "official",
+  "datasheet_note": "Даташит производителя"
  },
  {
   "id": 5,
@@ -85,7 +97,10 @@
    "Температура: −20…+60 °C, ±0,5 °C",
    "Вес 117,8 г, батареи работают до 130 ч"
   ],
-  "kit_ru": "Анемометр, защитный колпачок, батареи, протокол"
+  "kit_ru": "Анемометр, защитный колпачок, батареи, протокол",
+  "datasheet_url": "https://static.testo.com/image/upload/HQ/testo-410i-data-sheet.pdf",
+  "datasheet_kind": "official",
+  "datasheet_note": "Даташит производителя"
  },
  {
   "id": 6,
@@ -102,7 +117,10 @@
    "Точность: ±0,05 гПа (0…1 гПа), далее ±(0,2 гПа + 1,5 %)",
    "Вес 92 г, до 150 ч работы"
   ],
-  "kit_ru": "Прибор, набор шлангов Ø4 и 6 мм с адаптером, батареи, протокол"
+  "kit_ru": "Прибор, набор шлангов Ø4 и 6 мм с адаптером, батареи, протокол",
+  "datasheet_url": "https://static.testo.com/image/upload/HQ/testo-510i-data-sheet.pdf",
+  "datasheet_kind": "official",
+  "datasheet_note": "Даташит производителя"
  },
  {
   "id": 7,
@@ -119,7 +137,10 @@
    "Влажность: 0…100 %RH, ±2 %RH (35…65 %RH)",
    "Вес 86,4 г"
   ],
-  "kit_ru": "Термогигрометр, батареи, протокол"
+  "kit_ru": "Термогигрометр, батареи, протокол",
+  "datasheet_url": "https://static.testo.com/image/upload/HQ/testo-605i-datasheet-1981-1864.pdf",
+  "datasheet_kind": "official",
+  "datasheet_note": "Даташит производителя"
  },
  {
   "id": 8,
@@ -136,7 +157,10 @@
    "Температура: −20…+60 °C, ±0,5 °C",
    "Телескоп 400 мм, работа до 15 ч"
   ],
-  "kit_ru": "Анемометр, выдвижной телескоп 400 мм, батареи, протокол"
+  "kit_ru": "Анемометр, выдвижной телескоп 400 мм, батареи, протокол",
+  "datasheet_url": "https://static.testo.com/image/upload/HQ/testo-405i-data-sheet.pdf",
+  "datasheet_kind": "official",
+  "datasheet_note": "Даташит производителя"
  },
  {
   "id": 9,
@@ -153,7 +177,10 @@
    "Точность: ±1,0 °C (−30…+80 °C)",
    "Время отклика t90 — 3 с, защита IP40"
   ],
-  "kit_ru": "Bluetooth-рукоятка, гибкий зонд (800 мм), батареи, протокол"
+  "kit_ru": "Bluetooth-рукоятка, гибкий зонд (800 мм), батареи, протокол",
+  "datasheet_url": "https://static.testo.com/image/upload/HQ/testo-915i-datasheet-en.pdf",
+  "datasheet_kind": "official",
+  "datasheet_note": "Даташит производителя"
  },
  {
   "id": 10,
@@ -170,7 +197,10 @@
    "Разрешение 0,01 бар, перегрузка до 65 бар",
    "Подключение 7/16\" UNF, радиус Bluetooth 100 м"
   ],
-  "kit_ru": "Манометр, батареи, протокол"
+  "kit_ru": "Манометр, батареи, протокол",
+  "datasheet_url": "https://static.testo.com/image/upload/HQ/testo-549i-datasheet-1981-1854.pdf",
+  "datasheet_kind": "official",
+  "datasheet_note": "Даташит производителя"
  },
  {
   "id": 11,
@@ -187,7 +217,10 @@
    "Точность: ±1,3 °C (−20…+85 °C)",
    "Совместим с хладагентами A2L и A3"
   ],
-  "kit_ru": "Термометр, батареи, протокол"
+  "kit_ru": "Термометр, батареи, протокол",
+  "datasheet_url": "https://static.testo.com/image/upload/HQ/testo-115i-datasheet-1981-1844.pdf",
+  "datasheet_kind": "official",
+  "datasheet_note": "Даташит производителя"
  },
  {
   "id": 12,
@@ -204,7 +237,10 @@
    "Разрешение 0,1 гПа",
    "Единицы: гПа, мбар, Па, мм вод. ст., inHg, mmHg, psi, защита IP40"
   ],
-  "kit_ru": "Прибор, защитный колпачок, чехол, батареи, протокол"
+  "kit_ru": "Прибор, защитный колпачок, чехол, батареи, протокол",
+  "datasheet_url": "https://static.testo.com/image/upload/HQ/testo-511-data-sheet.pdf",
+  "datasheet_kind": "official",
+  "datasheet_note": "Даташит производителя"
  },
  {
   "id": 13,
@@ -221,7 +257,10 @@
    "Скорость: 1…80 м/с, ±2,5 % от показания (при 10 м/с)",
    "Расход: до 99 999 м³/ч"
   ],
-  "kit_ru": "См. страницу производителя"
+  "kit_ru": "См. страницу производителя",
+  "datasheet_url": "https://www.fluke.com/en/product/building-infrastructure/indoor-air-quality-testing/fluke-922-kit/ds",
+  "datasheet_kind": "official",
+  "datasheet_note": "Страница даташита Fluke"
  },
  {
   "id": 14,
@@ -238,7 +277,10 @@
    "Частоты: 31,5 Гц…8 кГц, взвешивание A и C",
    "Память до 99 значений, аналоговый выход, вес около 260 г"
   ],
-  "kit_ru": "Шумомер PCE-318, ветрозащита, калибровочный винт, батарея 9 В, разъём 3,5 мм, кейс, инструкция"
+  "kit_ru": "Шумомер PCE-318, ветрозащита, калибровочный винт, батарея 9 В, разъём 3,5 мм, кейс, инструкция",
+  "datasheet_url": "https://res.cloudinary.com/iwh/image/upload/q_auto,g_center/assets/1/26/PCE_PCE-318_Data_Sheet.pdf",
+  "datasheet_kind": "third-party",
+  "datasheet_note": "Даташит PCE-318 на стороннем хостинге; PCE-318 это шумомер, логгер отдельный"
  },
  {
   "id": 15,
@@ -255,7 +297,10 @@
    "Дальность выброса 10 м, прогрев 7 мин",
    "Расход жидкости 100 мл/мин, бак 2,5 л, вес 7,5 кг"
   ],
-  "kit_ru": "См. страницу продавца"
+  "kit_ru": "См. страницу продавца",
+  "datasheet_url": "https://www.steinigke.de/de/data/mpn51701972-eurolite-nsf-150a-dmx-spray-fogger.pdf",
+  "datasheet_kind": "third-party",
+  "datasheet_note": "Спецификация продавца Steinigke; модель снята с производства"
  },
  {
   "id": 16,
@@ -294,7 +339,10 @@
   ],
   "kit_ru": "",
   "source_note": "Hantek: торговые страницы, паспорта нет",
-  "check_ru": "Точность и частоту записи не нашли; уточнить модель (B или C)"
+  "check_ru": "Точность и частоту записи не нашли; уточнить модель (B или C)",
+  "datasheet_url": "https://hantek.com/products/detail/18192",
+  "datasheet_kind": "official",
+  "datasheet_note": "Страница серии HTM200 на сайте Hantek, PDF не проверен"
  },
  {
   "id": 19,
@@ -411,7 +459,10 @@
   ],
   "kit_ru": "",
   "source_note": "https://www.fnirsi.com/products/erd-10",
-  "check_ru": "Для оценки, не для сертифицированных замеров"
+  "check_ru": "Для оценки, не для сертифицированных замеров",
+  "datasheet_url": "https://www.rcscomponents.kiev.ua/datasheets/ERD-10-Manual-32P-V.pdf",
+  "datasheet_kind": "third-party",
+  "datasheet_note": "Руководство V1.2 у дистрибьютора"
  },
  {
   "id": 27,
@@ -572,7 +623,10 @@
    "Температура: 10…40 °C, ±0,1 °C",
    "Время отклика 0,2 с (90 %), до 100 Гц"
   ],
-  "kit_ru": "Датчик с сертификатом калибровки"
+  "kit_ru": "Датчик с сертификатом калибровки",
+  "datasheet_url": "https://swema.com/wp-content/uploads/2022/11/Swema-03_A5_eng-1.pdf",
+  "datasheet_kind": "official",
+  "datasheet_note": "Только руководство, отдельного даташита нет"
  },
  {
   "id": 39,
@@ -601,7 +655,10 @@
   ],
   "kit_ru": "",
   "source_note": "Руководство SISCO HZ-011-C (sisco.com)",
-  "check_ru": "Данные из выдержки руководства, поток и интервал не видны: сверить с полным руководством"
+  "check_ru": "Данные из выдержки руководства, поток и интервал не видны: сверить с полным руководством",
+  "datasheet_url": "https://www.sisco.com/images/uploaded/sisco-portabel-air-particle-counter-user-manual.pdf",
+  "datasheet_kind": "third-party",
+  "datasheet_note": "Руководство SISCO"
  },
  {
   "id": 41,
