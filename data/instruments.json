@@ -583,8 +583,9 @@
     "photo": "https://ivancovs.com/wp-content/uploads/2025/07/CGP22C.png",
     "source_url": "https://www.qingping.co/co2-temp-rh-monitor/overview",
     "status": "todo",
-    "datasheet_kind": "specs",
-    "datasheet_note": "Oficiālā specifikācija (Qingping CGP22C)"
+    "datasheet_kind": "third-party",
+    "datasheet_note": "Руководство CGP22C (EN/CS/SK/HU/DE) из каталога продавца Alza; не с сайта производителя.",
+    "datasheet_url": "https://dwn.alza.cz/manual/153987"
   },
   {
     "id": 33,
