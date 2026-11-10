@@ -616,8 +616,9 @@
     "kit_ru": "",
     "source_note": "Руководство SK-8202 (manuals.plus)",
     "check_ru": "Числовых диапазонов не получили, они в картинках руководства",
-    "datasheet_kind": "specs",
-    "datasheet_note": "Tehniskā specifikācija (SNAKOL SK-8202)"
+    "datasheet_kind": "manual",
+    "datasheet_note": "User's Manual, серия HX8200/8201/8202 (модель 8202 с CRI), со страницы дистрибьютора HCL Asia; PDF — скан одной страницы, без текстового слоя.",
+    "datasheet_url": "https://www.hcl-asia.com.hk/catalog/id_202_en_User%20manual_en.pdf"
   },
   {
     "id": 35,
