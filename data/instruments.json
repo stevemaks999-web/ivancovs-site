@@ -1,0 +1,577 @@
+[
+ {
+  "id": 1,
+  "name": "Testo 420",
+  "type_lv": "Plūsmas mērītājs",
+  "quantity": 1,
+  "category": "gaisa-plusma",
+  "photo": "https://ivancovs.com/wp-content/uploads/2025/07/Снимок-экрана-2025-07-28-161030.png",
+  "source_url": "https://www.testo.com/en/testo-420/p/0563-4200#tab-technicalData",
+  "status": "data",
+  "purpose_ru": "Объёмный расходомер с колпаком 610×610 мм и съёмным прибором: скорость и объёмный расход воздуха на решётках и диффузорах, абсолютное давление, температура и влажность. Без колпака работает в воздуховоде с трубкой Пито.",
+  "specs_ru": [
+   "Диф. давление: −120…+120 Па, ±(2 % + 0,5 Па)",
+   "Температура: −20…+60 °C, ±0,5 °C (0…+60 °C)",
+   "Влажность: 0…100 %RH",
+   "Связь со смартфоном (Bluetooth), протоколы на месте"
+  ],
+  "kit_ru": "Прибор, колпак 610×610 мм, 5 стяжных штанг, USB-кабель, батареи, тележка, протокол поверки"
+ },
+ {
+  "id": 2,
+  "name": "Testo 417",
+  "type_lv": "Plūsmas mērītājs",
+  "quantity": 2,
+  "category": "gaisa-plusma",
+  "photo": "https://ivancovs.com/wp-content/uploads/2025/07/Снимок-экрана-2025-07-28-162251.png",
+  "source_url": "https://www.testo.com/en/testo-417/p/0563-0417#tab-technicalData",
+  "status": "data",
+  "purpose_ru": "Крыльчатый анемометр 100 мм: скорость, объёмный расход и температура воздуха на приточных и вытяжных решётках. Среднее по времени и точкам считает сам.",
+  "specs_ru": [
+   "Скорость: 0,3…20 м/с, ±(0,1 м/с + 1,5 %)",
+   "Расход: до 99 999 м³/ч (с воронками до 440 м³/ч)",
+   "Температура: 0…+50 °C, ±0,5 °C",
+   "Приложение для смартфона"
+  ],
+  "kit_ru": "Анемометр, сумка, протокол, 3 батареи AA"
+ },
+ {
+  "id": 3,
+  "name": "Testo 535",
+  "type_lv": "CO₂ mērītājs",
+  "quantity": 1,
+  "category": "gaisa-kvalitate",
+  "photo": "https://ivancovs.com/wp-content/uploads/2025/07/Снимок-экрана-2025-07-28-162824.png",
+  "source_url": "https://www.testo.com/en/testo-535/p/0563-0535#tab-technicalData",
+  "status": "data",
+  "purpose_ru": "Измеритель углекислого газа в воздухе помещений: проверка вентиляции и качества воздуха. Инфракрасный датчик, усреднение по времени и точкам, звуковая сигнализация.",
+  "specs_ru": [
+   "CO₂: 0…10 000 ppm, ±(100 ppm + 5 %), разрешение 1 ppm",
+   "Вес 229 г, размеры 229×60×28 мм",
+   "Работа до 30 ч (3×AA)"
+  ],
+  "kit_ru": "Прибор, сумка, протокол, 3 батареи AA"
+ },
+ {
+  "id": 4,
+  "name": "Testo 440 dP",
+  "type_lv": "Spiediena starpības mērītājs",
+  "quantity": 1,
+  "category": "spiediens",
+  "photo": "https://ivancovs.com/wp-content/uploads/2025/07/Testo-440-dP.png",
+  "source_url": "https://www.testo.com/en/testo-440-dp/p/0560-4402#tab-technicalData",
+  "status": "data",
+  "purpose_ru": "Универсальный измеритель скорости воздуха и качества воздуха с встроенным датчиком перепада давления. К нему подключаются зонды: крыльчатка, турбулентность, CO₂, освещённость, температура и влажность.",
+  "specs_ru": [
+   "Диф. давление: 0…+150 гПа, ±0,05 гПа (0…1 гПа)",
+   "Температура NTC: −40…+150 °C",
+   "Термопара K: −200…+1370 °C",
+   "Расчёт риска сквозняка по EN ISO 7730"
+  ],
+  "kit_ru": "Прибор, соединительный шланг, 3 батареи AA, USB-кабель, протокол"
+ },
+ {
+  "id": 5,
+  "name": "testo 410i",
+  "type_lv": "anemometrs ar viedtālruņa vadību",
+  "quantity": 1,
+  "category": "gaisa-plusma",
+  "photo": "https://ivancovs.com/wp-content/uploads/2025/07/testo-410i.png",
+  "source_url": "https://www.testo.com/en/testo-410i/p/0560-1410#tab-technicalData",
+  "status": "data",
+  "purpose_ru": "Компактный крыльчатый анемометр (вал 30 мм) для измерения скорости и температуры воздуха. Показания на смартфоне по Bluetooth.",
+  "specs_ru": [
+   "Скорость: 0,4…30 м/с, ±(0,2 м/с + 2 %)",
+   "Температура: −20…+60 °C, ±0,5 °C",
+   "Вес 117,8 г, батареи работают до 130 ч"
+  ],
+  "kit_ru": "Анемометр, защитный колпачок, батареи, протокол"
+ },
+ {
+  "id": 6,
+  "name": "testo 510i",
+  "type_lv": "Difspiediena mērītājs ar viedtālruņa kontroli",
+  "quantity": 4,
+  "category": "spiediens",
+  "photo": "https://ivancovs.com/wp-content/uploads/2025/07/testo-510i.png",
+  "source_url": "https://www.testo.com/en/testo-510-i/p/0560-1510#tab-technicalData",
+  "status": "data",
+  "purpose_ru": "Дифференциальный манометр для проверки перепадов давления на фильтрах, вентиляторах, в каналах. Показания на смартфоне.",
+  "specs_ru": [
+   "Диапазон: −150…+150 гПа",
+   "Точность: ±0,05 гПа (0…1 гПа), далее ±(0,2 гПа + 1,5 %)",
+   "Вес 92 г, до 150 ч работы"
+  ],
+  "kit_ru": "Прибор, набор шлангов Ø4 и 6 мм с адаптером, батареи, протокол"
+ },
+ {
+  "id": 7,
+  "name": "testo 605i",
+  "type_lv": "Termohigrometrs ar viedtālruņa vadību",
+  "quantity": 4,
+  "category": "temperatura-mitrums",
+  "photo": "https://ivancovs.com/wp-content/uploads/2025/07/testo-605i.png",
+  "source_url": "https://www.testo.com/en/testo-605i/p/0560-2605-02#tab-technicalData",
+  "status": "data",
+  "purpose_ru": "Термогигрометр: температура и влажность воздуха. Показания на смартфоне.",
+  "specs_ru": [
+   "Температура: −20…+60 °C, ±0,5 °C (0…+60 °C)",
+   "Влажность: 0…100 %RH, ±2 %RH (35…65 %RH)",
+   "Вес 86,4 г"
+  ],
+  "kit_ru": "Термогигрометр, батареи, протокол"
+ },
+ {
+  "id": 8,
+  "name": "testo 405i",
+  "type_lv": "Termoanemometrs ar viedtālruņa vadību",
+  "quantity": 2,
+  "category": "gaisa-plusma",
+  "photo": "https://ivancovs.com/wp-content/uploads/2025/07/testo-405i.png",
+  "source_url": "https://www.testo.com/en/testo-405i/p/0560-1405#tab-technicalData",
+  "status": "data",
+  "purpose_ru": "Тепловой анемометр с телескопической штангой: малые скорости воздуха и температура, особенно в воздуховодах и труднодоступных местах.",
+  "specs_ru": [
+   "Скорость: 0…30 м/с, ±(0,1 м/с + 5 %) (0…2 м/с)",
+   "Температура: −20…+60 °C, ±0,5 °C",
+   "Телескоп 400 мм, работа до 15 ч"
+  ],
+  "kit_ru": "Анемометр, выдвижной телескоп 400 мм, батареи, протокол"
+ },
+ {
+  "id": 9,
+  "name": "Testo 915i",
+  "type_lv": "Termometrs ar viedtālruņa vadību",
+  "quantity": 1,
+  "category": "temperatura-mitrums",
+  "photo": "https://ivancovs.com/wp-content/uploads/2025/07/testo-915i.png",
+  "source_url": "https://www.testo.com/en/testo-915i/p/0563-4915#tab-technicalData",
+  "status": "data",
+  "purpose_ru": "Термометр с гибким зондом (термопара типа K) для измерения температуры труб и поверхностей. Показания на смартфоне.",
+  "specs_ru": [
+   "Диапазон: −50…+400 °C",
+   "Точность: ±1,0 °C (−30…+80 °C)",
+   "Время отклика t90 — 3 с, защита IP40"
+  ],
+  "kit_ru": "Bluetooth-рукоятка, гибкий зонд (800 мм), батареи, протокол"
+ },
+ {
+  "id": 10,
+  "name": "testo 549i",
+  "type_lv": "Augstspiediena mērītājs ar viedtālruņa vadību",
+  "quantity": 6,
+  "category": "spiediens",
+  "photo": "https://ivancovs.com/wp-content/uploads/2025/07/testo-549i.png",
+  "source_url": "https://www.testo.com/en/testo-549i/p/0560-2549-02#tab-technicalData",
+  "status": "data",
+  "purpose_ru": "Манометр высокого давления для систем охлаждения и кондиционирования. Показания на смартфоне.",
+  "specs_ru": [
+   "Диапазон: −1…+60 бар, ±0,5 % от шкалы",
+   "Разрешение 0,01 бар, перегрузка до 65 бар",
+   "Подключение 7/16\" UNF, радиус Bluetooth 100 м"
+  ],
+  "kit_ru": "Манометр, батареи, протокол"
+ },
+ {
+  "id": 11,
+  "name": "testo 115i",
+  "type_lv": "Skavu termometrs ar viedtālruņa vadību",
+  "quantity": 2,
+  "category": "temperatura-mitrums",
+  "photo": "https://ivancovs.com/wp-content/uploads/2025/07/testo-115i.png",
+  "source_url": "https://www.testo.com/en/testo-115i/p/0560-2115-02#tab-technicalData",
+  "status": "data",
+  "purpose_ru": "Клещевой термометр: температура труб (в том числе холодильных контуров) без разрыва контура. Показания на смартфоне.",
+  "specs_ru": [
+   "Диапазон: −40…+150 °C",
+   "Точность: ±1,3 °C (−20…+85 °C)",
+   "Совместим с хладагентами A2L и A3"
+  ],
+  "kit_ru": "Термометр, батареи, протокол"
+ },
+ {
+  "id": 12,
+  "name": "testo 511",
+  "type_lv": "Absolūtais spiediena mērītājs",
+  "quantity": 1,
+  "category": "spiediens",
+  "photo": "https://ivancovs.com/wp-content/uploads/2025/07/testo-511.png",
+  "source_url": "https://www.testo.com/en/testo-511/p/0560-0511#tab-technicalData",
+  "status": "data",
+  "purpose_ru": "Измеритель абсолютного давления (барометр): атмосферное давление и абсолютное давление в системе.",
+  "specs_ru": [
+   "Диапазон: 300…1200 гПа, ±3 гПа ±1 знак",
+   "Разрешение 0,1 гПа",
+   "Единицы: гПа, мбар, Па, мм вод. ст., inHg, mmHg, psi, защита IP40"
+  ],
+  "kit_ru": "Прибор, защитный колпачок, чехол, батареи, протокол"
+ },
+ {
+  "id": 13,
+  "name": "Fluke 922",
+  "type_lv": "Gaisa plūsmas mērītājs",
+  "quantity": 1,
+  "category": "gaisa-plusma",
+  "photo": "https://ivancovs.com/wp-content/uploads/2025/07/Fluke-922.png",
+  "source_url": "https://www.fluke.com/en/product/building-infrastructure/indoor-air-quality-testing/fluke-922-kit",
+  "status": "data",
+  "purpose_ru": "Микроманометр: перепад и статическое давление, скорость и расход воздуха в воздуховодах. Цветные шланги, память на 99 точек.",
+  "specs_ru": [
+   "Давление: ±4000 Па, ±(1 % + 1 Па)",
+   "Скорость: 1…80 м/с, ±2,5 % от показания (при 10 м/с)",
+   "Расход: до 99 999 м³/ч"
+  ],
+  "kit_ru": "См. страницу производителя"
+ },
+ {
+  "id": 14,
+  "name": "PCE 318",
+  "type_lv": "Skaņas līmeņa datu reģistrators",
+  "quantity": 1,
+  "category": "skana-gaisma-elektriba",
+  "photo": "https://ivancovs.com/wp-content/uploads/2025/07/PCE-318.png",
+  "source_url": "https://www.pce-instruments.com/us/measuring-instruments/test-meters/data-logger-data-logging-instrument-pce-instruments-sound-level-data-logger-pce-318-det_5981718.htm?srsltid=AfmBOoqtPmYbSdKHYquHwfx8ri6zQZ8VWn4FUNitxFlFo_BHXqOHbdUh",
+  "status": "data",
+  "purpose_ru": "Шумомер-регистратор: уровень звука в помещениях и на рабочих местах. Класс 2 по IEC 651.",
+  "specs_ru": [
+   "Диапазон: 26…130 дБ, ±1,5 дБ (94 дБ на 1 кГц)",
+   "Частоты: 31,5 Гц…8 кГц, взвешивание A и C",
+   "Память до 99 значений, аналоговый выход, вес около 260 г"
+  ],
+  "kit_ru": "Шумомер PCE-318, ветрозащита, калибровочный винт, батарея 9 В, разъём 3,5 мм, кейс, инструкция"
+ },
+ {
+  "id": 15,
+  "name": "NSF-150ADMX",
+  "type_lv": "Dūmu ģenerators",
+  "quantity": 1,
+  "category": "gazes-dumi",
+  "photo": "https://ivancovs.com/wp-content/uploads/2025/07/EUROLITE-NSF-150A-DMX.webp",
+  "source_url": "https://www.steinigke.de/de/mpn51701972-eurolite-nsf-150a-dmx-spray-fogger.html",
+  "status": "data",
+  "purpose_ru": "Дым-генератор (аппарат DMX) для визуализации потоков воздуха и проверки плотности: дым хорошо виден в воздуховодах и помещениях.",
+  "specs_ru": [
+   "Мощность 1600 Вт, питание 230 В",
+   "Дальность выброса 10 м, прогрев 7 мин",
+   "Расход жидкости 100 мл/мин, бак 2,5 л, вес 7,5 кг"
+  ],
+  "kit_ru": "См. страницу продавца"
+ },
+ {
+  "id": 16,
+  "name": "HoldPeak",
+  "type_lv": "Stroboskopiskais tachometrs",
+  "quantity": 1,
+  "category": "skana-gaisma-elektriba",
+  "photo": "https://ivancovs.com/wp-content/uploads/2025/07/HoldPeak.png",
+  "source_url": "",
+  "status": "todo"
+ },
+ {
+  "id": 17,
+  "name": "NK-200",
+  "type_lv": "Krāsas biezuma mērītājs",
+  "quantity": 1,
+  "category": "biezums-vibracija",
+  "photo": "https://ivancovs.com/wp-content/uploads/2025/07/NK-200.png",
+  "source_url": "",
+  "status": "todo"
+ },
+ {
+  "id": 18,
+  "name": "HTM208",
+  "type_lv": "8-kanālu temperatūras reģistrators",
+  "quantity": 1,
+  "category": "temperatura-mitrums",
+  "photo": "https://ivancovs.com/wp-content/uploads/2025/07/HTM208.png",
+  "source_url": "",
+  "status": "todo"
+ },
+ {
+  "id": 19,
+  "name": "AL-NK-200",
+  "type_lv": "Analogais spēka mērītājs",
+  "quantity": 1,
+  "category": "skana-gaisma-elektriba",
+  "photo": "https://ivancovs.com/wp-content/uploads/2025/07/AL-NK-200.png",
+  "source_url": "",
+  "status": "todo"
+ },
+ {
+  "id": 20,
+  "name": "Nohawk NP",
+  "type_lv": "Lāzera tālmērs",
+  "quantity": 1,
+  "category": "skana-gaisma-elektriba",
+  "photo": "https://ivancovs.com/wp-content/uploads/2025/07/Nohawk-NP.png",
+  "source_url": "",
+  "status": "todo"
+ },
+ {
+  "id": 21,
+  "name": "Nohawk NK800",
+  "type_lv": "Putekļu daļiņu skaitītājs",
+  "quantity": 1,
+  "category": "gaisa-kvalitate",
+  "photo": "https://ivancovs.com/wp-content/uploads/2025/07/Nohawk-NK800.png",
+  "source_url": "",
+  "status": "todo"
+ },
+ {
+  "id": 22,
+  "name": "TASI TA612A",
+  "type_lv": "4-kanālu еemperatūras reģistrators",
+  "quantity": 1,
+  "category": "temperatura-mitrums",
+  "photo": "https://ivancovs.com/wp-content/uploads/2025/07/TASI-TA612.png",
+  "source_url": "",
+  "status": "todo"
+ },
+ {
+  "id": 23,
+  "name": "BTMETER BT-8806-WM-APP",
+  "type_lv": "Anemometrs ar Bluetooth",
+  "quantity": 1,
+  "category": "gaisa-plusma",
+  "photo": "https://ivancovs.com/wp-content/uploads/2025/07/BT-8806-WM-APP.png",
+  "source_url": "",
+  "status": "todo"
+ },
+ {
+  "id": 24,
+  "name": "DR-S220",
+  "type_lv": "Diferenciālā spiediena mērītājs",
+  "quantity": 1,
+  "category": "spiediens",
+  "photo": "https://ivancovs.com/wp-content/uploads/2025/07/DR-S220.png",
+  "source_url": "",
+  "status": "todo"
+ },
+ {
+  "id": 25,
+  "name": "Hanmatek CO601",
+  "type_lv": "Elektrisko parametru reģistrators",
+  "quantity": 3,
+  "category": "skana-gaisma-elektriba",
+  "photo": "https://ivancovs.com/wp-content/uploads/2025/07/hanmatek-CO601.png",
+  "source_url": "",
+  "status": "todo"
+ },
+ {
+  "id": 26,
+  "name": "FNIRSI ERD-10",
+  "type_lv": "Elektromagnētiskā starojuma detektors",
+  "quantity": 1,
+  "category": "skana-gaisma-elektriba",
+  "photo": "https://ivancovs.com/wp-content/uploads/2025/07/FNIRSI-ERD-10_1.png",
+  "source_url": "",
+  "status": "todo"
+ },
+ {
+  "id": 27,
+  "name": "DM502",
+  "type_lv": "Gaisa kvalitātes mērītājs",
+  "quantity": 1,
+  "category": "gaisa-kvalitate",
+  "photo": "https://ivancovs.com/wp-content/uploads/2025/07/DM502-O3.png",
+  "source_url": "",
+  "status": "todo"
+ },
+ {
+  "id": 28,
+  "name": "ST-B168DL",
+  "type_lv": "Digitālais manometrs",
+  "quantity": 1,
+  "category": "spiediens",
+  "photo": "https://ivancovs.com/wp-content/uploads/2025/07/ST-B168DL.png",
+  "source_url": "",
+  "status": "todo"
+ },
+ {
+  "id": 29,
+  "name": "XIAOMI",
+  "type_lv": "Temperatūras reģistrators",
+  "quantity": 6,
+  "category": "temperatura-mitrums",
+  "photo": "https://ivancovs.com/wp-content/uploads/2025/07/XIAOMI.png",
+  "source_url": "",
+  "status": "todo"
+ },
+ {
+  "id": 30,
+  "name": "HOLDPEAK HP-5000T",
+  "type_lv": "Bezkontakta mitruma mērītājs",
+  "quantity": 1,
+  "category": "temperatura-mitrums",
+  "photo": "https://ivancovs.com/wp-content/uploads/2025/07/HP-5000T.png",
+  "source_url": "",
+  "status": "todo"
+ },
+ {
+  "id": 31,
+  "name": "Freshliance",
+  "type_lv": "Temperatūras un mitruma datu reģistrators",
+  "quantity": 20,
+  "category": "temperatura-mitrums",
+  "photo": "https://ivancovs.com/wp-content/uploads/2025/07/Freshliance.png",
+  "source_url": "",
+  "status": "todo"
+ },
+ {
+  "id": 32,
+  "name": "CGP22C",
+  "type_lv": "CO₂ reģistrators",
+  "quantity": 3,
+  "category": "gaisa-kvalitate",
+  "photo": "https://ivancovs.com/wp-content/uploads/2025/07/CGP22C.png",
+  "source_url": "",
+  "status": "todo"
+ },
+ {
+  "id": 33,
+  "name": "TELESIN",
+  "type_lv": "Dūmu ģenerators",
+  "quantity": 2,
+  "category": "gazes-dumi",
+  "photo": "https://ivancovs.com/wp-content/uploads/2025/07/TELESIN.png",
+  "source_url": "",
+  "status": "todo"
+ },
+ {
+  "id": 34,
+  "name": "SK8202",
+  "type_lv": "Apgaismojuma mērītājs",
+  "quantity": 1,
+  "category": "skana-gaisma-elektriba",
+  "photo": "https://ivancovs.com/wp-content/uploads/2025/07/SK8202.png",
+  "source_url": "",
+  "status": "todo"
+ },
+ {
+  "id": 35,
+  "name": "TOOLTOP",
+  "type_lv": "Mobilā termiskā kamera",
+  "quantity": 1,
+  "category": "termokameras-endoskopi",
+  "photo": "https://ivancovs.com/wp-content/uploads/2025/07/TOOLTOP.png",
+  "source_url": "",
+  "status": "todo"
+ },
+ {
+  "id": 36,
+  "name": "Endoskops",
+  "type_lv": "Endoskops ar locāmo kameru",
+  "quantity": 1,
+  "category": "termokameras-endoskopi",
+  "photo": "https://ivancovs.com/wp-content/uploads/2025/07/endoskops.png",
+  "source_url": "",
+  "status": "todo"
+ },
+ {
+  "id": 37,
+  "name": "PEAKMETER PM2019A",
+  "type_lv": "Skavu ampērmetrs",
+  "quantity": 1,
+  "category": "skana-gaisma-elektriba",
+  "photo": "https://ivancovs.com/wp-content/uploads/2025/07/PM2019a.png",
+  "source_url": "",
+  "status": "todo"
+ },
+ {
+  "id": 38,
+  "name": "Swema 03+",
+  "type_lv": "Termo-anemometer",
+  "quantity": 1,
+  "category": "gaisa-plusma",
+  "photo": "https://ivancovs.com/wp-content/uploads/2025/08/Снимок-экрана-2025-08-01-174718.png",
+  "source_url": "https://swema.com/product/swema-03/",
+  "status": "data",
+  "purpose_ru": "Всенаправленный датчик малых скоростей воздуха (сквозняк) с USB: оценка комфорта по ISO 7726 / ISO 7730.",
+  "specs_ru": [
+   "Скорость: 0,05…3 м/с (15…30 °C), ±0,03 м/с (0,05…1,0 м/с)",
+   "Температура: 10…40 °C, ±0,1 °C",
+   "Время отклика 0,2 с (90 %), до 100 Гц"
+  ],
+  "kit_ru": "Датчик с сертификатом калибровки"
+ },
+ {
+  "id": 39,
+  "name": "Refraktometrs",
+  "type_lv": "antifrīza koncentrācijas mērītājs",
+  "quantity": 1,
+  "category": "skana-gaisma-elektriba",
+  "photo": "https://ivancovs.com/wp-content/uploads/2025/08/refraktometr.jpg",
+  "source_url": "",
+  "status": "todo"
+ },
+ {
+  "id": 40,
+  "name": "Quality Monitor HZ-011-C",
+  "type_lv": "Daliņu skaitītājs",
+  "quantity": 1,
+  "category": "gaisa-kvalitate",
+  "photo": "https://ivancovs.com/wp-content/uploads/2026/01/Снимок-экрана-2026-01-27-094551.png",
+  "source_url": "",
+  "status": "todo"
+ },
+ {
+  "id": 41,
+  "name": "Portable 4 Gas Detector",
+  "type_lv": "Gas Meter O2 CO H2S Analyzer Rechargeable",
+  "quantity": 1,
+  "category": "gazes-dumi",
+  "photo": "https://ivancovs.com/wp-content/uploads/2026/01/Снимок-экрана-2026-01-27-095214.png",
+  "source_url": "",
+  "status": "todo"
+ },
+ {
+  "id": 42,
+  "name": "Manometer GT5101",
+  "type_lv": "Differential pressure meter ±500Pa",
+  "quantity": 1,
+  "category": "spiediens",
+  "photo": "https://ivancovs.com/wp-content/uploads/2026/01/Снимок-экрана-2026-01-27-095632.png",
+  "source_url": "",
+  "status": "todo"
+ },
+ {
+  "id": 43,
+  "name": "TUF-3000L Heat Water Flowmeter",
+  "type_lv": "Portatīvais ultraskaņas plūsmas mērītājs",
+  "quantity": 1,
+  "category": "biezums-vibracija",
+  "photo": "https://ivancovs.com/wp-content/uploads/2026/02/Handheld-Ultrasonic-Flow-Meter-1.png",
+  "source_url": "",
+  "status": "todo"
+ },
+ {
+  "id": 44,
+  "name": "Ultrasonic Transducer",
+  "type_lv": "Portatīvais ultraskaņas siltuma skaitītājs",
+  "quantity": 1,
+  "category": "biezums-vibracija",
+  "photo": "https://ivancovs.com/wp-content/uploads/2026/02/Ultraskanas-plusmas-skaititajs.png",
+  "source_url": "",
+  "status": "todo"
+ },
+ {
+  "id": 45,
+  "name": "GM100 Thickness gauge ultrasonic",
+  "type_lv": "Ultraskaņas biezuma mērītājs",
+  "quantity": 1,
+  "category": "biezums-vibracija",
+  "photo": "https://ivancovs.com/wp-content/uploads/2026/02/Ultraskanas-biezuma-meritajs.png",
+  "source_url": "",
+  "status": "todo"
+ },
+ {
+  "id": 46,
+  "name": "VM6370 Vibrometer",
+  "type_lv": "Pjezoelektriskais vibrācijas mērītājs",
+  "quantity": 1,
+  "category": "biezums-vibracija",
+  "photo": "https://ivancovs.com/wp-content/uploads/2026/02/Pjezoelektriskais-vibracijas-meritajs.png",
+  "source_url": "",
+  "status": "todo"
+ }
+]
