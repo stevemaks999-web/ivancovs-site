@@ -265,7 +265,8 @@
   "category": "skana-gaisma-elektriba",
   "photo": "https://ivancovs.com/wp-content/uploads/2025/07/HoldPeak.png",
   "source_url": "",
-  "status": "todo"
+  "status": "todo",
+  "check_ru": "Паспорта HoldPeak не нашли"
  },
  {
   "id": 17,
@@ -313,7 +314,16 @@
   "category": "skana-gaisma-elektriba",
   "photo": "https://ivancovs.com/wp-content/uploads/2025/07/Nohawk-NP.png",
   "source_url": "",
-  "status": "todo"
+  "status": "partial",
+  "purpose_ru": "Лазерный дальномер. По описанию продавца Nohawk NP это спортивный дальномер (гольф), а не строительный.",
+  "specs_ru": [
+   "Дальность до 600 м, погрешность ±0,5 м",
+   "Увеличение 6×, лазер 905 нм, питание от USB-аккумулятора",
+   "Вес 147 г, размеры 109×40×70 мм"
+  ],
+  "kit_ru": "",
+  "source_note": "Страница продавца (heatlanddiscgolf.com), паспорта нет",
+  "check_ru": "Проверить, тот ли это прибор: для замеров комнат нужен другой тип дальномера"
  },
  {
   "id": 21,
@@ -323,7 +333,8 @@
   "category": "gaisa-kvalitate",
   "photo": "https://ivancovs.com/wp-content/uploads/2025/07/Nohawk-NK800.png",
   "source_url": "",
-  "status": "todo"
+  "status": "todo",
+  "check_ru": "Nohawk NK800 в поиске не найден"
  },
  {
   "id": 22,
@@ -379,7 +390,8 @@
   "category": "skana-gaisma-elektriba",
   "photo": "https://ivancovs.com/wp-content/uploads/2025/07/hanmatek-CO601.png",
   "source_url": "",
-  "status": "todo"
+  "status": "todo",
+  "check_ru": "Hanmatek CO601 в поиске не найден (есть только Hanmatek MT255 и AEMC CL601)"
  },
  {
   "id": 26,
@@ -466,7 +478,8 @@
   "category": "temperatura-mitrums",
   "photo": "https://ivancovs.com/wp-content/uploads/2025/07/Freshliance.png",
   "source_url": "",
-  "status": "todo"
+  "status": "todo",
+  "check_ru": "Найден только листинг TagPlus-TH без чисел; нужна точная модель"
  },
  {
   "id": 32,
@@ -579,7 +592,16 @@
   "category": "gaisa-kvalitate",
   "photo": "https://ivancovs.com/wp-content/uploads/2026/01/Снимок-экрана-2026-01-27-094551.png",
   "source_url": "",
-  "status": "todo"
+  "status": "partial",
+  "purpose_ru": "Портативный счётчик частиц в воздухе (лазерное рассеяние): масса PM2.5 и PM10 и число частиц по шести размерам.",
+  "specs_ru": [
+   "Размеры частиц: 0,3; 0,5; 1,0; 2,5; 5,0; 10 мкм",
+   "PM2.5 и PM10: 0…1000 мкг/м³, разрешение 1 мкг/м³",
+   "Точность ±10 мкг/м³ до 100 и ±10 % от 100 до 1000"
+  ],
+  "kit_ru": "",
+  "source_note": "Руководство SISCO HZ-011-C (sisco.com)",
+  "check_ru": "Данные из выдержки руководства, поток и интервал не видны: сверить с полным руководством"
  },
  {
   "id": 41,
@@ -589,7 +611,8 @@
   "category": "gazes-dumi",
   "photo": "https://ivancovs.com/wp-content/uploads/2026/01/Снимок-экрана-2026-01-27-095214.png",
   "source_url": "",
-  "status": "todo"
+  "status": "todo",
+  "check_ru": "Под названием подходят разные 4-газовые детекторы (O2, CO, H2S, горючие газы); диапазоны у продавцов расходятся, нужна точная модель"
  },
  {
   "id": 42,
@@ -619,7 +642,8 @@
   "category": "biezums-vibracija",
   "photo": "https://ivancovs.com/wp-content/uploads/2026/02/Handheld-Ultrasonic-Flow-Meter-1.png",
   "source_url": "",
-  "status": "todo"
+  "status": "todo",
+  "check_ru": "Для TUF-3000L нет паспорта; у серии TUF точность около ±1 %, трубы от DN15, нужна сверка"
  },
  {
   "id": 44,
