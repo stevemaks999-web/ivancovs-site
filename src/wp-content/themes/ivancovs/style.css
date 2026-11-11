@@ -1,0 +1,114 @@
+/*
+Theme Name: Ivancovs
+Description: Тема сайта Ivancovs: аренда приборов и личный бренд Дмитрия Иванцова. Сначала телефон, светлая и тёмная тема.
+Version: 0.1.0
+Text Domain: ivancovs
+Requires PHP: 8.2
+*/
+
+:root{--ink:#0f1b2d;--mut:#5b6678;--bg:#f5f7fa;--card:#fff;--line:#e2e7ee;--acc:#0b6bcb;--acc2:#0a4f96;--ok:#1a8f4c;--ph1:#e9eef5;--ph2:#f2f5f9;--cell:#eef2f7;--chipon:#0f1b2d;--chipont:#fff}
+[data-theme=dark]{--ink:#e8eef7;--mut:#9aa7ba;--bg:#0b121d;--card:#131d2c;--line:#243247;--acc:#4da3ff;--acc2:#7bb9ff;--ok:#2fb36b;--ph1:#1a2638;--ph2:#1f2c42;--cell:#1b2638;--chipon:#4da3ff;--chipont:#08111f}
+[data-theme=dark] .btn{color:#08111f}[data-theme=dark] .btn.ghost{color:var(--acc);background:transparent}[data-theme=dark] .btn.wa{color:#fff}[data-theme=dark] .note{background:#2a2412;border-color:#4a3f1a;color:#e8d9a0}[data-theme=dark] .cal .x{background:#3a1d22;color:#ff9aa5}[data-theme=dark] .search input,[data-theme=dark] .bar input{background:var(--card);color:var(--ink);border:1px solid var(--line)}[data-theme=dark] .hero .search input{border:0}
+*{box-sizing:border-box}body{margin:0;font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--ink);background:var(--bg)}
+a{color:inherit;text-decoration:none}.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+.note{background:#fff8e1;border-bottom:1px solid #f0dfa0;font-size:14px;padding:8px 0}
+.note b{margin-right:8px}.tabs a{margin-right:14px;color:var(--acc);text-decoration:underline}
+header.site{background:var(--card);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+header.site .wrap{display:flex;align-items:center;gap:20px;height:64px}
+.logo{font-weight:800;letter-spacing:.5px;font-size:20px}.logo i{color:var(--acc);font-style:normal}
+nav{display:flex;gap:18px;margin-left:12px;color:var(--mut);font-size:15px}
+.sp{flex:1}.lang{font-size:14px;color:var(--mut)}.lang b{color:var(--ink)}
+.btn{display:inline-block;background:var(--acc);color:#fff;padding:11px 20px;border-radius:8px;font-weight:600;border:0;cursor:pointer}
+.btn:hover{background:var(--acc2)}.btn.ghost{background:#fff;color:var(--acc);border:1px solid var(--acc)}
+.btn.wa{background:var(--ok)}
+.hero{background:linear-gradient(135deg,#0f1b2d,#17406e);color:#fff;padding:56px 0}
+.hero h1{font-size:40px;line-height:1.15;margin:0 0 12px}.hero p{color:#c8d6ea;max-width:560px;margin:0 0 24px}
+.search{display:flex;gap:8px;max-width:560px}.search input{flex:1;padding:13px 14px;border-radius:8px;border:0;font-size:16px}
+.chips{margin-top:14px;display:flex;flex-wrap:wrap;gap:8px}.chips span{background:#ffffff1f;padding:5px 12px;border-radius:99px;font-size:14px}
+section.blk{padding:44px 0}h2{font-size:26px;margin:0 0 20px}
+.grid{display:grid;gap:16px}.g4{grid-template-columns:repeat(4,1fr)}.g3{grid-template-columns:repeat(3,1fr)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.ph{aspect-ratio:4/3;background:repeating-linear-gradient(45deg,var(--ph1),var(--ph1) 10px,var(--ph2) 10px,var(--ph2) 20px);display:grid;place-items:center;color:#8a95a8;font-size:13px}
+.card .b{padding:14px 16px}.card h3{margin:0 0 4px;font-size:17px}.mut{color:var(--mut);font-size:14px}
+.price{font-weight:700;margin-top:8px}.price small{font-weight:400;color:var(--mut)}
+.cat{padding:20px;text-align:left}.cat b{display:block;margin-bottom:4px}
+.steps{counter-reset:s}.steps .card{padding:20px}.steps .card:before{counter-increment:s;content:counter(s);display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--acc);color:#fff;font-weight:700;margin-bottom:10px}
+.theme{background:none;border:1px solid var(--line);color:var(--ink);border-radius:8px;width:36px;height:36px;font-size:17px;cursor:pointer}
+.krow{display:flex;gap:8px;align-items:center;overflow-x:auto;padding-bottom:10px}.krow>b{flex:none;font-size:14px}.krow span,.chipbar span{flex:none;background:var(--card);border:1px solid var(--line);border-radius:99px;padding:7px 14px;font-size:14px;white-space:nowrap}.krow span{border-color:var(--acc);color:var(--acc)}.chipbar{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px;margin-bottom:12px}.chipbar .on{background:var(--chipon);color:var(--chipont);border-color:var(--chipon)}
+.bar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:20px}.bar input{flex:1;min-width:200px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;font-size:15px}
+.layout{display:block}.side .card{padding:16px}.side li{list-style:none;padding:6px 0;color:var(--mut);font-size:15px}.side ul{margin:0;padding:0}.side li.on{color:var(--ink);font-weight:700}
+.crumbs{font-size:14px;color:var(--mut);margin:20px 0}
+.prod{display:grid;grid-template-columns:1.1fr 1fr;gap:32px;align-items:start}
+.prod h1{font-size:32px;margin:0 0 6px}.spec{width:100%;border-collapse:collapse;margin:12px 0}.spec td{padding:8px 0;border-bottom:1px solid var(--line);font-size:15px}.spec td:first-child{color:var(--mut);width:46%}
+.book{padding:20px}.book .row{display:flex;justify-content:space-between;gap:12px;text-align:right;padding:8px 0;border-bottom:1px solid var(--line);font-size:15px}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin:12px 0;text-align:center;font-size:13px}.cal span{padding:7px 0;border-radius:6px;background:var(--cell)}.cal .x{background:#fde4e4;color:#b33;text-decoration:line-through}.cal .s{background:var(--acc);color:var(--chipont)}.cal .h{background:none;color:var(--mut);font-weight:600}
+.rules{font-size:14px;color:var(--mut);margin:10px 0 16px}.rules li{margin:3px 0}
+footer{background:var(--ink);color:#b8c4d6;padding:36px 0;margin-top:40px;font-size:14px}footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+
+
+.who{display:flex;gap:16px;align-items:center;margin-bottom:22px}.av{width:76px;height:76px;aspect-ratio:1;border-radius:50%;flex:none;overflow:hidden}.who h1{margin:0 0 4px}.who p{margin:0;color:#c8d6ea;font-size:15px}
+.newsline{display:block;margin-top:14px;color:#7bb9ff;font-size:14px}.duo{display:grid;gap:12px;grid-template-columns:1fr 1fr}.duocard{background:#ffffff14;border:1px solid #ffffff2e;border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:6px;color:#fff}.duocard b{font-size:18px}.duocard span{font-size:14px;color:#c8d6ea}.duocard i{font-style:normal;color:#7bb9ff;font-weight:600;margin-top:4px}
+.about{display:flex;gap:20px;padding:20px;align-items:center}.av2{width:110px;height:110px;aspect-ratio:1;border-radius:12px;flex:none}.soc{display:flex;gap:8px;flex-wrap:wrap}.soc span{border:1px solid var(--line);border-radius:99px;padding:5px 12px;font-size:13px}
+@media(max-width:560px){.who{flex-direction:column;align-items:flex-start;gap:12px}.who h1{font-size:22px!important}.duo{grid-template-columns:1fr}.about{flex-direction:column;align-items:flex-start}}
+/* Мобильная версия (основная) */
+.burger{display:none;font-size:22px;background:none;border:0;padding:6px}
+.stick{display:none}
+@media(max-width:860px){
+ body{font-size:15px}.wrap{padding:0 14px}
+ .note{font-size:12px;padding:6px 0}.note b{display:block;margin:0}
+ header.site .wrap{height:56px;gap:10px}nav{display:none}.burger{display:block;order:3}
+ .lang{font-size:12px;white-space:nowrap}.logo{font-size:18px}
+ header.site .btn.wa{display:none}.theme{width:34px;height:34px}
+ .hero{padding:28px 0}.hero h1{font-size:24px}.hero p{font-size:15px;margin-bottom:16px}
+ .search{flex-direction:column}.search input,.search .btn{width:100%;text-align:center}
+ .chips span{font-size:12px;padding:4px 10px}
+ section.blk{padding:26px 0}h2{font-size:21px;margin-bottom:14px}
+ .grid{gap:10px}.g4,.g3{grid-template-columns:repeat(2,1fr)}
+ .cat{padding:14px}.cat b{font-size:15px}.mut{font-size:13px}
+ .card .b{padding:10px 12px}.card h3{font-size:15px}
+ .steps .card{padding:14px}
+ .bar{gap:8px}
+ h1{font-size:24px!important}
+ .prod{grid-template-columns:1fr;gap:18px}.prod h1{font-size:24px!important}
+ .prod .g4{grid-template-columns:repeat(4,1fr)!important}
+ .cal span{padding:9px 0}
+ .stick{display:flex;position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);padding:10px 14px;gap:10px;align-items:center;z-index:9}
+ .stick b{font-size:18px;flex:none}.stick .btn{flex:1;text-align:center;padding:12px}.stick .btn.wa{flex:none;padding:12px 14px}
+ #product{padding-bottom:70px}.stick{display:none}#product.on~.stick,body.pp .stick{display:flex}
+ footer .wrap{flex-direction:column}
+}
+@media(max-width:380px){.g4,.g3{grid-template-columns:1fr 1fr}}
+
+/* Тема: бургер-меню и WooCommerce */
+body.menu-open nav{display:flex;position:absolute;top:56px;left:0;right:0;flex-direction:column;background:var(--card);border-bottom:1px solid var(--line);padding:8px 14px;gap:0}
+body.menu-open nav a{padding:12px 0;border-bottom:1px solid var(--line)}
+header.site{position:sticky}
+.screen{display:block}
+.ph img,.gal img{width:100%;height:100%;object-fit:cover;display:block}
+.ph{overflow:hidden}
+.btn.block{display:block;text-align:center}
+.entry{padding-top:24px;padding-bottom:24px;overflow-x:hidden}.entry h1{font-size:28px}.entry p{margin:0 0 14px}
+.price-line{font-weight:700;font-size:22px}.price-line small{font-weight:400;color:var(--mut)}
+.krow a,.chipbar a{flex:none;background:var(--card);border:1px solid var(--line);border-radius:99px;padding:7px 14px;font-size:14px;white-space:nowrap}
+.krow a{border-color:var(--acc);color:var(--acc)}
+.chipbar a.on{background:var(--chipon);color:var(--chipont);border-color:var(--chipon)}
+.pager{display:flex;gap:8px;justify-content:center;margin:20px 0}.pager a,.pager span{padding:8px 14px;border:1px solid var(--line);border-radius:8px;background:var(--card)}
+.sr{position:absolute;left:-9999px}
+.noprint{}
+body.pp main{padding-bottom:70px}
+
+/* Старые страницы на WPBakery: убираем выход за края экрана */
+.entry .vc_row{margin-left:0!important;margin-right:0!important}
+.entry .vc_column_container>.vc_column-inner{padding-left:0!important;padding-right:0!important}
+.entry img{max-width:100%;height:auto}
+.entry a{color:var(--acc);text-decoration:underline}
+.entry h1,.entry h2,.entry h3{color:var(--ink)}
+.entry .vc_row,.entry .wpb_column,.entry .wpb_wrapper,.entry .vc_column-inner,.entry .wpb_text_column{background:transparent!important;color:inherit}
+.ivs-tabs{margin:16px 0}
+.ivs-tab{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:0 0 10px}
+.ivs-tab summary{cursor:pointer;padding:14px 16px;font-weight:700;list-style:none}
+.ivs-tab summary::-webkit-details-marker{display:none}
+.ivs-tab summary:after{content:"+";float:right;color:var(--mut)}
+.ivs-tab[open] summary:after{content:"−"}
+.ivs-tab-body{padding:0 16px 14px}
+.entry .upb_row_bg,.entry .upb_content_color,.entry .upb_content_video{background-color:transparent!important}
