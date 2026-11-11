@@ -524,8 +524,9 @@
     "photo": "https://ivancovs.com/wp-content/uploads/2025/07/ST-B168DL.png",
     "source_url": "https://www.cnzongheng.com/manifold-gauge32/22.html",
     "status": "todo",
-    "datasheet_kind": "specs",
-    "datasheet_note": "Ražotāja specifikācija (Super Stars ST-B168DL)"
+    "datasheet_kind": "manual",
+    "datasheet_note": "Instruction ST-B168D/ST-B268D (англ.), PDF прислал производитель (Jinhua Weike / Super Stars) по запросу; файл лежит в папке прибора.",
+    "datasheet_url": ""
   },
   {
     "id": 29,
@@ -571,8 +572,9 @@
     "source_url": "https://www.freshliance.com/products/bluetag-th20-bluetooth-temperature-and-humidity-data-logger.html",
     "status": "todo",
     "check_ru": "Найден только листинг TagPlus-TH без чисел; нужна точная модель",
-    "datasheet_kind": "specs",
-    "datasheet_note": "Ražotāja specifikācija (Freshliance BlueTag TH20)"
+    "datasheet_kind": "official",
+    "datasheet_note": "Онлайн-инструкция BlueTag TH20 на сайте Freshliance (электронная книга, не PDF); ссылка из QR на буклете, пришедшем от производителя.",
+    "datasheet_url": "https://oss.freshliance.com/ds/bluetag/th20-en.html"
   },
   {
     "id": 32,
