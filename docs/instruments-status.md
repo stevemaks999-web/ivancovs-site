@@ -1,10 +1,10 @@
 # Данные о приборах (Фаза 12)
 
-Состояние: полные данные 17, частичные 13, не нашли 16 (всего 46).
+Состояние: полные данные 17, частичные 29 (всего 46). Не нашли: 0. Шильдиков от Дмитрия не будет.
 
 - **Полные**: данные со страницы производителя.
 - **Частичные**: данные из описаний продавцов и сторонних руководств, паспорта нет; в колонке «Проверить» что уточнить.
-- **Не нашли**: по названию в поиске ничего подходящего; нужны фото шильдика, руководство или ссылка.
+- **Частичные из досье**: часть данных из папки `instruments/` и описаний продавцов, сверены поиском выборочно.
 
 Файл с данными: `data/instruments.json`. Числа сверять с паспортом прибора.
 
@@ -25,34 +25,34 @@
 | 13 | Fluke 922 | Gaisa plūsmas mērītājs | 1 | полные |  |
 | 14 | PCE 318 | Skaņas līmeņa datu reģistrators | 1 | полные |  |
 | 15 | NSF-150ADMX | Dūmu ģenerators | 1 | полные |  |
-| 16 | HoldPeak | Stroboskopiskais tachometrs | 1 | не нашли | Паспорта HoldPeak не нашли |
-| 17 | NK-200 | Krāsas biezuma mērītājs | 1 | не нашли |  |
-| 18 | HTM208 | 8-kanālu temperatūras reģistrators | 1 | частичные | Точность и частоту записи не нашли; уточнить модель (B или C) |
-| 19 | AL-NK-200 | Analogais spēka mērītājs | 1 | не нашли |  |
-| 20 | Nohawk NP | Lāzera tālmērs | 1 | частичные | Проверить, тот ли это прибор: для замеров комнат нужен другой тип дальномера |
-| 21 | Nohawk NK800 | Putekļu daļiņu skaitītājs | 1 | не нашли | Nohawk NK800 в поиске не найден |
-| 22 | TASI TA612A | 4-kanālu еemperatūras reģistrators | 1 | частичные | На сайте написано «4-канальный» при названии TA612A: проверить на самом приборе, скорее TA612C |
-| 23 | BTMETER BT-8806-WM-APP | Anemometrs ar Bluetooth | 1 | частичные | Данные продавцов расходятся; официального паспорта нет |
-| 24 | DR-S220 | Diferenciālā spiediena mērītājs | 1 | не нашли |  |
-| 25 | Hanmatek CO601 | Elektrisko parametru reģistrators | 3 | не нашли | Hanmatek CO601 в поиске не найден (есть только Hanmatek MT255 и AEMC CL601) |
+| 16 | HoldPeak | Stroboskopiskais tachometrs | 1 | частичные | Данные из досье и описаний продавцов одной и той же модели под другими брендами; паспорта HoldPeak нет |
+| 17 | NK-200 | Krāsas biezuma mērītājs | 1 | полные |  |
+| 18 | HTM208 | 8-kanālu temperatūras reģistrators | 1 | частичные | Точность и частоту записи уточнить по руководству; уточнить модель (B или C) |
+| 19 | AL-NK-200 | Analogais spēka mērītājs | 1 | частичные | Описания продавцов расходятся по цене деления (0,1 Н или 1 Н); сверить по прибору |
+| 20 | Nohawk NP | Lāzera tālmērs | 1 | частичные | Проверить, подходит ли для замеров внутри комнат: это дальномер для больших дистанций |
+| 21 | Nohawk NK800 | Putekļu daļiņu skaitītājs | 1 | частичные | Данные взяты по близкому прибору SISCO MKS-800, у Nohawk NK800 паспорта не нашли; сверить |
+| 22 | TASI TA612A | 4-kanālu еemperatūras reģistrators | 1 | частичные | Название TA612A, по характеристикам TA612C: проверить на приборе |
+| 23 | BTMETER BT-8806-WM-APP | Anemometrs ar Bluetooth | 1 | частичные | Данные продавцов расходятся, официального паспорта нет |
+| 24 | DR-S220 | Diferenciālā spiediena mērītājs | 1 | частичные | Диапазон и питание сверить с наклейкой на приборе (модели MD-S220 и MD-S2201 отличаются) |
+| 25 | Hanmatek CO601 | Elektrisko parametru reģistrators | 3 | частичные | Напряжение у производителя указано 600 В или 1000 В в разных источниках: сверить по руководству |
 | 26 | FNIRSI ERD-10 | Elektromagnētiskā starojuma detektors | 1 | частичные | Для оценки, не для сертифицированных замеров |
-| 27 | DM502 | Gaisa kvalitātes mērītājs | 1 | частичные | На фото сайта вариант DM502-O3, но у продавцов есть и вариант с формальдегидом (HCHO): уточнить |
-| 28 | ST-B168DL | Digitālais manometrs | 1 | не нашли |  |
-| 29 | XIAOMI | Temperatūras reģistrators | 6 | не нашли |  |
+| 27 | DM502 | Gaisa kvalitātes mērītājs | 1 | частичные | Уточнить вариант: бывает с формальдегидом (HCHO) |
+| 28 | ST-B168DL | Digitālais manometrs | 1 | частичные | Данные из досье, сверить по руководству |
+| 29 | XIAOMI | Temperatūras reģistrators | 6 | частичные | Данные из досье |
 | 30 | HOLDPEAK HP-5000T | Bezkontakta mitruma mērītājs | 1 | частичные | Паспорта нет; шкала относительная, не проценты влажности |
-| 31 | Freshliance | Temperatūras un mitruma datu reģistrators | 20 | не нашли | Найден только листинг TagPlus-TH без чисел; нужна точная модель |
-| 32 | CGP22C | CO₂ reģistrators | 3 | не нашли |  |
-| 33 | TELESIN | Dūmu ģenerators | 2 | не нашли |  |
-| 34 | SK8202 | Apgaismojuma mērītājs | 1 | частичные | Числовых диапазонов не получили, они в картинках руководства |
-| 35 | TOOLTOP | Mobilā termiskā kamera | 1 | не нашли |  |
-| 36 | Endoskops | Endoskops ar locāmo kameru | 1 | не нашли |  |
+| 31 | Freshliance | Temperatūras un mitruma datu reģistrators | 20 | частичные | Диапазон влажности уточнить по руководству; стандарты EN12830, CE |
+| 32 | CGP22C | CO₂ reģistrators | 3 | частичные | Данные из досье |
+| 33 | TELESIN | Dūmu ģenerators | 2 | частичные | Время работы от батареи расходится в источниках (от 5 до 28 минут): проверить |
+| 34 | SK8202 | Apgaismojuma mērītājs | 1 | частичные | Числа из досье, сверить по руководству |
+| 35 | TOOLTOP | Mobilā termiskā kamera | 1 | частичные | Нужно уточнить модель: T3 или T7 |
+| 36 | Endoskops | Endoskops ar locāmo kameru | 1 | частичные | Модель и длину зонда сверить |
 | 37 | PEAKMETER PM2019A | Skavu ampērmetrs | 1 | частичные | В описаниях расходятся: True RMS и измерение напряжения; уточнить по руководству |
 | 38 | Swema 03+ | Termo-anemometer | 1 | полные |  |
-| 39 | Refraktometrs | antifrīza koncentrācijas mērītājs | 1 | не нашли |  |
-| 40 | Quality Monitor HZ-011-C | Daliņu skaitītājs | 1 | частичные | Данные из выдержки руководства, поток и интервал не видны: сверить с полным руководством |
-| 41 | Portable 4 Gas Detector | Gas Meter O2 CO H2S Analyzer Rechargeable | 1 | не нашли | Под названием подходят разные 4-газовые детекторы (O2, CO, H2S, горючие газы); диапазоны у продавцов расходятся, нужна точная модель |
+| 39 | Refraktometrs | antifrīza koncentrācijas mērītājs | 1 | частичные | Данные из досье |
+| 40 | Quality Monitor HZ-011-C | Daliņu skaitītājs | 1 | частичные | Сверить поток и интервал с полным руководством |
+| 41 | Portable 4 Gas Detector | Gas Meter O2 CO H2S Analyzer Rechargeable | 1 | частичные | Модель BH-4S, диапазоны сверить по паспорту |
 | 42 | Manometer GT5101 | Differential pressure meter ±500Pa | 1 | частичные | Таблица в руководстве читается плохо: сверить по прибору |
-| 43 | TUF-3000L Heat Water Flowmeter | Portatīvais ultraskaņas plūsmas mērītājs | 1 | не нашли | Для TUF-3000L нет паспорта; у серии TUF точность около ±1 %, трубы от DN15, нужна сверка |
-| 44 | Ultrasonic Transducer | Portatīvais ultraskaņas siltuma skaitītājs | 1 | не нашли |  |
-| 45 | GM100 Thickness gauge ultrasonic | Ultraskaņas biezuma mērītājs | 1 | частичные | Производитель может отличаться: на рынке есть другие GM100 с диапазоном до 300 мм |
+| 43 | TUF-3000L Heat Water Flowmeter | Portatīvais ultraskaņas plūsmas mērītājs | 1 | частичные | В комплектах указан как TUF-3000L, у нас TUF-2000H: уточнить |
+| 44 | Ultrasonic Transducer | Portatīvais ultraskaņas siltuma skaitītājs | 1 | частичные | Сверить комплектацию датчиков |
+| 45 | GM100 Thickness gauge ultrasonic | Ultraskaņas biezuma mērītājs | 1 | частичные | Производитель GM100 может отличаться: на рынке есть другие модели |
 | 46 | VM6370 Vibrometer | Pjezoelektriskais vibrācijas mērītājs | 1 | частичные | Частотный диапазон и точность не подтверждены |

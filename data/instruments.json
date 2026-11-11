@@ -18,7 +18,10 @@
     "kit_ru": "Прибор, колпак 610×610 мм, 5 стяжных штанг, USB-кабель, батареи, тележка, протокол поверки",
     "datasheet_url": "https://static.testo.com/image/upload/HQ/testo-420-data-sheet.pdf",
     "datasheet_kind": "official",
-    "datasheet_note": "Даташит производителя"
+    "datasheet_note": "Даташит производителя",
+    "short_ru": "Колпак-балометр: расход воздуха на решётках и диффузорах.",
+    "short_lv": "Balometrs ar tvertni: gaisa plūsma uz restēm un difuzoriem.",
+    "short_en": "Flow hood: airflow at grilles and diffusers."
   },
   {
     "id": 2,
@@ -39,7 +42,10 @@
     "kit_ru": "Анемометр, сумка, протокол, 3 батареи AA",
     "datasheet_url": "https://static.testo.com/image/upload/HQ/testo-417-datasheet-en.pdf",
     "datasheet_kind": "official",
-    "datasheet_note": "Даташит производителя"
+    "datasheet_note": "Даташит производителя",
+    "short_ru": "Крыльчатый анемометр 100 мм: скорость и расход воздуха на решётках.",
+    "short_lv": "Spārnrata anemometrs 100 mm: gaisa ātrums un plūsma uz restēm.",
+    "short_en": "100 mm vane anemometer: air speed and flow at grilles."
   },
   {
     "id": 3,
@@ -59,7 +65,10 @@
     "kit_ru": "Прибор, сумка, протокол, 3 батареи AA",
     "datasheet_url": "https://static.testo.com/image/upload/HQ/testo-535-datasheet-en.pdf",
     "datasheet_kind": "official",
-    "datasheet_note": "Даташит производителя"
+    "datasheet_note": "Даташит производителя",
+    "short_ru": "Измеритель CO₂: проверка вентиляции и качества воздуха.",
+    "short_lv": "CO₂ mērītājs: ventilācijas un gaisa kvalitātes pārbaude.",
+    "short_en": "CO₂ meter: checks ventilation and air quality."
   },
   {
     "id": 4,
@@ -80,7 +89,10 @@
     "kit_ru": "Прибор, соединительный шланг, 3 батареи AA, USB-кабель, протокол",
     "datasheet_url": "https://static.testo.com/image/upload/HQ/testo-440-datasheet-1981-1214.pdf",
     "datasheet_kind": "official",
-    "datasheet_note": "Даташит производителя"
+    "datasheet_note": "Даташит производителя",
+    "short_ru": "Измеритель скорости воздуха и давления с набором зондов.",
+    "short_lv": "Gaisa ātruma un spiediena mērītājs ar zondēm.",
+    "short_en": "Air velocity and pressure meter with a set of probes."
   },
   {
     "id": 5,
@@ -100,7 +112,10 @@
     "kit_ru": "Анемометр, защитный колпачок, батареи, протокол",
     "datasheet_url": "https://static.testo.com/image/upload/HQ/testo-410i-data-sheet.pdf",
     "datasheet_kind": "official",
-    "datasheet_note": "Даташит производителя"
+    "datasheet_note": "Даташит производителя",
+    "short_ru": "Компактный анемометр: скорость и температура воздуха, показания на смартфоне.",
+    "short_lv": "Kompakts anemometrs: gaisa ātrums un temperatūra, rādījumi viedtālrunī.",
+    "short_en": "Compact anemometer: air speed and temperature, readings on your phone."
   },
   {
     "id": 6,
@@ -120,7 +135,10 @@
     "kit_ru": "Прибор, набор шлангов Ø4 и 6 мм с адаптером, батареи, протокол",
     "datasheet_url": "https://static.testo.com/image/upload/HQ/testo-510i-data-sheet.pdf",
     "datasheet_kind": "official",
-    "datasheet_note": "Даташит производителя"
+    "datasheet_note": "Даташит производителя",
+    "short_ru": "Дифманометр: перепады давления на фильтрах и в каналах, смартфон.",
+    "short_lv": "Difspiediena mērītājs filtriem un kanāliem, rādījumi viedtālrunī.",
+    "short_en": "Differential pressure meter for filters and ducts, readings on your phone."
   },
   {
     "id": 7,
@@ -140,7 +158,10 @@
     "kit_ru": "Термогигрометр, батареи, протокол",
     "datasheet_url": "https://static.testo.com/image/upload/HQ/testo-605i-datasheet-1981-1864.pdf",
     "datasheet_kind": "official",
-    "datasheet_note": "Даташит производителя"
+    "datasheet_note": "Даташит производителя",
+    "short_ru": "Термогигрометр: температура и влажность воздуха, смартфон.",
+    "short_lv": "Termohigrometrs: gaisa temperatūra un mitrums, viedtālrunī.",
+    "short_en": "Thermo-hygrometer: air temperature and humidity, on your phone."
   },
   {
     "id": 8,
@@ -160,7 +181,10 @@
     "kit_ru": "Анемометр, выдвижной телескоп 400 мм, батареи, протокол",
     "datasheet_url": "https://static.testo.com/image/upload/HQ/testo-405i-data-sheet.pdf",
     "datasheet_kind": "official",
-    "datasheet_note": "Даташит производителя"
+    "datasheet_note": "Даташит производителя",
+    "short_ru": "Тепловой анемометр на штанге: малые скорости воздуха в воздуховодах.",
+    "short_lv": "Termoanemometrs ar kātu: mazi gaisa ātrumi kanālos.",
+    "short_en": "Thermal anemometer on a rod: low air speeds in ducts."
   },
   {
     "id": 9,
@@ -180,7 +204,10 @@
     "kit_ru": "Bluetooth-рукоятка, гибкий зонд (800 мм), батареи, протокол",
     "datasheet_url": "https://static.testo.com/image/upload/HQ/testo-915i-datasheet-en.pdf",
     "datasheet_kind": "official",
-    "datasheet_note": "Даташит производителя"
+    "datasheet_note": "Даташит производителя",
+    "short_ru": "Термометр с гибким зондом: температура труб и поверхностей, смартфон.",
+    "short_lv": "Termometrs ar elastīgu zondi: cauruļu un virsmu temperatūra.",
+    "short_en": "Thermometer with a flexible probe: pipe and surface temperature."
   },
   {
     "id": 10,
@@ -200,7 +227,10 @@
     "kit_ru": "Манометр, батареи, протокол",
     "datasheet_url": "https://static.testo.com/image/upload/HQ/testo-549i-datasheet-1981-1854.pdf",
     "datasheet_kind": "official",
-    "datasheet_note": "Даташит производителя"
+    "datasheet_note": "Даташит производителя",
+    "short_ru": "Манометр высокого давления для холодильных систем и кондиционеров.",
+    "short_lv": "Augstspiediena manometrs dzesēšanas sistēmām un kondicionieriem.",
+    "short_en": "High-pressure gauge for refrigeration and air conditioning."
   },
   {
     "id": 11,
@@ -220,7 +250,10 @@
     "kit_ru": "Термометр, батареи, протокол",
     "datasheet_url": "https://static.testo.com/image/upload/HQ/testo-115i-datasheet-1981-1844.pdf",
     "datasheet_kind": "official",
-    "datasheet_note": "Даташит производителя"
+    "datasheet_note": "Даташит производителя",
+    "short_ru": "Клещевой термометр: температура труб без разрыва контура.",
+    "short_lv": "Skavu termometrs: cauruļu temperatūra bez kontūra pārtraukšanas.",
+    "short_en": "Clamp thermometer: pipe temperature without opening the circuit."
   },
   {
     "id": 12,
@@ -240,7 +273,10 @@
     "kit_ru": "Прибор, защитный колпачок, чехол, батареи, протокол",
     "datasheet_url": "https://static.testo.com/image/upload/HQ/testo-511-data-sheet.pdf",
     "datasheet_kind": "official",
-    "datasheet_note": "Даташит производителя"
+    "datasheet_note": "Даташит производителя",
+    "short_ru": "Барометр: атмосферное и абсолютное давление в системе.",
+    "short_lv": "Barometrs: atmosfēras un absolūtais spiediens sistēmā.",
+    "short_en": "Barometer: atmospheric and absolute system pressure."
   },
   {
     "id": 13,
@@ -260,7 +296,10 @@
     "kit_ru": "См. страницу производителя",
     "datasheet_url": "https://assets.fluke.com/manuals/922_____umeng0000.pdf",
     "datasheet_kind": "manual",
-    "datasheet_note": "Fluke 922 Users Manual (Official PDF)"
+    "datasheet_note": "Fluke 922 Users Manual (Official PDF)",
+    "short_ru": "Микроманометр: давление, скорость и расход воздуха в воздуховодах.",
+    "short_lv": "Mikromanometrs: spiediens, gaisa ātrums un plūsma kanālos.",
+    "short_en": "Micromanometer: pressure, air speed and flow in ducts."
   },
   {
     "id": 14,
@@ -280,7 +319,10 @@
     "kit_ru": "Шумомер PCE-318, ветрозащита, калибровочный винт, батарея 9 В, разъём 3,5 мм, кейс, инструкция",
     "datasheet_url": "https://res.cloudinary.com/iwh/image/upload/q_auto,g_center/assets/1/26/PCE_PCE-318_Data_Sheet.pdf",
     "datasheet_kind": "third-party",
-    "datasheet_note": "Даташит PCE-318 на стороннем хостинге; PCE-318 это шумомер, логгер отдельный"
+    "datasheet_note": "Даташит PCE-318 на стороннем хостинге; PCE-318 это шумомер, логгер отдельный",
+    "short_ru": "Шумомер-регистратор: уровень звука в помещениях и на рабочих местах.",
+    "short_lv": "Skaņas līmeņa reģistrators telpām un darba vietām.",
+    "short_en": "Sound level logger for rooms and workplaces."
   },
   {
     "id": 15,
@@ -300,7 +342,10 @@
     "kit_ru": "См. страницу продавца",
     "datasheet_url": "https://www.steinigke.de/data/mpn51701972-eurolite-nsf-150a-dmx-spray-fogger.pdf",
     "datasheet_kind": "official",
-    "datasheet_note": "Steinigke Eurolite NSF-150A Datasheet (PDF)"
+    "datasheet_note": "Steinigke Eurolite NSF-150A Datasheet (PDF)",
+    "short_ru": "Дым-генератор DMX: видно потоки воздуха и утечки.",
+    "short_lv": "DMX dūmu ģenerators: redzamas gaisa plūsmas un noplūdes.",
+    "short_en": "DMX smoke machine: makes airflow and leaks visible."
   },
   {
     "id": 16,
@@ -310,10 +355,19 @@
     "category": "skana-gaisma-elektriba",
     "photo": "https://ivancovs.com/wp-content/uploads/2025/07/HoldPeak.png",
     "source_url": "https://www.holdpeak.com/product/480.html",
-    "status": "todo",
-    "check_ru": "Паспорта HoldPeak не нашли",
+    "status": "partial",
+    "check_ru": "Данные из досье и описаний продавцов одной и той же модели под другими брендами; паспорта HoldPeak нет",
     "datasheet_kind": "specs",
-    "datasheet_note": "Ražotāja specifikācija (HoldPeak)"
+    "datasheet_note": "Ražotāja specifikācija (HoldPeak)",
+    "purpose_ru": "Стробоскопический тахометр: измеряет обороты вращающихся частей без контакта и «замораживает» вращение для осмотра.",
+    "specs_ru": [
+      "Диапазон: 60…99 999 об/мин (1…1666 Гц)",
+      "Подсветка: 16 светодиодов, около 1500 лк на 30 см",
+      "Питание: аккумулятор 7,4 В / 2200 мАч, до 8 часов работы"
+    ],
+    "short_ru": "Стробоскопический тахометр: обороты без контакта.",
+    "short_lv": "Stroboskopiskais tahometrs: apgriezieni bez kontakta.",
+    "short_en": "Stroboscopic tachometer: contactless rotation speed."
   },
   {
     "id": 17,
@@ -333,7 +387,10 @@
       "Погрешность: ±(3% + 2 мкм), разрешение: 0,1 мкм / 1 мкм",
       "Цветной дисплей, встроенный аккумулятор с зарядкой Type-C"
     ],
-    "kit_ru": "Толщиномер NK-200, калибровочные пластины Fe/NFe, эталонные плёнки, кабель USB Type-C, футляр."
+    "kit_ru": "Толщиномер NK-200, калибровочные пластины Fe/NFe, эталонные плёнки, кабель USB Type-C, футляр.",
+    "short_ru": "Толщиномер покрытий на стали и алюминии без повреждений.",
+    "short_lv": "Pārklājuma biezuma mērītājs uz tērauda un alumīnija.",
+    "short_en": "Coating thickness gauge for steel and aluminium."
   },
   {
     "id": 18,
@@ -344,17 +401,21 @@
     "photo": "https://ivancovs.com/wp-content/uploads/2025/07/HTM208.png",
     "source_url": "https://eleshop.eu/hantek-htm208b-handheld-thermometer.html",
     "status": "partial",
-    "purpose_ru": "Регистратор температуры на 8 каналов (термопары J, K, T, E, S, N, B, R и др.). Скорее всего Hantek HTM208B/C.",
+    "purpose_ru": "Восьмиканальный регистратор температуры с термопарами: тепловые профили печей, труб, котлов.",
     "specs_ru": [
-      "8 каналов, термопара K: −200…+1370 °C, разрешение 0,1 °C",
-      "Цветной экран 320×240, запись на USB-накопитель"
+      "8 изолированных каналов, термопары K, J, T, E, R, S, B, N",
+      "Диапазон K: −200…+1370 °C, разрешение 0,1 °C",
+      "Экран 2,8″ с графиками, выгрузка по USB"
     ],
     "kit_ru": "",
     "source_note": "Hantek: торговые страницы, паспорта нет",
-    "check_ru": "Точность и частоту записи не нашли; уточнить модель (B или C)",
+    "check_ru": "Точность и частоту записи уточнить по руководству; уточнить модель (B или C)",
     "datasheet_url": "https://storage.eleshop.eu/files/HTM208.pdf",
     "datasheet_kind": "official",
-    "datasheet_note": "Hantek HTM208 Datasheet (Eleshop PDF)"
+    "datasheet_note": "Hantek HTM208 Datasheet (Eleshop PDF)",
+    "short_ru": "8-канальный регистратор температуры с термопарами.",
+    "short_lv": "8 kanālu temperatūras reģistrators ar termopāriem.",
+    "short_en": "8-channel temperature logger with thermocouples."
   },
   {
     "id": 19,
@@ -364,9 +425,19 @@
     "category": "skana-gaisma-elektriba",
     "photo": "https://ivancovs.com/wp-content/uploads/2025/07/AL-NK-200.png",
     "source_url": "http://www.handpi.com/en/productshow.asp?ArticleID=243",
-    "status": "todo",
+    "status": "partial",
     "datasheet_kind": "specs",
-    "datasheet_note": "Ražotāja specifikācija (Handpi / ALIYIQI)"
+    "datasheet_note": "Ražotāja specifikācija (Handpi / ALIYIQI)",
+    "purpose_ru": "Механический динамометр на растяжение и сжатие: проверка усилия пружин, замков, кнопок.",
+    "specs_ru": [
+      "Максимум 200 Н (около 20 кгс)",
+      "Цена деления 1 Н, точность ±1 % шкалы",
+      "Ход 10 мм, режимы измерения и фиксации пика, питание не нужно"
+    ],
+    "check_ru": "Описания продавцов расходятся по цене деления (0,1 Н или 1 Н); сверить по прибору",
+    "short_ru": "Механический динамометр: усилие на растяжение и сжатие.",
+    "short_lv": "Mehānisks spēka mērītājs: stiepe un spiede.",
+    "short_en": "Mechanical force gauge: push and pull."
   },
   {
     "id": 20,
@@ -377,18 +448,21 @@
     "photo": "https://ivancovs.com/wp-content/uploads/2025/07/Nohawk-NP.png",
     "source_url": null,
     "status": "partial",
-    "purpose_ru": "Лазерный дальномер. По описанию продавца Nohawk NP это спортивный дальномер (гольф), а не строительный.",
+    "purpose_ru": "Лазерный дальномер с оптикой 6× и сенсорным экраном: расстояния и высоты на улице и на объектах.",
     "specs_ru": [
-      "Дальность до 600 м, погрешность ±0,5 м",
-      "Увеличение 6×, лазер 905 нм, питание от USB-аккумулятора",
-      "Вес 147 г, размеры 109×40×70 мм"
+      "Дистанция: 0,2…600 / 800 м, точность ±0,5 м",
+      "Оптика 6×, функции: горизонтальное расстояние, разница высот, скорость",
+      "Питание: аккумулятор, зарядка по USB"
     ],
     "kit_ru": "",
     "source_note": "Страница продавца (heatlanddiscgolf.com), паспорта нет",
-    "check_ru": "Проверить, тот ли это прибор: для замеров комнат нужен другой тип дальномера",
+    "check_ru": "Проверить, подходит ли для замеров внутри комнат: это дальномер для больших дистанций",
     "datasheet_url": null,
     "datasheet_kind": "specs",
-    "datasheet_note": "Tehniskā specifikācija (Nohawk NP)"
+    "datasheet_note": "Tehniskā specifikācija (Nohawk NP)",
+    "short_ru": "Лазерный дальномер с оптикой 6×: расстояния и высоты.",
+    "short_lv": "Lāzera tālmērs ar 6× optiku: attālumi un augstumi.",
+    "short_en": "Laser rangefinder with 6× optics: distances and heights."
   },
   {
     "id": 21,
@@ -398,11 +472,20 @@
     "category": "gaisa-kvalitate",
     "photo": "https://ivancovs.com/wp-content/uploads/2025/07/Nohawk-NK800.png",
     "source_url": "https://www.sisco.com/digital-particle-counter",
-    "status": "todo",
-    "check_ru": "Nohawk NK800 в поиске не найден",
+    "status": "partial",
+    "check_ru": "Данные взяты по близкому прибору SISCO MKS-800, у Nohawk NK800 паспорта не нашли; сверить",
     "datasheet_url": "https://www.sisco.com/images/uploaded/sisco-particle-counter-MKS-800-user-manual.pdf",
     "datasheet_kind": "manual",
-    "datasheet_note": "SISCO MKS-800 User Manual (PDF)"
+    "datasheet_note": "SISCO MKS-800 User Manual (PDF)",
+    "purpose_ru": "Счётчик частиц в воздухе: чистота помещений, эффективность фильтров HEPA.",
+    "specs_ru": [
+      "6 каналов частиц: 0,3 / 0,5 / 1,0 / 2,5 / 5,0 / 10,0 мкм",
+      "Поток 2,83 л/мин, время замера 1…999 с",
+      "Температура и влажность, память 1000–2000 замеров"
+    ],
+    "short_ru": "Счётчик частиц: чистота воздуха и работа фильтров HEPA.",
+    "short_lv": "Daļiņu skaitītājs: gaisa tīrība un HEPA filtru darbība.",
+    "short_en": "Particle counter: air cleanliness and HEPA filter performance."
   },
   {
     "id": 22,
@@ -413,17 +496,21 @@
     "photo": "https://ivancovs.com/wp-content/uploads/2025/07/TASI-TA612.png",
     "source_url": "https://www.china-tasi.com/en/product/detail/ta612-series-multi-channel-thermocouple-thermometers/",
     "status": "partial",
-    "purpose_ru": "Термометр-регистратор для термопар (K, J, T).",
+    "purpose_ru": "Четырёхканальный термометр для термопар K и J: температура в нескольких точках с записью.",
     "specs_ru": [
-      "Модель TA612C имеет 4 канала и USB; TA612A на самом деле одноканальная",
-      "Память до 5000 записей у TA612C"
+      "4 канала, термопары K и J",
+      "K: −200…+1372 °C, J: −200…+1200 °C, разрешение 0,1 °C",
+      "Память 5000 точек, USB, разности T1−T2 и T3−T4"
     ],
     "kit_ru": "",
     "source_note": "Описания на страницах продавцов (manuals.plus)",
-    "check_ru": "На сайте написано «4-канальный» при названии TA612A: проверить на самом приборе, скорее TA612C",
+    "check_ru": "Название TA612A, по характеристикам TA612C: проверить на приборе",
     "datasheet_url": "https://instruments.co.za/attachment?id_attachment=82",
     "datasheet_kind": "manual",
-    "datasheet_note": "TASI TA612A/B/C User Manual (общий мануал серии TA612A/B/C, PDF)"
+    "datasheet_note": "TASI TA612A/B/C User Manual (общий мануал серии TA612A/B/C, PDF)",
+    "short_ru": "4-канальный термометр для термопар K и J с записью.",
+    "short_lv": "4 kanālu termometrs K un J termopāriem ar ierakstu.",
+    "short_en": "4-channel thermometer for K and J thermocouples with logging."
   },
   {
     "id": 23,
@@ -434,16 +521,20 @@
     "photo": "https://ivancovs.com/wp-content/uploads/2025/07/BT-8806-WM-APP.png",
     "source_url": "https://holdpeak-store.com/holdpeak-cup-anemometer-handheld-HP-8806WM-APP/",
     "status": "partial",
-    "purpose_ru": "Чашечный анемометр с Bluetooth: скорость ветра и воздуха, температура, давление, влажность.",
+    "purpose_ru": "Чашечный анемометр с Bluetooth: скорость ветра, температура, давление, высота.",
     "specs_ru": [
-      "Скорость: 0,3…42 м/с, ±5 %",
-      "Вес около 150 г, компас, подсветка"
+      "Скорость: 0,3…42 м/с, точность ±5 %",
+      "Температура −10…+45 °C",
+      "Барометр, высота, влажность, точка росы; связь со смартфоном"
     ],
     "kit_ru": "",
     "source_note": "Описания продавцов (BTMETER)",
-    "check_ru": "Данные продавцов расходятся; официального паспорта нет",
+    "check_ru": "Данные продавцов расходятся, официального паспорта нет",
     "datasheet_kind": "specs",
-    "datasheet_note": "Tehniskā specifikācija (BTMETER / HoldPeak)"
+    "datasheet_note": "Tehniskā specifikācija (BTMETER / HoldPeak)",
+    "short_ru": "Анемометр с Bluetooth: ветер, температура, давление.",
+    "short_lv": "Anemometrs ar Bluetooth: vējš, temperatūra, spiediens.",
+    "short_en": "Bluetooth anemometer: wind, temperature, pressure."
   },
   {
     "id": 24,
@@ -453,10 +544,20 @@
     "category": "spiediens",
     "photo": "https://ivancovs.com/wp-content/uploads/2025/07/DR-S220.png",
     "source_url": "https://www.meokonint.com/md-s220-series-differential-pressure-gauge-product/",
-    "status": "todo",
+    "status": "partial",
     "datasheet_url": "https://www.meokonint.com/uploads/MD-S2201-DIFFERENTIAL-PRESSURE-TRANSMITTER.pdf",
     "datasheet_kind": "official",
-    "datasheet_note": "Meokon MD-S220 Datasheet (PDF)"
+    "datasheet_note": "Meokon MD-S220 Datasheet (PDF)",
+    "purpose_ru": "Цифровой дифманометр малых давлений: фильтры, чистые комнаты, вентиляторы.",
+    "specs_ru": [
+      "Диапазоны от ±30 Па до ±5 кПа (по версии)",
+      "Точность около 1–2 % шкалы",
+      "Единицы: Па, кПа, мм вод. ст., мбар; питание от батареек"
+    ],
+    "check_ru": "Диапазон и питание сверить с наклейкой на приборе (модели MD-S220 и MD-S2201 отличаются)",
+    "short_ru": "Цифровой дифманометр малых давлений: фильтры, чистые комнаты.",
+    "short_lv": "Digitāls difspiediena mērītājs: filtri, tīrtelpas.",
+    "short_en": "Digital low-pressure gauge: filters and cleanrooms."
   },
   {
     "id": 25,
@@ -466,10 +567,19 @@
     "category": "skana-gaisma-elektriba",
     "photo": "https://ivancovs.com/wp-content/uploads/2025/07/hanmatek-CO601.png",
     "source_url": "https://hanmatek.com/blogs/news/hanmatek%C2%AE-co601-clamp-oscilloscope-portable-precision-for-modern-technicians",
-    "status": "todo",
-    "check_ru": "Hanmatek CO601 в поиске не найден (есть только Hanmatek MT255 и AEMC CL601)",
+    "status": "partial",
+    "check_ru": "Напряжение у производителя указано 600 В или 1000 В в разных источниках: сверить по руководству",
     "datasheet_kind": "specs",
-    "datasheet_note": "Oficiālā specifikācija (HANMATEK)"
+    "datasheet_note": "Oficiālā specifikācija (HANMATEK)",
+    "purpose_ru": "Токовые клещи с осциллографом: форма тока и напряжения, диагностика электрики.",
+    "specs_ru": [
+      "Осциллограф: 1 МГц по напряжению, 1 кГц по току, 5 МС/с",
+      "Ток до 600 А (True RMS), напряжение до 600 В",
+      "Экран 2,8″, Bluetooth, встроенный аккумулятор"
+    ],
+    "short_ru": "Токовые клещи с осциллографом: форма тока и напряжения.",
+    "short_lv": "Strāvas knaibles ar osciloskopu: strāvas un sprieguma forma.",
+    "short_en": "Current clamp with oscilloscope: current and voltage waveforms."
   },
   {
     "id": 26,
@@ -480,19 +590,21 @@
     "photo": "https://ivancovs.com/wp-content/uploads/2025/07/FNIRSI-ERD-10_1.png",
     "source_url": "https://www.fnirsi.com/products/erd-10",
     "status": "partial",
-    "purpose_ru": "Детектор электромагнитных полей 4-в-1: электрическое, магнитное, радиочастотное поле и температура.",
+    "purpose_ru": "Детектор электромагнитного излучения: электрические и магнитные поля, радиочастоты.",
     "specs_ru": [
       "Электрическое поле: 1…1999 В/м",
       "Магнитное поле: 0,01…99,99 мкТл",
-      "Радиочастоты: 0,1…1999,9 мкВт/см²",
-      "Цветной экран 2,4\", USB-C, вес около 143 г"
+      "Радиочастоты: 0,01…99,99 мВт/м², диапазон 50 Гц…3,5 ГГц"
     ],
     "kit_ru": "",
     "source_note": "https://www.fnirsi.com/products/erd-10",
     "check_ru": "Для оценки, не для сертифицированных замеров",
     "datasheet_url": "https://download.kamami.pl/p1200644-ERD-10_User_Manual_EN_ZH.pdf",
     "datasheet_kind": "manual",
-    "datasheet_note": "FNIRSI ERD-10 User Manual (PDF)"
+    "datasheet_note": "FNIRSI ERD-10 User Manual (PDF)",
+    "short_ru": "Детектор электромагнитных полей и радиочастот.",
+    "short_lv": "Elektromagnētisko lauku un radiofrekvenču detektors.",
+    "short_en": "Detector of electromagnetic fields and radio frequencies."
   },
   {
     "id": 27,
@@ -503,17 +615,21 @@
     "photo": "https://ivancovs.com/wp-content/uploads/2025/07/DM502-O3.png",
     "source_url": "https://www.langder.com/",
     "status": "partial",
-    "purpose_ru": "Многофункциональный анализатор качества воздуха: PM1.0, PM2.5, PM10, TVOC, температура, влажность, AQI. У варианта DM502-O3 ещё озон (O3).",
+    "purpose_ru": "Монитор качества воздуха с озоном: озон, пыль PM2.5 и PM10, температура и влажность.",
     "specs_ru": [
-      "Экран 2,8\", размеры 155×87×35 мм",
-      "Диапазоны озона у продавцов разные (0–5 ppm или 0–50 ppm)"
+      "Озон: 0…5 ppm, разрешение 0,001 ppm",
+      "PM2.5 / PM10: 0…999 мкг/м³",
+      "Температура −10…+50 °C, влажность 20–85 %"
     ],
     "kit_ru": "",
     "source_note": "Руководство DM502 (ato.com), страницы продавцов",
-    "check_ru": "На фото сайта вариант DM502-O3, но у продавцов есть и вариант с формальдегидом (HCHO): уточнить",
+    "check_ru": "Уточнить вариант: бывает с формальдегидом (HCHO)",
     "datasheet_url": "https://www.langder.com/PIC/PIC/202411281135510.pdf",
     "datasheet_kind": "manual",
-    "datasheet_note": "Langder DM502 User Manual (PDF)"
+    "datasheet_note": "Langder DM502 User Manual (PDF)",
+    "short_ru": "Монитор воздуха: озон, пыль PM2.5 и PM10, температура и влажность.",
+    "short_lv": "Gaisa monitors: ozons, putekļi PM2.5 un PM10, temperatūra un mitrums.",
+    "short_en": "Air monitor: ozone, PM2.5 and PM10 dust, temperature and humidity."
   },
   {
     "id": 28,
@@ -523,10 +639,20 @@
     "category": "spiediens",
     "photo": "https://ivancovs.com/wp-content/uploads/2025/07/ST-B168DL.png",
     "source_url": "https://www.cnzongheng.com/manifold-gauge32/22.html",
-    "status": "todo",
+    "status": "partial",
     "datasheet_kind": "manual",
     "datasheet_note": "Instruction ST-B168D/ST-B268D (англ.), PDF прислал производитель (Jinhua Weike / Super Stars) по запросу; файл лежит в папке прибора.",
-    "datasheet_url": ""
+    "datasheet_url": "",
+    "purpose_ru": "Цифровой манометрический коллектор для кондиционеров и холодильных систем.",
+    "specs_ru": [
+      "Давление 0…6000 кПа (0…60 бар), перегрузка до 100 бар",
+      "Точность ±0,5 % шкалы",
+      "База хладагентов: около 90 (R32, R410A, R134a, R22, R404A)"
+    ],
+    "check_ru": "Данные из досье, сверить по руководству",
+    "short_ru": "Цифровой манометрический коллектор для кондиционеров.",
+    "short_lv": "Digitāls manometru kolektors kondicionieriem.",
+    "short_en": "Digital manifold gauge for air conditioning."
   },
   {
     "id": 29,
@@ -536,10 +662,20 @@
     "category": "temperatura-mitrums",
     "photo": "https://ivancovs.com/wp-content/uploads/2025/07/XIAOMI.png",
     "source_url": "https://www.mi.com/global/product/mi-temperature-and-humidity-monitor-2/",
-    "status": "todo",
+    "status": "partial",
     "datasheet_url": "https://fccid.io/2AWMOLYWSD03MMC/User-Manual/User-Manual-4847184.pdf",
     "datasheet_kind": "manual",
-    "datasheet_note": "Xiaomi LYWSD03MMC User Manual (FCC PDF)"
+    "datasheet_note": "Xiaomi LYWSD03MMC User Manual (FCC PDF)",
+    "purpose_ru": "Датчик температуры и влажности с Bluetooth: контроль микроклимата, приложение Xiaomi Home.",
+    "specs_ru": [
+      "Температура 0…60 °C, разрешение 0,1 °C",
+      "Влажность 0…99 %, разрешение 1 %",
+      "Bluetooth 4.2, батарея CR2032, до 1 года"
+    ],
+    "check_ru": "Данные из досье",
+    "short_ru": "Датчик температуры и влажности с Bluetooth.",
+    "short_lv": "Temperatūras un mitruma sensors ar Bluetooth.",
+    "short_en": "Bluetooth temperature and humidity sensor."
   },
   {
     "id": 30,
@@ -550,17 +686,20 @@
     "photo": "https://ivancovs.com/wp-content/uploads/2025/07/HP-5000T.png",
     "source_url": "https://holdpeak-store.com/holdpeak-hp-5000t-pinless-wood-moisture-meter-non-destructive-moisture-meter-for-wood-concrete-floors-walls-measuring-depth-20-40mm-digital-moisture-meter-with-masonry-spherical-sensor/",
     "status": "partial",
-    "purpose_ru": "Бесконтактный (безигольчатый) влагомер для древесины и стройматериалов: шаровой датчик, показывает относительное значение 0–100.",
+    "purpose_ru": "Бесконтактный влагомер для дерева, гипса, бетона и кирпича без повреждения поверхности.",
     "specs_ru": [
       "Глубина измерения 20–40 мм",
-      "Пороги RISK 0–50 и WET 51–100 настраиваются",
-      "Заряд через USB-C, автовыключение 30 мин"
+      "Материалы: дерево, гипс, бетон, кирпич, штукатурка, полы",
+      "Индикация: сухо / риск / влажно, питание USB-C"
     ],
     "kit_ru": "",
     "source_note": "Описания продавцов (HOLDPEAK/SISCO)",
     "check_ru": "Паспорта нет; шкала относительная, не проценты влажности",
     "datasheet_kind": "specs",
-    "datasheet_note": "Oficiālā specifikācija (HoldPeak HP-5000T)"
+    "datasheet_note": "Oficiālā specifikācija (HoldPeak HP-5000T)",
+    "short_ru": "Бесконтактный влагомер для дерева, гипса, бетона, кирпича.",
+    "short_lv": "Bezkontakta mitruma mērītājs kokam, ģipsim, betonam, ķieģeļiem.",
+    "short_en": "Non-contact moisture meter for wood, plaster, concrete and brick."
   },
   {
     "id": 31,
@@ -570,11 +709,20 @@
     "category": "temperatura-mitrums",
     "photo": "https://ivancovs.com/wp-content/uploads/2025/07/Freshliance.png",
     "source_url": "https://www.freshliance.com/products/bluetag-th20-bluetooth-temperature-and-humidity-data-logger.html",
-    "status": "todo",
-    "check_ru": "Найден только листинг TagPlus-TH без чисел; нужна точная модель",
+    "status": "partial",
+    "check_ru": "Диапазон влажности уточнить по руководству; стандарты EN12830, CE",
     "datasheet_kind": "official",
     "datasheet_note": "Онлайн-инструкция BlueTag TH20 на сайте Freshliance (электронная книга, не PDF); ссылка из QR на буклете, пришедшем от производителя.",
-    "datasheet_url": "https://oss.freshliance.com/ds/bluetag/th20-en.html"
+    "datasheet_url": "https://oss.freshliance.com/ds/bluetag/th20-en.html",
+    "purpose_ru": "Блютуз-логгер температуры и влажности: склады, холодильники, перевозка.",
+    "specs_ru": [
+      "Температура −30…+70 °C, точность ±0,5 °C",
+      "Влажность 0…100 %, точность ±3 %",
+      "Память до 65 000 записей, интервал 1–99 минут, отчёты PDF и CSV"
+    ],
+    "short_ru": "Блютуз-логгер температуры и влажности для складов и перевозки.",
+    "short_lv": "Bluetooth temperatūras un mitruma reģistrators noliktavām un pārvadājumiem.",
+    "short_en": "Bluetooth temperature and humidity logger for storage and transport."
   },
   {
     "id": 32,
@@ -584,10 +732,20 @@
     "category": "gaisa-kvalitate",
     "photo": "https://ivancovs.com/wp-content/uploads/2025/07/CGP22C.png",
     "source_url": "https://www.qingping.co/co2-temp-rh-monitor/overview",
-    "status": "todo",
+    "status": "partial",
     "datasheet_kind": "third-party",
     "datasheet_note": "Руководство CGP22C (EN/CS/SK/HU/DE) из каталога продавца Alza; не с сайта производителя.",
-    "datasheet_url": "https://dwn.alza.cz/manual/153987"
+    "datasheet_url": "https://dwn.alza.cz/manual/153987",
+    "purpose_ru": "Монитор CO₂, температуры и влажности с Wi-Fi и Bluetooth: проверка вентиляции помещений.",
+    "specs_ru": [
+      "CO₂: 400…9999 ppm, датчик NDIR",
+      "Температура −20…+50 °C, влажность 0…99,9 %",
+      "Wi-Fi 2,4 ГГц и Bluetooth, приложение Qingping"
+    ],
+    "check_ru": "Данные из досье",
+    "short_ru": "Монитор CO₂, температуры и влажности с Wi-Fi и Bluetooth.",
+    "short_lv": "CO₂, temperatūras un mitruma monitors ar Wi-Fi un Bluetooth.",
+    "short_en": "CO₂, temperature and humidity monitor with Wi-Fi and Bluetooth."
   },
   {
     "id": 33,
@@ -597,9 +755,19 @@
     "category": "gazes-dumi",
     "photo": "https://ivancovs.com/wp-content/uploads/2025/07/TELESIN.png",
     "source_url": "https://www.telesinstore.com/blogs/news/telesin-c40-portable-fog-machine-comprehensive-faqs-and-answers",
-    "status": "todo",
+    "status": "partial",
     "datasheet_kind": "specs",
-    "datasheet_note": "Oficiālā specifikācija (TELESIN C40)"
+    "datasheet_note": "Oficiālā specifikācija (TELESIN C40)",
+    "purpose_ru": "Переносной дым-генератор 40 Вт: показать направление потоков воздуха и найти утечки.",
+    "specs_ru": [
+      "Мощность 40 Вт, пульт управления",
+      "Размер 61×59×166 мм, вес около 276 г",
+      "Зарядка USB-C, жидкость на растительном глицерине"
+    ],
+    "check_ru": "Время работы от батареи расходится в источниках (от 5 до 28 минут): проверить",
+    "short_ru": "Переносной дым-генератор 40 Вт: потоки воздуха и утечки.",
+    "short_lv": "Portatīvs 40 W dūmu ģenerators: gaisa plūsmas un noplūdes.",
+    "short_en": "Portable 40 W smoke generator: airflow and leaks."
   },
   {
     "id": 34,
@@ -610,17 +778,21 @@
     "photo": "https://ivancovs.com/wp-content/uploads/2025/07/SK8202.png",
     "source_url": "http://www.hcl-asia.com.hk/en/products_detail.php?prodid=164",
     "status": "partial",
-    "purpose_ru": "Люксметр (освещённость).",
+    "purpose_ru": "Люксметр с цветовой температурой и индексом цветопередачи: освещённость рабочих мест.",
     "specs_ru": [
-      "Размеры 100×55×26 мм, 2 батареи AAA",
-      "SK-8202 отличается от SK-8201 индексом цветопередачи и цветовой температурой"
+      "Освещённость 0,5…300 000 лк",
+      "Цветовая температура 2500…8000 К",
+      "Индекс цветопередачи 20…100 Ra, вес 70 г"
     ],
     "kit_ru": "",
     "source_note": "Руководство SK-8202 (manuals.plus)",
-    "check_ru": "Числовых диапазонов не получили, они в картинках руководства",
+    "check_ru": "Числа из досье, сверить по руководству",
     "datasheet_kind": "manual",
     "datasheet_note": "User's Manual, серия HX8200/8201/8202 (модель 8202 с CRI), со страницы дистрибьютора HCL Asia; PDF — скан одной страницы, без текстового слоя.",
-    "datasheet_url": "https://www.hcl-asia.com.hk/catalog/id_202_en_User%20manual_en.pdf"
+    "datasheet_url": "https://www.hcl-asia.com.hk/catalog/id_202_en_User%20manual_en.pdf",
+    "short_ru": "Люксметр с цветовой температурой: освещённость рабочих мест.",
+    "short_lv": "Luksmetrs ar krāsu temperatūru: darba vietu apgaismojums.",
+    "short_en": "Lux meter with colour temperature: workplace lighting."
   },
   {
     "id": 35,
@@ -630,9 +802,19 @@
     "category": "termokameras-endoskopi",
     "photo": "https://ivancovs.com/wp-content/uploads/2025/07/TOOLTOP.png",
     "source_url": "https://www.tooltop.com/",
-    "status": "todo",
+    "status": "partial",
     "datasheet_kind": "specs",
-    "datasheet_note": "Oficiālā specifikācija (TOOLTOP T3/T7)"
+    "datasheet_note": "Oficiālā specifikācija (TOOLTOP T3/T7)",
+    "purpose_ru": "Тепловизор для смартфона на Android: утечки тепла, перегрев электрики, проверка полов.",
+    "specs_ru": [
+      "Разрешение 256×192 (T7) или 96×96 (T3)",
+      "Диапазон −20…+550 °C, чувствительность < 50 мК",
+      "25 Гц, подключение USB Type-C"
+    ],
+    "check_ru": "Нужно уточнить модель: T3 или T7",
+    "short_ru": "Тепловизор для смартфона: утечки тепла и перегрев электрики.",
+    "short_lv": "Termokamera viedtālrunim: siltuma noplūdes un elektrības pārkaršana.",
+    "short_en": "Smartphone thermal camera: heat loss and overheating wiring."
   },
   {
     "id": 36,
@@ -642,10 +824,20 @@
     "category": "termokameras-endoskopi",
     "photo": "https://ivancovs.com/wp-content/uploads/2025/07/endoskops.png",
     "source_url": "https://m.media-amazon.com/images/I/C1O-W5uS1ZL.pdf",
-    "status": "todo",
+    "status": "partial",
     "datasheet_url": "https://m.media-amazon.com/images/I/C1O-W5uS1ZL.pdf",
     "datasheet_kind": "manual",
-    "datasheet_note": "Anesok Articulating Borescope Manual (PDF)"
+    "datasheet_note": "Anesok Articulating Borescope Manual (PDF)",
+    "purpose_ru": "Эндоскоп с поворотной камерой: осмотр двигателя, труб и труднодоступных мест.",
+    "specs_ru": [
+      "Камера 1080P, поворот головки на 180°",
+      "Диаметр зонда 6,0 / 8,5 мм, защита IP67",
+      "Длина зонда 1–2 м, светодиодная подсветка"
+    ],
+    "check_ru": "Модель и длину зонда сверить",
+    "short_ru": "Эндоскоп с поворотной камерой для скрытых мест.",
+    "short_lv": "Endoskops ar grozāmu kameru grūti pieejamām vietām.",
+    "short_en": "Endoscope with an articulating camera for hidden spots."
   },
   {
     "id": 37,
@@ -656,16 +848,20 @@
     "photo": "https://ivancovs.com/wp-content/uploads/2025/07/PM2019a.png",
     "source_url": "https://www.elektrotikls.lv/products/peakmeter-pm2019s-flexible-mini-low-amp-clamp-for-multimeter-ac-dc-current-clamp-meter/",
     "status": "partial",
-    "purpose_ru": "Гибкий токовый клещи-мультиметр: измерение переменного тока до 3000 А, частота.",
+    "purpose_ru": "Токовые клещи с гибкой катушкой Роговского для больших токов в щитах.",
     "specs_ru": [
-      "Ток до 3000 А AC, гибкий датчик Ø 75 мм",
-      "6000 отсчётов, CAT III 600 В, вес около 340 г"
+      "Ток AC: 30 / 300 / 3000 А",
+      "Гибкая катушка диаметром 75 мм",
+      "CAT III 600 В, экран 6000 отсчётов"
     ],
     "kit_ru": "",
     "source_note": "Руководство PM2019A/S (manuals.plus), страницы продавцов",
     "check_ru": "В описаниях расходятся: True RMS и измерение напряжения; уточнить по руководству",
     "datasheet_kind": "specs",
-    "datasheet_note": "Tehniskā specifikācija (Peakmeter PM2019A)"
+    "datasheet_note": "Tehniskā specifikācija (Peakmeter PM2019A)",
+    "short_ru": "Токовые клещи с катушкой Роговского для больших токов.",
+    "short_lv": "Strāvas knaibles ar Rogovska spoli lielām strāvām.",
+    "short_en": "Current clamp with Rogowski coil for large currents."
   },
   {
     "id": 38,
@@ -685,7 +881,10 @@
     "kit_ru": "Датчик с сертификатом калибровки",
     "datasheet_url": "https://swema.com/wp-content/uploads/2022/11/Swema-03_A5_eng-1.pdf",
     "datasheet_kind": "manual",
-    "datasheet_note": "Swema 03+ Manual (PDF)"
+    "datasheet_note": "Swema 03+ Manual (PDF)",
+    "short_ru": "Датчик сквозняка по ISO 7726 / 7730: оценка комфорта.",
+    "short_lv": "Caurvēja sensors pēc ISO 7726 / 7730: komforta novērtējums.",
+    "short_en": "Draught sensor per ISO 7726 / 7730: comfort assessment."
   },
   {
     "id": 39,
@@ -695,9 +894,19 @@
     "category": "skana-gaisma-elektriba",
     "photo": "https://ivancovs.com/wp-content/uploads/2025/08/refraktometr.jpg",
     "source_url": "https://www.ddmeter.com/products/rha-503-atc-b1100-1400sg-e-50c-0c-p-50c-0c-c-40c-0c-optical-refractometer",
-    "status": "todo",
+    "status": "partial",
     "datasheet_kind": "specs",
-    "datasheet_note": "Tehniskā specifikācija (RHA-503ATC)"
+    "datasheet_note": "Tehniskā specifikācija (RHA-503ATC)",
+    "purpose_ru": "Рефрактометр для антифриза и электролита: проверка концентрации охлаждающей жидкости.",
+    "specs_ru": [
+      "Температура замерзания этиленгликоля и пропиленгликоля: −50…0 °C",
+      "Омыватель: −40…0 °C, электролит 1,100…1,400 кг/л",
+      "Автокомпенсация температуры 10…30 °C"
+    ],
+    "check_ru": "Данные из досье",
+    "short_ru": "Рефрактометр: концентрация антифриза и электролита.",
+    "short_lv": "Refraktometrs: antifrīza un elektrolīta koncentrācija.",
+    "short_en": "Refractometer: antifreeze and electrolyte concentration."
   },
   {
     "id": 40,
@@ -708,18 +917,21 @@
     "photo": "https://ivancovs.com/wp-content/uploads/2026/01/Снимок-экрана-2026-01-27-094551.png",
     "source_url": "https://www.sisco.com/digital-particle-counter",
     "status": "partial",
-    "purpose_ru": "Портативный счётчик частиц в воздухе (лазерное рассеяние): масса PM2.5 и PM10 и число частиц по шести размерам.",
+    "purpose_ru": "Лазерный счётчик частиц с принтером: классы чистоты по ISO 14644 и GMP.",
     "specs_ru": [
-      "Размеры частиц: 0,3; 0,5; 1,0; 2,5; 5,0; 10 мкм",
-      "PM2.5 и PM10: 0…1000 мкг/м³, разрешение 1 мкг/м³",
-      "Точность ±10 мкг/м³ до 100 и ±10 % от 100 до 1000"
+      "6 каналов: 0,3 / 0,5 / 1,0 / 3,0 / 5,0 / 10 мкм",
+      "Поток 2,83 л/мин, память 1000 замеров",
+      "Встроенный термопринтер, питание от сети и аккумулятор"
     ],
     "kit_ru": "",
     "source_note": "Руководство SISCO HZ-011-C (sisco.com)",
-    "check_ru": "Данные из выдержки руководства, поток и интервал не видны: сверить с полным руководством",
+    "check_ru": "Сверить поток и интервал с полным руководством",
     "datasheet_url": "https://www.sisco.com/images/uploaded/sisco-portabel-air-particle-counter-user-manual.pdf",
     "datasheet_kind": "manual",
-    "datasheet_note": "SISCO HZ-011-C User Manual (PDF)"
+    "datasheet_note": "SISCO HZ-011-C User Manual (PDF)",
+    "short_ru": "Лазерный счётчик частиц с принтером: классы чистоты ISO 14644.",
+    "short_lv": "Lāzera daļiņu skaitītājs ar printeri: tīrības klases ISO 14644.",
+    "short_en": "Laser particle counter with printer: ISO 14644 cleanliness classes."
   },
   {
     "id": 41,
@@ -729,11 +941,20 @@
     "category": "gazes-dumi",
     "photo": "https://ivancovs.com/wp-content/uploads/2026/01/Снимок-экрана-2026-01-27-095214.png",
     "source_url": "https://www.bosean.com/",
-    "status": "todo",
-    "check_ru": "Под названием подходят разные 4-газовые детекторы (O2, CO, H2S, горючие газы); диапазоны у продавцов расходятся, нужна точная модель",
+    "status": "partial",
+    "check_ru": "Модель BH-4S, диапазоны сверить по паспорту",
     "datasheet_url": "https://www.oxidationtech.com/downloads/Bosean/BH-4Smanual.pdf",
     "datasheet_kind": "manual",
-    "datasheet_note": "Bosean BH-4S Manual (PDF)"
+    "datasheet_note": "Bosean BH-4S Manual (PDF)",
+    "purpose_ru": "Четырёхгазовый детектор: кислород, угарный газ, сероводород, горючие газы. Для колодцев и резервуаров.",
+    "specs_ru": [
+      "Горючие газы 0–100 % НКПР",
+      "O₂ 0–30 %, CO 0–1000 ppm, H₂S 0–100 ppm",
+      "Тревога: звук 85 дБ, свет, вибрация"
+    ],
+    "short_ru": "Детектор 4 газов: O₂, CO, H₂S, горючие. Для колодцев и резервуаров.",
+    "short_lv": "4 gāzu detektors: O₂, CO, H₂S, degošās. Akām un tvertnēm.",
+    "short_en": "4-gas detector: O₂, CO, H₂S, combustibles. For wells and tanks."
   },
   {
     "id": 42,
@@ -744,19 +965,21 @@
     "photo": "https://ivancovs.com/wp-content/uploads/2026/01/Снимок-экрана-2026-01-27-095632.png",
     "source_url": "https://benetech.co/",
     "status": "partial",
-    "purpose_ru": "Цифровой дифманометр (две трубки) для воздуха и неагрессивных газов: вентиляция, фильтры, давление в каналах.",
+    "purpose_ru": "Микроманометр: перепад давления до ±500 Па для воздуховодов и фильтров.",
     "specs_ru": [
-      "Диапазон ±500 Па, разрешение 5 Па",
-      "Точность ±1 % от шкалы (по таблице руководства, подтвердить)",
-      "Размеры 160×65×35 мм, около 176 г",
-      "13 единиц измерения"
+      "Диапазон ±500 Па, разрешение 0,1 Па",
+      "Точность ±1 % шкалы, 11 единиц измерения",
+      "Фиксация, мин/макс/среднее, питание 3×AAA"
     ],
     "kit_ru": "",
     "source_note": "Руководство GT5101 (ecotao-store.co.za)",
     "check_ru": "Таблица в руководстве читается плохо: сверить по прибору",
     "datasheet_url": "https://instruments.co.za/attachment?id_attachment=255",
     "datasheet_kind": "manual",
-    "datasheet_note": "Benetech GT5101 Manual (PDF)"
+    "datasheet_note": "Benetech GT5101 Manual (PDF)",
+    "short_ru": "Микроманометр до ±500 Па для воздуховодов и фильтров.",
+    "short_lv": "Mikromanometrs līdz ±500 Pa kanāliem un filtriem.",
+    "short_en": "Micromanometer up to ±500 Pa for ducts and filters."
   },
   {
     "id": 43,
@@ -766,11 +989,20 @@
     "category": "biezums-vibracija",
     "photo": "https://ivancovs.com/wp-content/uploads/2026/02/Handheld-Ultrasonic-Flow-Meter-1.png",
     "source_url": "https://images-na.ssl-images-amazon.com/images/I/91UF3OH+pjL.pdf",
-    "status": "todo",
-    "check_ru": "Для TUF-3000L нет паспорта; у серии TUF точность около ±1 %, трубы от DN15, нужна сверка",
+    "status": "partial",
+    "check_ru": "В комплектах указан как TUF-3000L, у нас TUF-2000H: уточнить",
     "datasheet_url": "https://images-na.ssl-images-amazon.com/images/I/91UF3OH+pjL.pdf",
     "datasheet_kind": "manual",
-    "datasheet_note": "TUF-2000H User Manual (PDF)"
+    "datasheet_note": "TUF-2000H User Manual (PDF)",
+    "purpose_ru": "Портативный ультразвуковой расходомер: расход воды в трубе без врезки.",
+    "specs_ru": [
+      "Трубы DN15…DN6000 (в зависимости от датчиков)",
+      "Скорость до ±32 м/с, точность лучше ±1 %",
+      "Вода, гликоль, масла, дизель"
+    ],
+    "short_ru": "Ультразвуковой расходомер: расход воды в трубе без врезки.",
+    "short_lv": "Ultraskaņas plūsmas mērītājs: ūdens plūsma caurulē bez iegriešanās.",
+    "short_en": "Ultrasonic flow meter: water flow in a pipe without cutting in."
   },
   {
     "id": 44,
@@ -780,10 +1012,20 @@
     "category": "biezums-vibracija",
     "photo": "https://ivancovs.com/wp-content/uploads/2026/02/Ultraskanas-plusmas-skaititajs.png",
     "source_url": "https://5.imimg.com/data5/SELLER/Doc/2023/8/334415108/KP/RD/WJ/38455781/ultra-hand-held-ultrasonic-flow-meter.pdf",
-    "status": "todo",
+    "status": "partial",
     "datasheet_url": "https://5.imimg.com/data5/SELLER/Doc/2023/8/334415108/KP/RD/WJ/38455781/ultra-hand-held-ultrasonic-flow-meter.pdf",
     "datasheet_kind": "manual",
-    "datasheet_note": "TUF-2000B User Manual (PDF)"
+    "datasheet_note": "TUF-2000B User Manual (PDF)",
+    "purpose_ru": "Ультразвуковой расходомер и теплосчётчик: расход и тепловая энергия на трубопроводе.",
+    "specs_ru": [
+      "Трубы DN15…DN6000",
+      "2 датчика PT100 для подачи и обратки",
+      "RS485 Modbus, выход 4–20 мА, расчёт тепла по EN 1434"
+    ],
+    "check_ru": "Сверить комплектацию датчиков",
+    "short_ru": "Ультразвуковой расходомер и теплосчётчик для трубопроводов.",
+    "short_lv": "Ultraskaņas plūsmas un siltuma skaitītājs caurulēm.",
+    "short_en": "Ultrasonic flow and heat meter for pipelines."
   },
   {
     "id": 45,
@@ -794,18 +1036,21 @@
     "photo": "https://ivancovs.com/wp-content/uploads/2026/02/Ultraskanas-biezuma-meritajs.png",
     "source_url": "http://www.benetechco.net/",
     "status": "partial",
-    "purpose_ru": "Ультразвуковой толщиномер: толщина стальных стенок и труб с одной стороны.",
+    "purpose_ru": "Ультразвуковой толщиномер: стенки труб, металл, ёмкости с одной стороны.",
     "specs_ru": [
-      "Диапазон 1,2…225 мм (сталь), ±(1 % H + 0,1 мм)",
-      "Скорость звука 1000…9999 м/с",
-      "Рабочая температура 0…40 °C"
+      "Диапазон по стали 1,2…225 мм",
+      "Точность ±(1 % + 0,1 мм), разрешение 0,1 мм",
+      "Скорость звука 1000…9999 м/с, 12 материалов"
     ],
     "kit_ru": "",
     "source_note": "Официальное руководство Benetech GM100 (benetechco.net)",
-    "check_ru": "Производитель может отличаться: на рынке есть другие GM100 с диапазоном до 300 мм",
+    "check_ru": "Производитель GM100 может отличаться: на рынке есть другие модели",
     "datasheet_url": "http://www.benetechco.net/UploadSysFiles/Images/Product/3/2/GM100b/7160101004-GM100.pdf",
     "datasheet_kind": "official",
-    "datasheet_note": "Benetech GM100 Instruction Manual (PDF)"
+    "datasheet_note": "Benetech GM100 Instruction Manual (PDF)",
+    "short_ru": "Ультразвуковой толщиномер: стенки труб и металла с одной стороны.",
+    "short_lv": "Ultraskaņas biezuma mērītājs: cauruļu un metāla sieniņas no vienas puses.",
+    "short_en": "Ultrasonic thickness gauge: pipe and metal walls from one side."
   },
   {
     "id": 46,
@@ -816,16 +1061,20 @@
     "photo": "https://ivancovs.com/wp-content/uploads/2026/02/Pjezoelektriskais-vibracijas-meritajs.png",
     "source_url": "https://www.mtmpre.com.my/showproducts/productid/5989692/cid/580642/landtek-vibration-meter-vm6370/",
     "status": "partial",
-    "purpose_ru": "Виброметр с пьезодатчиком: ускорение, скорость, перемещение вибрации машин.",
+    "purpose_ru": "Виброметр: ускорение, скорость и перемещение вибрации двигателей, насосов, вентиляторов.",
     "specs_ru": [
-      "Ускорение 0,1…400 м/с², скорость 0,01…400 мм/с (по описанию варианта VM6370T)",
-      "Вес около 340 г"
+      "Ускорение 0,1…400 м/с², 10 Гц…10 кГц",
+      "Скорость 0,01…400 мм/с, перемещение 0,001…4 мм",
+      "Точность ±5 % + 2 знака, ISO 2954"
     ],
     "kit_ru": "",
     "source_note": "Страницы продавцов (Landtek)",
     "check_ru": "Частотный диапазон и точность не подтверждены",
     "datasheet_kind": "manual",
     "datasheet_note": "Landtek VM-6370 User Manual (PDF)",
-    "datasheet_url": "https://cdn1.npcdn.net/userfiles/21836/attachment/5989692/20250807043332_7d2af8c5c92f355574a6464034e26e3c/VM-6370-EN.pdf"
+    "datasheet_url": "https://cdn1.npcdn.net/userfiles/21836/attachment/5989692/20250807043332_7d2af8c5c92f355574a6464034e26e3c/VM-6370-EN.pdf",
+    "short_ru": "Виброметр: вибрация двигателей, насосов и вентиляторов.",
+    "short_lv": "Vibrometrs: dzinēju, sūkņu un ventilatoru vibrācija.",
+    "short_en": "Vibration meter for motors, pumps and fans."
   }
 ]
