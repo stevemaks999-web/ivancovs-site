@@ -19,6 +19,7 @@ function ivs_tg_opts() {
 		'secret' => '',
 		'code'   => '',
 		'chats'  => array(),
+		'menu'   => 0,
 	), is_array( $o ) ? $o : array() );
 }
 
@@ -72,6 +73,20 @@ function ivs_tg_send_all( $text, $keyboard = null, $blocking = false ) {
 	}
 }
 
+/** Кнопка «Меню» рядом с полем ввода и список команд. */
+function ivs_tg_setup_menu() {
+	ivs_tg_call( 'setMyCommands', array( 'commands' => array(
+		array( 'command' => 'book', 'description' => 'Забронировать: снять прибор с сайта' ),
+		array( 'command' => 'orders', 'description' => 'Активные брони' ),
+		array( 'command' => 'blocks', 'description' => 'Снятые с сайта приборы' ),
+		array( 'command' => 'menu', 'description' => 'Показать кнопки внизу' ),
+	) ) );
+	ivs_tg_call( 'setChatMenuButton', array( 'menu_button' => array( 'type' => 'commands' ) ) );
+	$o         = ivs_tg_opts();
+	$o['menu'] = 1;
+	ivs_tg_save( $o );
+}
+
 function ivs_tg_h( $s ) {
 	return htmlspecialchars( (string) $s, ENT_NOQUOTES, 'UTF-8' );
 }
@@ -104,6 +119,7 @@ function ivs_tg_page() {
 				'secret_token'    => $o['secret'],
 				'allowed_updates' => array( 'message', 'callback_query' ),
 			) );
+			ivs_tg_setup_menu();
 			$msg = is_wp_error( $r ) ? 'Не удалось подключить: ' . $r->get_error_message() : 'Сохранено, бот подключён.';
 		} elseif ( 'code' === $do ) {
 			$o['code'] = strtoupper( wp_generate_password( 8, false ) );
@@ -165,6 +181,9 @@ add_action( 'rest_api_init', function () {
 			if ( ! $o['secret'] || ! $hdr || ! hash_equals( $o['secret'], $hdr ) ) {
 				return new WP_REST_Response( array( 'ok' => false ), 403 );
 			}
+			if ( empty( $o['menu'] ) ) {
+				ivs_tg_setup_menu();
+			}
 			$u = $req->get_json_params();
 			if ( ! empty( $u['callback_query'] ) ) {
 				ivs_tg_on_callback( $u['callback_query'] );
@@ -223,6 +242,8 @@ function ivs_tg_on_message( $m ) {
 	$arg = trim( preg_replace( '/^@\S+\s*/', '', trim( (string) substr( $text, strlen( $cmd ) ) ) ) );
 	if ( '/orders' === $cmd || IVS_TG_BTN_ORDERS === $text ) {
 		ivs_tg_cmd_orders( $chat );
+	} elseif ( '/menu' === $cmd ) {
+		ivs_tg_menu( $chat, 'Кнопки внизу экрана.' );
 	} elseif ( '/book' === $cmd || IVS_TG_BTN_BOOK === $text ) {
 		ivs_tg_book_list( $chat, 0, 0 );
 	} elseif ( '/block' === $cmd ) {
