@@ -575,17 +575,80 @@ add_action( 'ivs_book_release_unpaid', function () {
 	}
 } );
 
+
+/* ---------- Блочное оформление заказа (Store API) ---------- */
+
+/** Поле «кто заберёт» в блочном оформлении. */
+add_action( 'woocommerce_init', function () {
+	if ( ! function_exists( 'woocommerce_register_additional_checkout_field' ) ) {
+		return;
+	}
+	woocommerce_register_additional_checkout_field( array(
+		'id'       => 'ivancovs/pickup-name',
+		'label'    => 'Vārds un uzvārds, kas saņems instrumentu / Имя и фамилия того, кто заберёт прибор',
+		'location' => 'order',
+		'type'     => 'text',
+		'required' => true,
+	) );
+} );
+
+/** Имя того, кто заберёт: из нашего поля или из поля блочного оформления. */
+function ivs_book_pickup_name( $order ) {
+	$n = $order->get_meta( '_ivs_pickup_name' );
+	if ( ! $n ) {
+		$n = $order->get_meta( '_wc_other/ivancovs/pickup-name' );
+	}
+	return is_string( $n ) ? $n : '';
+}
+
+/**
+ * Блочное оформление: даты берём из корзины, проверяем занятость и занимаем приборы до оплаты.
+ */
+add_action( 'woocommerce_store_api_checkout_order_processed', function ( $order ) {
+	$used = array();
+	foreach ( WC()->cart->get_cart() as $ci ) {
+		if ( empty( $ci['ivs_from'] ) ) {
+			continue;
+		}
+		$err = ivs_book_validate( $ci['product_id'], $ci['ivs_from'], $ci['ivs_to'], $ci['ivs_t_from'], $ci['ivs_t_to'], (int) $ci['quantity'] );
+		if ( '' !== $err ) {
+			throw new \Automattic\WooCommerce\StoreApi\Exceptions\RouteException( 'ivs_busy', esc_html( get_the_title( $ci['product_id'] ) . ': ' . $err ), 409 );
+		}
+		foreach ( $order->get_items() as $item_id => $item ) {
+			if ( isset( $used[ $item_id ] ) || (int) $item->get_product_id() !== (int) $ci['product_id'] || (int) $item->get_quantity() !== (int) $ci['quantity'] ) {
+				continue;
+			}
+			$used[ $item_id ] = true;
+			$item->update_meta_data( '_ivs_from', $ci['ivs_from'] );
+			$item->update_meta_data( '_ivs_to', $ci['ivs_to'] );
+			$item->update_meta_data( '_ivs_t_from', $ci['ivs_t_from'] );
+			$item->update_meta_data( '_ivs_t_to', $ci['ivs_t_to'] );
+			$item->update_meta_data( ivs_t( 'Saņemšana', 'Выдача', 'Pickup' ), $ci['ivs_from'] . ' ' . $ci['ivs_t_from'] );
+			$item->update_meta_data( ivs_t( 'Atgriešana', 'Возврат', 'Return' ), $ci['ivs_to'] . ' ' . $ci['ivs_t_to'] );
+			$item->update_meta_data( ivs_t( 'Dienas', 'Суток', 'Days' ), ivs_book_days( $ci['ivs_from'], $ci['ivs_to'] ) );
+			$item->save();
+			break;
+		}
+	}
+	$name = $order->get_meta( '_wc_other/ivancovs/pickup-name' );
+	if ( $name ) {
+		$order->update_meta_data( '_ivs_pickup_name', sanitize_text_field( $name ) );
+		$order->save();
+	}
+	ivs_book_save_order( $order );
+}, 10, 1 );
+
 /* ---------- Имя того, кто заберёт: админка и письма ---------- */
 
 add_action( 'woocommerce_admin_order_data_after_billing_address', function ( $order ) {
-	$n = $order->get_meta( '_ivs_pickup_name' );
+	$n = ivs_book_pickup_name( $order );
 	if ( $n ) {
 		echo '<p><strong>' . esc_html__( 'Заберёт', 'ivancovs' ) . ':</strong> ' . esc_html( $n ) . '</p>';
 	}
 } );
 
 add_filter( 'woocommerce_email_order_meta_fields', function ( $fields, $sent_to_admin, $order ) {
-	$n = $order->get_meta( '_ivs_pickup_name' );
+	$n = ivs_book_pickup_name( $order );
 	if ( $n ) {
 		$fields['ivs_pickup_name'] = array(
 			'label' => ivs_t( 'Instrumentu saņems', 'Прибор заберёт', 'Collected by' ),
