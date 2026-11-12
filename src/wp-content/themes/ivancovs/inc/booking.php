@@ -462,6 +462,10 @@ add_action( 'woocommerce_check_cart_items', function () {
 	if ( defined( 'REST_REQUEST' ) && REST_REQUEST && function_exists( 'wc_clear_notices' ) ) {
 		wc_clear_notices();
 	}
+	// Заказ уже создан и проверен без учёта себя (ivs_book store_api хук): повторная проверка корзины увидит его же даты занятыми.
+	if ( ! empty( $GLOBALS['ivs_order_checked'] ) ) {
+		return;
+	}
 	foreach ( WC()->cart->get_cart() as $item ) {
 		if ( empty( $item['ivs_from'] ) ) {
 			continue;
@@ -619,6 +623,7 @@ function ivs_book_pickup_name( $order ) {
  */
 add_action( 'woocommerce_store_api_checkout_order_processed', function ( $order ) {
 	$used = array();
+	$GLOBALS['ivs_order_checked'] = true;
 	foreach ( WC()->cart->get_cart() as $ci ) {
 		if ( empty( $ci['ivs_from'] ) ) {
 			continue;
