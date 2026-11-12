@@ -204,13 +204,13 @@ function ivs_tg_on_message( $m ) {
 		$code = trim( substr( $text, 6 ) );
 		$o    = ivs_tg_opts();
 		if ( ivs_tg_is_paired( $chat ) ) {
-			ivs_tg_reply( $chat, 'Чат уже подключён. Команды: /orders, /block, /blocks, /help' );
+			ivs_tg_menu( $chat, 'Чат уже подключён. Кнопки внизу экрана.' );
 		} elseif ( $code && $o['code'] && hash_equals( $o['code'], strtoupper( $code ) ) ) {
 			$o['chats'][] = (string) $chat;
 			$o['chats']   = array_values( array_unique( $o['chats'] ) );
 			$o['code']    = '';
 			ivs_tg_save( $o );
-			ivs_tg_reply( $chat, '✅ Чат подключён. Новые заказы будут приходить сюда. Команды: /orders, /block, /blocks, /help' );
+			ivs_tg_menu( $chat, '✅ Чат подключён. Новые заказы будут приходить сюда. Кнопки внизу экрана.' );
 		} else {
 			ivs_tg_reply( $chat, 'Нужен код подключения из админки сайта: /start КОД' );
 		}
@@ -221,15 +221,157 @@ function ivs_tg_on_message( $m ) {
 	}
 	$cmd = strtolower( strtok( $text, " \n@" ) );
 	$arg = trim( preg_replace( '/^@\S+\s*/', '', trim( (string) substr( $text, strlen( $cmd ) ) ) ) );
-	if ( '/orders' === $cmd ) {
+	if ( '/orders' === $cmd || IVS_TG_BTN_ORDERS === $text ) {
 		ivs_tg_cmd_orders( $chat );
+	} elseif ( '/book' === $cmd || IVS_TG_BTN_BOOK === $text ) {
+		ivs_tg_book_list( $chat, 0, 0 );
 	} elseif ( '/block' === $cmd ) {
 		ivs_tg_cmd_block( $chat, $arg );
-	} elseif ( '/blocks' === $cmd ) {
+	} elseif ( '/blocks' === $cmd || IVS_TG_BTN_BLOCKS === $text ) {
 		ivs_tg_cmd_blocks( $chat );
 	} else {
-		ivs_tg_reply( $chat, "Команды:\n/orders — активные брони\n/block Testo 420 21.11.2026 25.11.2026 — снять прибор с сайта на даты (одна дата = один день)\n/blocks — список снятых приборов с кнопками «вернуть на сайт»" );
+		ivs_tg_menu( $chat, "Кнопки внизу:\n📅 Забронировать — снять прибор с сайта на даты (список и календарь)\n📋 Брони — активные заказы\n🚫 Снятые — что снято с сайта, с кнопками «вернуть»" );
 	}
+}
+
+define( 'IVS_TG_BTN_BOOK', '📅 Забронировать' );
+define( 'IVS_TG_BTN_ORDERS', '📋 Брони' );
+define( 'IVS_TG_BTN_BLOCKS', '🚫 Снятые' );
+
+/** Сообщение с постоянными кнопками внизу экрана. */
+function ivs_tg_menu( $chat_id, $text ) {
+	ivs_tg_call( 'sendMessage', array(
+		'chat_id'      => $chat_id,
+		'text'         => $text,
+		'parse_mode'   => 'HTML',
+		'reply_markup' => array(
+			'keyboard'        => array( array( array( 'text' => IVS_TG_BTN_BOOK ) ), array( array( 'text' => IVS_TG_BTN_ORDERS ), array( 'text' => IVS_TG_BTN_BLOCKS ) ) ),
+			'resize_keyboard' => true,
+		),
+	) );
+}
+
+function ivs_tg_edit( $chat, $mid, $text, $kb ) {
+	ivs_tg_call( 'editMessageText', array(
+		'chat_id'      => $chat,
+		'message_id'   => $mid,
+		'text'         => $text,
+		'parse_mode'   => 'HTML',
+		'reply_markup' => array( 'inline_keyboard' => $kb ),
+	) );
+}
+
+/* ---------- «Забронировать»: прибор → даты ---------- */
+
+function ivs_tg_book_products() {
+	$ids = get_posts( array( 'post_type' => 'product', 'post_status' => 'publish', 'numberposts' => 200, 'orderby' => 'title', 'order' => 'ASC', 'fields' => 'ids' ) );
+	$out = array();
+	foreach ( $ids as $id ) {
+		if ( ! ivs_book_is_kit( $id ) ) {
+			$out[ $id ] = get_the_title( $id );
+		}
+	}
+	return $out;
+}
+
+/** Список приборов, по 8 на страницу. $mid = 0: новое сообщение, иначе правка. */
+function ivs_tg_book_list( $chat, $mid, $page ) {
+	$all   = ivs_tg_book_products();
+	$per   = 8;
+	$pages = max( 1, (int) ceil( count( $all ) / $per ) );
+	$page  = max( 0, min( $page, $pages - 1 ) );
+	$kb    = array();
+	foreach ( array_slice( $all, $page * $per, $per, true ) as $id => $title ) {
+		$kb[] = array( array( 'text' => $title, 'callback_data' => 'bp|' . $id . '|' . substr( ivs_book_today(), 0, 7 ) ) );
+	}
+	$nav = array();
+	if ( $page > 0 ) {
+		$nav[] = array( 'text' => '‹ Назад', 'callback_data' => 'bl|' . ( $page - 1 ) );
+	}
+	if ( $page < $pages - 1 ) {
+		$nav[] = array( 'text' => 'Дальше ›', 'callback_data' => 'bl|' . ( $page + 1 ) );
+	}
+	if ( $nav ) {
+		$kb[] = $nav;
+	}
+	$text = '📅 <b>Какой прибор снять с сайта?</b> (' . ( $page + 1 ) . '/' . $pages . ')';
+	if ( $mid ) {
+		ivs_tg_edit( $chat, $mid, $text, $kb );
+	} else {
+		ivs_tg_reply( $chat, $text, $kb );
+	}
+}
+
+/** Календарь месяца. $from пусто: выбор первого дня, иначе выбор последнего. */
+function ivs_tg_cal( $pid, $ym, $from ) {
+	$today = ivs_book_today();
+	$names = array( 'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь' );
+	$y     = (int) substr( $ym, 0, 4 );
+	$m     = (int) substr( $ym, 5, 2 );
+	$min   = $from ? $from : $today;
+	$prev  = gmdate( 'Y-m', gmmktime( 0, 0, 0, $m - 1, 1, $y ) );
+	$next  = gmdate( 'Y-m', gmmktime( 0, 0, 0, $m + 1, 1, $y ) );
+	$nv    = $from ? 'bq|' . $pid . '|' . $from . '|' : 'bp|' . $pid . '|';
+	$can   = $prev >= substr( $min, 0, 7 );
+	$kb    = array( array(
+		array( 'text' => $can ? '‹' : ' ', 'callback_data' => $can ? $nv . $prev : 'x' ),
+		array( 'text' => $names[ $m - 1 ] . ' ' . $y, 'callback_data' => 'x' ),
+		array( 'text' => '›', 'callback_data' => $nv . $next ),
+	), array() );
+	foreach ( array( 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс' ) as $w ) {
+		$kb[1][] = array( 'text' => $w, 'callback_data' => 'x' );
+	}
+	$first = gmmktime( 0, 0, 0, $m, 1, $y );
+	$lead  = ( (int) gmdate( 'N', $first ) ) - 1;
+	$count = (int) gmdate( 't', $first );
+	$row   = array();
+	for ( $i = 0; $i < $lead; $i++ ) {
+		$row[] = array( 'text' => ' ', 'callback_data' => 'x' );
+	}
+	for ( $d = 1; $d <= $count; $d++ ) {
+		$date = sprintf( '%04d-%02d-%02d', $y, $m, $d );
+		if ( $date < $min ) {
+			$row[] = array( 'text' => '·', 'callback_data' => 'x' );
+		} else {
+			$row[] = array( 'text' => (string) $d, 'callback_data' => ( $from ? 'be|' . $pid . '|' . $from . '|' : 'bf|' . $pid . '|' ) . $date );
+		}
+		if ( 7 === count( $row ) ) {
+			$kb[] = $row;
+			$row  = array();
+		}
+	}
+	if ( $row ) {
+		while ( count( $row ) < 7 ) {
+			$row[] = array( 'text' => ' ', 'callback_data' => 'x' );
+		}
+		$kb[] = $row;
+	}
+	$kb[] = array( array( 'text' => '‹ К списку приборов', 'callback_data' => 'bl|0' ) );
+	return $kb;
+}
+
+/** Снять прибор с сайта на даты. Возвращает текст ошибки или ''. */
+function ivs_tg_add_block( $pid, $from, $to ) {
+	global $wpdb;
+	if ( ! $pid || ! get_post( $pid ) || ivs_book_is_kit( $pid ) || $to < $from ) {
+		return 'Не удалось: проверьте прибор и даты';
+	}
+	$wpdb->insert( ivs_book_table(), array( // phpcs:ignore
+		'order_id'     => 0,
+		'item_id'      => 0,
+		'product_id'   => $pid,
+		'component_id' => $pid,
+		'qty'          => ivs_book_units( $pid ),
+		'date_from'    => $from,
+		'date_to'      => $to,
+		'active'       => 1,
+		'created'      => current_time( 'mysql', true ),
+	) );
+	return '';
+}
+
+function ivs_tg_fmt_date( $d ) {
+	return substr( $d, 8, 2 ) . '.' . substr( $d, 5, 2 ) . '.' . substr( $d, 0, 4 );
 }
 
 /* ---------- Заказ: текст и кнопки ---------- */
@@ -356,6 +498,26 @@ function ivs_tg_on_callback( $cb ) {
 		$wpdb->delete( ivs_book_table(), array( 'id' => absint( $p[1] ), 'order_id' => 0 ) ); // phpcs:ignore
 		$ans = 'Прибор снова на сайте';
 		ivs_tg_cmd_blocks( $chat );
+	} elseif ( 'bl' === $p[0] ) {
+		ivs_tg_book_list( $chat, $mid, (int) ( $p[1] ?? 0 ) );
+	} elseif ( 'bp' === $p[0] && isset( $p[2] ) ) {
+		$pid = absint( $p[1] );
+		ivs_tg_edit( $chat, $mid, '📅 <b>' . ivs_tg_h( get_the_title( $pid ) ) . "</b>\nС какого дня снять с сайта?", ivs_tg_cal( $pid, $p[2], '' ) );
+	} elseif ( 'bf' === $p[0] && isset( $p[2] ) ) {
+		$pid = absint( $p[1] );
+		ivs_tg_edit( $chat, $mid, '📅 <b>' . ivs_tg_h( get_the_title( $pid ) ) . "</b>\nС " . ivs_tg_fmt_date( $p[2] ) . ".\nПо какой день включительно? (на один день нажмите ту же дату)", ivs_tg_cal( $pid, substr( $p[2], 0, 7 ), $p[2] ) );
+	} elseif ( 'bq' === $p[0] && isset( $p[3] ) ) {
+		$pid = absint( $p[1] );
+		ivs_tg_edit( $chat, $mid, '📅 <b>' . ivs_tg_h( get_the_title( $pid ) ) . "</b>\nС " . ivs_tg_fmt_date( $p[2] ) . ".\nПо какой день включительно?", ivs_tg_cal( $pid, $p[3], $p[2] ) );
+	} elseif ( 'be' === $p[0] && isset( $p[3] ) ) {
+		$pid = absint( $p[1] );
+		$err = ivs_tg_add_block( $pid, $p[2], $p[3] );
+		if ( $err ) {
+			$ans = $err;
+		} else {
+			$ans = 'Готово';
+			ivs_tg_edit( $chat, $mid, '🚫 <b>' . ivs_tg_h( get_the_title( $pid ) ) . '</b> снят с сайта: ' . ivs_tg_fmt_date( $p[2] ) . ( $p[3] !== $p[2] ? ' → ' . ivs_tg_fmt_date( $p[3] ) : '' ) . "\nВернуть можно кнопкой «🚫 Снятые».", array( array( array( 'text' => '📅 Забронировать ещё', 'callback_data' => 'bl|0' ) ) ) );
+		}
 	}
 	ivs_tg_call( 'answerCallbackQuery', array( 'callback_query_id' => $qid, 'text' => $ans, 'show_alert' => strlen( $ans ) > 40 ) );
 }
