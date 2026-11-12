@@ -14,6 +14,10 @@ const IVS_EMAIL         = 'dmitrijs@ivancovs.com';
 
 /** Текущий язык: lv, ru или en (Polylang, иначе по локали). */
 function ivs_lang() {
+	// Товары не переводятся плагином, язык страницы прибора берём из параметра ?ivl=ru|en.
+	if ( isset( $_GET['ivl'] ) && in_array( $_GET['ivl'], array( 'ru', 'en' ), true ) && function_exists( 'is_woocommerce' ) && is_woocommerce() ) { // phpcs:ignore WordPress.Security.NonceVerification
+		return $_GET['ivl']; // phpcs:ignore
+	}
 	if ( function_exists( 'pll_current_language' ) ) {
 		$l = pll_current_language();
 		if ( $l ) {
@@ -106,14 +110,29 @@ class IVS_Flat_Walker extends Walker_Nav_Menu {
 	public function end_lvl( &$output, $depth = 0, $args = null ) {}
 }
 
+/** Добавляет к адресу параметр языка (для lv убирает). Только для страниц каталога и приборов. */
+function ivs_lang_url( $url, $lang = null ) {
+	$lang = $lang ? $lang : ivs_lang();
+	$url  = remove_query_arg( 'ivl', $url );
+	return 'lv' === $lang ? $url : add_query_arg( 'ivl', $lang, $url );
+}
+
 /** Переключатель языков: Polylang, иначе просто подпись. */
 function ivs_lang_switch() {
 	if ( function_exists( 'pll_the_languages' ) ) {
 		$langs = pll_the_languages( array( 'raw' => 1 ) );
 		if ( $langs ) {
 			$out = array();
+			$is_shop = function_exists( 'is_woocommerce' ) && is_woocommerce();
+			$cur     = ivs_lang();
 			foreach ( $langs as $l ) {
 				$name = strtoupper( $l['slug'] );
+				if ( $is_shop ) {
+					$on  = $l['slug'] === $cur;
+					$url = ivs_lang_url( home_url( add_query_arg( null, null ) ), $l['slug'] );
+					$out[] = $on ? '<b>' . esc_html( $name ) . '</b>' : '<a href="' . esc_url( $url ) . '">' . esc_html( $name ) . '</a>';
+					continue;
+				}
 				$out[] = $l['current_lang'] ? '<b>' . esc_html( $name ) . '</b>' : '<a href="' . esc_url( $l['url'] ) . '">' . esc_html( $name ) . '</a>';
 			}
 			echo '<span class="lang">' . implode( ' · ', $out ) . '</span>'; // phpcs:ignore
