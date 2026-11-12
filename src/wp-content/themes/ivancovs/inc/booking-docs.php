@@ -346,7 +346,35 @@ add_action( 'woocommerce_process_shop_order_meta', function ( $order_id ) {
 	$order->save();
 } );
 
-/** «Прибор выдан»: нужен проверенный документ и серийные номера. */
+/** Выдача: нужны проверенный документ и серийные номера. Возвращает текст ошибки или ''. */
+function ivs_do_issue( $order, $who = 'в админке' ) {
+	if ( $order->get_meta( '_ivs_issued_at' ) ) {
+		return 'Уже выдано.';
+	}
+	$serials = array_filter( (array) $order->get_meta( '_ivs_serials' ) );
+	if ( ! $order->get_meta( '_ivs_doc_checked' ) || count( $serials ) < count( ivs_act_rows( $order ) ) ) {
+		return 'Сначала впишите все серийные номера, выберите документ, отметьте «документ проверен» и сохраните заказ.';
+	}
+	$order->update_meta_data( '_ivs_issued_at', wp_date( 'd.m.Y H:i' ) );
+	$order->add_order_note( 'Приборы выданы, документ проверен (' . $who . ').' );
+	$order->save();
+	return '';
+}
+
+/** Возврат: освобождаем даты, закрываем заказ, пишем клиенту. */
+function ivs_do_return( $order, $who = 'в админке' ) {
+	if ( $order->get_meta( '_ivs_returned_at' ) ) {
+		return 'Уже возвращено.';
+	}
+	global $wpdb;
+	$order->update_meta_data( '_ivs_returned_at', wp_date( 'd.m.Y H:i' ) );
+	$order->save();
+	$order->update_status( 'completed', 'Приборы возвращены (' . $who . ').' );
+	$wpdb->update( ivs_book_table(), array( 'active' => 0 ), array( 'order_id' => $order->get_id() ) ); // phpcs:ignore
+	ivs_send_return_email( $order );
+	return '';
+}
+
 add_action( 'admin_post_ivs_issue', function () {
 	$id = isset( $_GET['order_id'] ) ? absint( $_GET['order_id'] ) : 0;
 	check_admin_referer( 'ivs_issue_' . $id );
@@ -357,18 +385,14 @@ add_action( 'admin_post_ivs_issue', function () {
 	if ( ! $order ) {
 		wp_die( 'Заказ не найден' );
 	}
-	$serials = array_filter( (array) $order->get_meta( '_ivs_serials' ) );
-	if ( ! $order->get_meta( '_ivs_doc_checked' ) || count( $serials ) < count( ivs_act_rows( $order ) ) ) {
-		wp_die( 'Сначала впишите все серийные номера, выберите документ, отметьте «документ проверен» и сохраните заказ.', 'Выдача', array( 'back_link' => true ) );
+	$err = ivs_do_issue( $order );
+	if ( $err ) {
+		wp_die( esc_html( $err ), 'Выдача', array( 'back_link' => true ) );
 	}
-	$order->update_meta_data( '_ivs_issued_at', wp_date( 'd.m.Y H:i' ) );
-	$order->add_order_note( 'Приборы выданы, документ проверен.' );
-	$order->save();
 	wp_safe_redirect( wp_get_referer() ? wp_get_referer() : admin_url() );
 	exit;
 } );
 
-/** «Прибор возвращён»: освобождаем даты, закрываем заказ, пишем клиенту. */
 add_action( 'admin_post_ivs_return', function () {
 	$id = isset( $_GET['order_id'] ) ? absint( $_GET['order_id'] ) : 0;
 	check_admin_referer( 'ivs_return_' . $id );
@@ -379,12 +403,7 @@ add_action( 'admin_post_ivs_return', function () {
 	if ( ! $order ) {
 		wp_die( 'Заказ не найден' );
 	}
-	global $wpdb;
-	$order->update_meta_data( '_ivs_returned_at', wp_date( 'd.m.Y H:i' ) );
-	$order->save();
-	$order->update_status( 'completed', 'Приборы возвращены.' );
-	$wpdb->update( ivs_book_table(), array( 'active' => 0 ), array( 'order_id' => $id ) ); // phpcs:ignore
-	ivs_send_return_email( $order );
+	ivs_do_return( $order );
 	wp_safe_redirect( wp_get_referer() ? wp_get_referer() : admin_url() );
 	exit;
 } );

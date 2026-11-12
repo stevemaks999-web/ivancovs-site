@@ -122,7 +122,7 @@ function ivs_book_busy_days( $product_id, $from, $to, $exclude_order = 0 ) {
 	foreach ( $comp as $cid => $need ) {
 		$total = ivs_book_units( $cid );
 		$sql   = $wpdb->prepare(
-			"SELECT date_from, date_to, qty FROM {$t} WHERE component_id=%d AND active=1 AND date_to>=%s AND date_from<=%s AND order_id<>%d", // phpcs:ignore
+			"SELECT date_from, date_to, qty FROM {$t} WHERE component_id=%d AND active=1 AND date_to>=%s AND date_from<=%s AND (order_id=0 OR order_id<>%d)", // phpcs:ignore
 			$cid,
 			$from,
 			$to,
