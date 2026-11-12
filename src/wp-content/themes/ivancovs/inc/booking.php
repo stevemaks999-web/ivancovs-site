@@ -464,7 +464,18 @@ add_action( 'woocommerce_check_cart_items', function () {
 		}
 		$err = ivs_book_validate( $item['product_id'], $item['ivs_from'], $item['ivs_to'], $item['ivs_t_from'], $item['ivs_t_to'], (int) $item['quantity'] );
 		if ( '' !== $err ) {
-			wc_add_notice( get_the_title( $item['product_id'] ) . ': ' . $err, 'error' );
+			$dbg = '';
+			if ( current_user_can( 'manage_woocommerce' ) ) {
+				global $wpdb;
+				$dbg = ' [debug ' . wp_json_encode( array(
+					'rows'  => $wpdb->get_results( $wpdb->prepare( 'SELECT order_id,component_id,qty,date_from,date_to,active FROM ' . ivs_book_table() . ' WHERE date_to>=%s', ivs_book_today() ) ), // phpcs:ignore
+					'qty'   => (int) $item['quantity'],
+					'units' => ivs_book_units( $item['product_id'] ),
+					'draft' => WC()->session ? (int) WC()->session->get( 'store_api_draft_order', 0 ) : -1,
+					'free'  => ivs_book_free_for_range( $item['product_id'], $item['ivs_from'], $item['ivs_to'] ),
+				) ) . ']';
+			}
+			wc_add_notice( get_the_title( $item['product_id'] ) . ': ' . $err . $dbg, 'error' );
 		}
 	}
 } );
