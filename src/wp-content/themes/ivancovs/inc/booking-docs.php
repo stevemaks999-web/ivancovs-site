@@ -439,6 +439,12 @@ add_action( 'woocommerce_email_after_order_table', function ( $order, $sent_to_a
 		'Выдача и возврат с 9:00 до 18:00. В выходные только по договорённости с Дмитрием. Покажите один документ: паспорт, права или ID. Прибор заберёт только человек, указанный в заказе.',
 		'Pickup and return 9:00–18:00. Weekends only by arrangement with Dmitrijs. Show one ID: passport, licence or ID card. Only the person named in the order can collect the instrument.',
 	);
+	list( , $deposit ) = ivs_order_lines( $order );
+	if ( $deposit > 0 ) {
+		$rules[0] .= ' Drošības nauda ' . ivs_money( $deposit ) . ' tiks atmaksāta pēc instrumenta atgriešanas.';
+		$rules[1] .= ' Залог ' . ivs_money( $deposit ) . ' будет возвращён после возврата прибора.';
+		$rules[2] .= ' The deposit of ' . ivs_money( $deposit ) . ' is refunded after the instrument is returned.';
+	}
 	if ( $plain_text ) {
 		echo "\n" . $link . "\n" . implode( "\n", $rules ) . "\n"; // phpcs:ignore
 		return;
@@ -456,6 +462,11 @@ add_action( 'woocommerce_thankyou', function ( $order_id ) {
 		echo '<p><a class="btn" href="' . esc_url( ivs_doc_url( $order, 'invoice' ) ) . '">' . esc_html( ivs_t( 'Rēķins (PVN 21%)', 'Счёт (PVN 21%)', 'Invoice (21% VAT)' ) ) . '</a></p>';
 	}
 }, 5 );
+
+/** При возврате клиент получает наше письмо о возврате, стандартное «Выполненный заказ» не нужно. */
+add_filter( 'woocommerce_email_enabled_customer_completed_order', function ( $enabled, $order ) {
+	return ( $order && ivs_order_has_booking( $order ) ) ? false : $enabled;
+}, 10, 2 );
 
 /** Служебные поля дат не показываем в заказе. */
 add_filter( 'woocommerce_hidden_order_itemmeta', function ( $keys ) {
