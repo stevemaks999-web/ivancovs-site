@@ -20,7 +20,7 @@ while ( have_posts() ) :
 	$wa_text = sprintf( ivs_t( 'Sveiki! Interesē noma: %s', 'Здравствуйте! Интересует аренда: %s', 'Hello! I am interested in renting: %s' ), get_the_title() );
 	?>
 <div class="wrap">
-	<div class="crumbs"><a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php ivs_e( 'Sākums', 'Главная', 'Home' ); ?></a> › <a href="<?php echo esc_url( $shop ); ?>"><?php ivs_e( 'Noma', 'Аренда', 'Rental' ); ?></a><?php if ( $cat ) : ?> › <a href="<?php echo esc_url( get_term_link( $cat ) ); ?>"><?php echo esc_html( $cat->name ); ?></a><?php endif; ?> › <?php the_title(); ?></div>
+	<div class="crumbs"><a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php ivs_e( 'Sākums', 'Главная', 'Home' ); ?></a> › <a href="<?php echo esc_url( ivs_lang_url( $shop ) ); ?>"><?php ivs_e( 'Noma', 'Аренда', 'Rental' ); ?></a><?php if ( $cat ) : ?> › <a href="<?php echo esc_url( ivs_lang_url( get_term_link( $cat ) ) ); ?>"><?php echo esc_html( $cat->name ); ?></a><?php endif; ?> › <?php the_title(); ?></div>
 	<div class="prod">
 		<div class="gal">
 			<div class="ph" style="aspect-ratio:4/3;border-radius:12px;border:1px solid var(--line)"><?php echo $ids ? wp_get_attachment_image( $ids[0], 'large' ) : esc_html( ivs_t( 'foto', 'фото', 'photo' ) ); // phpcs:ignore ?></div>
