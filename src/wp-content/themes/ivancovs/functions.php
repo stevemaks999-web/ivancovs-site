@@ -14,6 +14,10 @@ const IVS_EMAIL         = 'dmitrijs@ivancovs.com';
 
 /** Текущий язык: lv, ru или en (Polylang, иначе по локали). */
 function ivs_lang() {
+	// Запросы Store API (корзина, оформление) идут без языка страницы: подписи делаем латышскими.
+	if ( defined( 'REST_REQUEST' ) && REST_REQUEST && ! isset( $_GET['ivl'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+		return 'lv';
+	}
 	// Товары не переводятся плагином, язык страницы прибора берём из параметра ?ivl=ru|en.
 	if ( isset( $_GET['ivl'] ) && in_array( $_GET['ivl'], array( 'ru', 'en' ), true ) && function_exists( 'is_woocommerce' ) && is_woocommerce() ) { // phpcs:ignore WordPress.Security.NonceVerification
 		return $_GET['ivl']; // phpcs:ignore
