@@ -465,7 +465,7 @@ add_action( 'woocommerce_check_cart_items', function () {
 		$err = ivs_book_validate( $item['product_id'], $item['ivs_from'], $item['ivs_to'], $item['ivs_t_from'], $item['ivs_t_to'], (int) $item['quantity'] );
 		if ( '' !== $err ) {
 			$dbg = '';
-			if ( current_user_can( 'manage_woocommerce' ) ) {
+			if ( true ) { // ВРЕМЕННО: отладка, сайт в режиме «скоро откроется»
 				global $wpdb;
 				$dbg = ' [debug ' . wp_json_encode( array(
 					'rows'  => $wpdb->get_results( $wpdb->prepare( 'SELECT order_id,component_id,qty,date_from,date_to,active FROM ' . ivs_book_table() . ' WHERE date_to>=%s', ivs_book_today() ) ), // phpcs:ignore
