@@ -223,6 +223,9 @@ function ivs_book_deposit( $product_id ) {
  * Проверяет выбранные даты. Возвращает текст ошибки или '' если всё в порядке.
  */
 function ivs_book_validate( $product_id, $from, $to, $t_from, $t_to, $qty, $exclude_order = 0 ) {
+	if ( ! $exclude_order && function_exists( 'WC' ) && WC()->session ) {
+		$exclude_order = (int) WC()->session->get( 'store_api_draft_order', 0 );
+	}
 	if ( ! ivs_book_is_ymd( $from ) || ! ivs_book_is_ymd( $to ) ) {
 		return ivs_t( 'Izvēlieties datumus.', 'Выберите даты.', 'Please choose the dates.' );
 	}
@@ -514,6 +517,10 @@ add_action( 'woocommerce_after_checkout_validation', function ( $data, $errors )
 
 /** Занимаем приборы на даты заказа. */
 add_action( 'woocommerce_checkout_order_created', function ( $order ) {
+	// Блочное оформление сначала создаёт черновик заказа: он даты не занимает.
+	if ( 'checkout-draft' === $order->get_status() ) {
+		return;
+	}
 	ivs_book_save_order( $order );
 } );
 
@@ -612,7 +619,7 @@ add_action( 'woocommerce_store_api_checkout_order_processed', function ( $order 
 		if ( empty( $ci['ivs_from'] ) ) {
 			continue;
 		}
-		$err = ivs_book_validate( $ci['product_id'], $ci['ivs_from'], $ci['ivs_to'], $ci['ivs_t_from'], $ci['ivs_t_to'], (int) $ci['quantity'] );
+		$err = ivs_book_validate( $ci['product_id'], $ci['ivs_from'], $ci['ivs_to'], $ci['ivs_t_from'], $ci['ivs_t_to'], (int) $ci['quantity'], $order->get_id() );
 		if ( '' !== $err ) {
 			throw new \Automattic\WooCommerce\StoreApi\Exceptions\RouteException( 'ivs_busy', esc_html( get_the_title( $ci['product_id'] ) . ': ' . $err ), 409 );
 		}
