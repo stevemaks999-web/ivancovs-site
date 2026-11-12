@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-const IVS_BOOK_DB_VERSION = '1';
+const IVS_BOOK_DB_VERSION = '2';
 const IVS_BOOK_HORIZON    = 365; // на сколько дней вперёд можно бронировать
 const IVS_BOOK_TIME_FROM  = 9;
 const IVS_BOOK_TIME_TO    = 18;
@@ -35,6 +35,8 @@ function ivs_book_install() {
 		qty INT UNSIGNED NOT NULL DEFAULT 1,
 		date_from DATE NOT NULL,
 		date_to DATE NOT NULL,
+		t_from VARCHAR(4) NOT NULL DEFAULT '',
+		t_to VARCHAR(4) NOT NULL DEFAULT '',
 		active TINYINT(1) NOT NULL DEFAULT 1,
 		created DATETIME NOT NULL,
 		PRIMARY KEY  (id),
