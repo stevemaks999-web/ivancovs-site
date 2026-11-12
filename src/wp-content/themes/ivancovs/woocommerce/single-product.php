@@ -35,8 +35,20 @@ while ( have_posts() ) :
 		<div>
 			<h1><?php the_title(); ?> <?php ivs_e( 'noma Rīgā', 'аренда в Риге', 'rental in Riga' ); ?></h1>
 
+			<?php
+			$ivs_week    = (float) get_post_meta( get_the_ID(), '_ivs_price_week', true );
+			$ivs_month   = (float) get_post_meta( get_the_ID(), '_ivs_price_month', true );
+			$ivs_deposit = (float) get_post_meta( get_the_ID(), '_ivs_deposit', true );
+			?>
 			<div class="card book" id="booking">
 				<div class="price-line"><?php echo wp_kses_post( wc_price( $product->get_price() ) ); ?> <small>/ <?php ivs_e( 'diena', 'сутки', 'day' ); ?></small></div>
+				<?php if ( $ivs_week > 0 ) : ?>
+					<div class="row"><span><?php ivs_e( 'Nedēļā (7 dienas)', 'Неделя (7 суток)', 'Week (7 days)' ); ?></span><span><?php echo wp_kses_post( wc_price( $ivs_week ) ); ?></span></div>
+				<?php endif; ?>
+				<?php if ( $ivs_month > 0 ) : ?>
+					<div class="row"><span><?php ivs_e( 'Mēnesī', 'Месяц', 'Month' ); ?></span><span><?php echo wp_kses_post( wc_price( $ivs_month ) ); ?></span></div>
+				<?php endif; ?>
+				<div class="row"><span><?php ivs_e( 'Drošības nauda', 'Залог', 'Deposit' ); ?></span><span><?php echo $ivs_deposit > 0 ? wp_kses_post( wc_price( $ivs_deposit ) ) : esc_html( ivs_t( 'nav nepieciešama', 'не нужен', 'not required' ) ); ?></span></div>
 				<?php
 				// Фаза 6: календарь выбора дат и бронь.
 				do_action( 'ivs_booking_calendar', $product );
