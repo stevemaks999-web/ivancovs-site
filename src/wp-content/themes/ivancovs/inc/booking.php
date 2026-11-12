@@ -353,6 +353,8 @@ add_action( 'wp_enqueue_scripts', function () {
 
 /** Остатки WooCommerce не уменьшаем: число штук в карточке это парк приборов, а занятость считаем по датам. */
 add_filter( 'woocommerce_can_reduce_order_stock', '__return_false' );
+// Смена статуса заказа в админке тоже не должна менять число штук прибора.
+add_filter( 'woocommerce_prevent_adjust_line_item_product_stock', '__return_true' );
 add_filter( 'woocommerce_product_get_manage_stock', function ( $v ) {
 	return is_admin() && ! wp_doing_ajax() ? $v : false;
 } );
