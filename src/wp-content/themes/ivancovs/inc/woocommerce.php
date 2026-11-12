@@ -86,7 +86,7 @@ function ivs_cat_names() {
 }
 
 add_filter( 'get_term', function ( $term ) {
-	if ( $term instanceof WP_Term && 'product_cat' === $term->taxonomy && ! is_admin() ) {
+	if ( $term instanceof WP_Term && 'product_cat' === $term->taxonomy && ! is_admin() && ! ( defined( 'REST_REQUEST' ) && REST_REQUEST ) ) {
 		$lang = ivs_lang();
 		$map  = ivs_cat_names();
 		if ( 'lv' !== $lang && isset( $map[ $term->name ] ) ) {
