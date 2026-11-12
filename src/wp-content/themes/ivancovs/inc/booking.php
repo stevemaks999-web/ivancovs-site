@@ -492,6 +492,8 @@ add_action( 'woocommerce_checkout_create_order_line_item', function ( $item, $ke
 	}
 	$item->add_meta_data( '_ivs_from', $values['ivs_from'], true );
 	$item->add_meta_data( '_ivs_to', $values['ivs_to'], true );
+	$item->add_meta_data( '_ivs_t_from', $values['ivs_t_from'], true );
+	$item->add_meta_data( '_ivs_t_to', $values['ivs_t_to'], true );
 	$item->add_meta_data( ivs_t( 'Saņemšana', 'Выдача', 'Pickup' ), $values['ivs_from'] . ' ' . $values['ivs_t_from'], true );
 	$item->add_meta_data( ivs_t( 'Atgriešana', 'Возврат', 'Return' ), $values['ivs_to'] . ' ' . $values['ivs_t_to'], true );
 	$item->add_meta_data( ivs_t( 'Dienas', 'Суток', 'Days' ), ivs_book_days( $values['ivs_from'], $values['ivs_to'] ), true );
