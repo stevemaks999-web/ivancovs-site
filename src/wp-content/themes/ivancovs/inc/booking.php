@@ -172,6 +172,69 @@ function ivs_book_is_weekend( $ymd ) {
 	return (int) gmdate( 'N', strtotime( $ymd . ' UTC' ) ) >= 6;
 }
 
+/** Особые дни: выходные, открытые Дмитрием для выдачи, и будни, закрытые (праздники). */
+function ivs_book_special_days() {
+	$d = get_option( 'ivs_special_days', array() );
+	return array(
+		'open'   => isset( $d['open'] ) && is_array( $d['open'] ) ? array_values( $d['open'] ) : array(),
+		'closed' => isset( $d['closed'] ) && is_array( $d['closed'] ) ? array_values( $d['closed'] ) : array(),
+	);
+}
+
+/** Можно ли в этот день выдать и принять прибор. */
+function ivs_book_day_open( $ymd ) {
+	$d = ivs_book_special_days();
+	if ( in_array( $ymd, $d['closed'], true ) ) {
+		return false;
+	}
+	return ! ivs_book_is_weekend( $ymd ) || in_array( $ymd, $d['open'], true );
+}
+
+function ivs_book_parse_dates( $text ) {
+	$out = array();
+	foreach ( preg_split( '/[\s,;]+/', (string) $text, -1, PREG_SPLIT_NO_EMPTY ) as $t ) {
+		if ( preg_match( '/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/', $t, $m ) ) {
+			$t = sprintf( '%04d-%02d-%02d', $m[3], $m[2], $m[1] );
+		}
+		if ( ivs_book_is_ymd( $t ) ) {
+			$out[ $t ] = $t;
+		}
+	}
+	ksort( $out );
+	return array_values( $out );
+}
+
+add_action( 'admin_menu', function () {
+	add_submenu_page( 'woocommerce', 'Выходные и особые дни', 'Выходные и особые дни', 'manage_woocommerce', 'ivs-days', 'ivs_days_page' );
+} );
+
+function ivs_days_page() {
+	if ( ! current_user_can( 'manage_woocommerce' ) ) {
+		return;
+	}
+	if ( isset( $_POST['ivs_days_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['ivs_days_nonce'] ) ), 'ivs_days' ) ) {
+		update_option( 'ivs_special_days', array(
+			'open'   => ivs_book_parse_dates( isset( $_POST['ivs_open'] ) ? sanitize_textarea_field( wp_unslash( $_POST['ivs_open'] ) ) : '' ),
+			'closed' => ivs_book_parse_dates( isset( $_POST['ivs_closed'] ) ? sanitize_textarea_field( wp_unslash( $_POST['ivs_closed'] ) ) : '' ),
+		), false );
+		echo '<div class="updated"><p>Сохранено.</p></div>';
+	}
+	$d     = ivs_book_special_days();
+	$today = ivs_book_today();
+	$keep  = function ( $list ) use ( $today ) {
+		return implode( "\n", array_filter( $list, function ( $x ) use ( $today ) {
+			return $x >= $today;
+		} ) );
+	};
+	echo '<div class="wrap"><h1>Выходные и особые дни</h1>';
+	echo '<p>Выдача и возврат с 9:00 до 18:00 по будням. По субботам и воскресеньям онлайн-бронь закрыта: откройте здесь нужные выходные, и клиенты смогут выбрать их для выдачи и возврата. Праздничные будни можно закрыть.</p>';
+	echo '<form method="post"><table class="form-table">';
+	echo '<tr><th><label for="ivs_open">Открытые выходные</label></th><td><textarea id="ivs_open" name="ivs_open" rows="6" cols="30">' . esc_textarea( $keep( $d['open'] ) ) . '</textarea><p class="description">Одна дата на строку: ГГГГ-ММ-ДД или ДД.ММ.ГГГГ. Эти субботы и воскресенья доступны для выдачи и возврата.</p></td></tr>';
+	echo '<tr><th><label for="ivs_closed">Закрытые будни</label></th><td><textarea id="ivs_closed" name="ivs_closed" rows="6" cols="30">' . esc_textarea( $keep( $d['closed'] ) ) . '</textarea><p class="description">Праздники и дни, когда вы не работаете. В эти дни выдача и возврат недоступны.</p></td></tr>';
+	wp_nonce_field( 'ivs_days', 'ivs_days_nonce' );
+	echo '</table><p><button class="button button-primary">Сохранить</button></p></form></div>';
+}
+
 function ivs_book_today() {
 	return wp_date( 'Y-m-d' );
 }
@@ -238,8 +301,8 @@ function ivs_book_validate( $product_id, $from, $to, $t_from, $t_to, $qty, $excl
 	if ( ivs_book_days( $from, $to ) > IVS_BOOK_HORIZON || $to > gmdate( 'Y-m-d', strtotime( ivs_book_today() . ' UTC' ) + IVS_BOOK_HORIZON * DAY_IN_SECONDS ) ) {
 		return ivs_t( 'Datumi ir pārāk tālu.', 'Даты слишком далеко.', 'The dates are too far ahead.' );
 	}
-	if ( ivs_book_is_weekend( $from ) || ivs_book_is_weekend( $to ) ) {
-		return ivs_t( 'Brīvdienās izsniegšana un atgriešana tikai pēc vienošanās ar Dmitriju.', 'В выходные выдача и возврат только по договорённости с Дмитрием.', 'On weekends pickup and return are by arrangement with Dmitrijs only.' );
+	if ( ! ivs_book_day_open( $from ) || ! ivs_book_day_open( $to ) ) {
+		return ivs_t( 'Brīvdienās izsniegšana un atgriešana tikai pēc vienošanās ar Dmitriju.', 'В выходные и праздники выдача и возврат только по договорённости с Дмитрием.', 'Pickup and return are not available on this day (weekends by arrangement with Dmitrijs).' );
 	}
 	if ( ! ivs_book_valid_time( $t_from ) || ! ivs_book_valid_time( $t_to ) ) {
 		return ivs_t( 'Izsniegšana un atgriešana no 9:00 līdz 18:00.', 'Выдача и возврат с 9:00 до 18:00.', 'Pickup and return between 9:00 and 18:00.' );
@@ -274,6 +337,7 @@ add_action( 'rest_api_init', function () {
 			$res = new WP_REST_Response( array(
 				'max'  => $max,
 				'free' => (object) ivs_book_busy_days( $id, $from, $to ),
+				'days' => ivs_book_special_days(),
 			) );
 			$res->header( 'Cache-Control', 'no-store' );
 			return $res;

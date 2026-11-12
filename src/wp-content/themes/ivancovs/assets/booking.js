@@ -23,7 +23,8 @@
   function utc(s) { var p = s.split('-'); return Date.UTC(+p[0], +p[1] - 1, +p[2]); }
   function addDays(s, n) { var d = new Date(utc(s) + n * 86400000); return ymd(d.getUTCFullYear(), d.getUTCMonth() + 1, d.getUTCDate()); }
   function dow(s) { return (new Date(utc(s)).getUTCDay() + 6) % 7; } // 0 = Monday
-  function weekend(s) { return dow(s) >= 5; }
+  var special = { open: [], closed: [] };
+  function weekend(s) { return special.closed.indexOf(s) >= 0 || (dow(s) >= 5 && special.open.indexOf(s) < 0); }
   function days(a, b) { return Math.round((utc(b) - utc(a)) / 86400000) + 1; }
   function freeOn(s) { return Object.prototype.hasOwnProperty.call(free, s) ? free[s] : max; }
   var last = addDays(today, cfg.horizon);
@@ -133,6 +134,6 @@
 
   render(); update();
   fetch(cfg.rest, { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (j) {
-    free = j.free || {}; max = j.max || 1; render(); update();
+    free = j.free || {}; max = j.max || 1; if (j.days) special = { open: j.days.open || [], closed: j.days.closed || [] }; render(); update();
   }).catch(function () {});
 })();
