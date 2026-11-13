@@ -21,6 +21,7 @@ function ivs_tg_opts() {
 		'chats'  => array(),
 		'menu'   => 0,
 		'panel'  => array(),
+		'pings'  => array(),
 	), is_array( $o ) ? $o : array() );
 }
 
@@ -245,6 +246,7 @@ function ivs_tg_on_message( $m ) {
 		return;
 	}
 	ivs_tg_del( $chat, $mid ); // в чате остаётся одно окно бота
+	ivs_tg_clear_pings( $chat );
 	$cmd = strtolower( strtok( $text, " \n@" ) );
 	$arg = trim( preg_replace( '/^@\S+\s*/', '', trim( (string) substr( $text, strlen( $cmd ) ) ) ) );
 	if ( '/orders' === $cmd || IVS_TG_BTN_ORDERS === $text ) {
@@ -315,13 +317,36 @@ function ivs_tg_show( $chat, $text, $kb, $mid = 0, $fresh = false ) {
 	$r = ivs_tg_call( 'sendMessage', $p );
 	if ( ! is_wp_error( $r ) && ! empty( $r['result']['message_id'] ) ) {
 		ivs_tg_panel_set( $chat, $r['result']['message_id'] );
+		ivs_tg_call( 'pinChatMessage', array( 'chat_id' => $chat, 'message_id' => $r['result']['message_id'], 'disable_notification' => true ) );
 		if ( $old && (int) $r['result']['message_id'] !== $old ) {
 			ivs_tg_del( $chat, $old );
 		}
 	}
 }
 
-/** Открыть главный экран новым окном. */
+/** Короткие сигналы о новом заказе: живут до следующего действия, потом удаляются. */
+function ivs_tg_clear_pings( $chat ) {
+	$o = ivs_tg_opts();
+	if ( empty( $o['pings'][ $chat ] ) ) {
+		return;
+	}
+	foreach ( $o['pings'][ $chat ] as $id ) {
+		ivs_tg_del( $chat, $id );
+	}
+	$o['pings'][ $chat ] = array();
+	ivs_tg_save( $o );
+}
+
+function ivs_tg_ping( $chat, $text ) {
+	$r = ivs_tg_call( 'sendMessage', array( 'chat_id' => $chat, 'text' => $text ) );
+	if ( ! is_wp_error( $r ) && ! empty( $r['result']['message_id'] ) ) {
+		$o                     = ivs_tg_opts();
+		$o['pings'][ $chat ][] = (int) $r['result']['message_id'];
+		ivs_tg_save( $o );
+	}
+}
+
+/** Открыть главный экран в постоянном окне. */
 function ivs_tg_open( $chat, $note = '' ) {
 	// Убираем старые кнопки внизу экрана, если они остались.
 	$r = ivs_tg_call( 'sendMessage', array( 'chat_id' => $chat, 'text' => '…', 'reply_markup' => array( 'remove_keyboard' => true ) ) );
@@ -329,14 +354,14 @@ function ivs_tg_open( $chat, $note = '' ) {
 		ivs_tg_del( $chat, $r['result']['message_id'] );
 	}
 	list( $t, $kb ) = ivs_tg_screen_home( $note );
-	ivs_tg_show( $chat, $t, $kb, 0, true );
+	ivs_tg_show( $chat, $t, $kb );
 }
 
 /** Перейти на экран: правим сообщение $mid (или окно бота). */
 function ivs_tg_go( $chat, $mid, $screen, $a = 0, $b = 0 ) {
 	$fn = 'ivs_tg_screen_' . $screen;
 	list( $t, $kb ) = $fn( $a, $b );
-	ivs_tg_show( $chat, $t, $kb, $mid, ! $mid );
+	ivs_tg_show( $chat, $t, $kb, $mid );
 }
 
 /* ---------- Данные ---------- */
@@ -838,7 +863,8 @@ add_action( 'shutdown', function () {
 			continue;
 		}
 		foreach ( ivs_tg_opts()['chats'] as $chat ) {
-			ivs_tg_show( $chat, '🆕 ' . ivs_tg_order_text( $order ), ivs_tg_order_keyboard( $order ), 0, true );
+			ivs_tg_show( $chat, '🆕 ' . ivs_tg_order_text( $order ), ivs_tg_order_keyboard( $order ) );
+			ivs_tg_ping( $chat, '🆕 Новый заказ №' . $order->get_id() . ' — смотрите закреплённое окно' );
 		}
 	}
 	$GLOBALS['ivs_tg_queue'] = array();
@@ -854,6 +880,7 @@ function ivs_tg_on_callback( $cb ) {
 	if ( ! $chat || ! ivs_tg_is_paired( $chat ) ) {
 		return;
 	}
+	ivs_tg_clear_pings( $chat );
 	$p   = explode( '|', $data );
 	$ans = '';
 	$k   = $p[0];
