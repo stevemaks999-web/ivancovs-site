@@ -81,11 +81,12 @@ function ivs_tg_setup_menu() {
 		array( 'command' => 'orders', 'description' => 'Активные брони' ),
 		array( 'command' => 'blocks', 'description' => 'Снятые с сайта приборы' ),
 		array( 'command' => 'today', 'description' => 'Сегодня и завтра: выдачи и возвраты' ),
+		array( 'command' => 'income', 'description' => 'Доход с PVN и без' ),
 		array( 'command' => 'menu', 'description' => 'Главное меню' ),
 	) ) );
 	ivs_tg_call( 'setChatMenuButton', array( 'menu_button' => array( 'type' => 'commands' ) ) );
 	$o         = ivs_tg_opts();
-	$o['menu'] = 1;
+	$o['menu'] = 2;
 	ivs_tg_save( $o );
 }
 
@@ -183,7 +184,7 @@ add_action( 'rest_api_init', function () {
 			if ( ! $o['secret'] || ! $hdr || ! hash_equals( $o['secret'], $hdr ) ) {
 				return new WP_REST_Response( array( 'ok' => false ), 403 );
 			}
-			if ( empty( $o['menu'] ) ) {
+			if ( (int) $o['menu'] < 2 ) {
 				ivs_tg_setup_menu();
 			}
 			$u = $req->get_json_params();
@@ -252,6 +253,8 @@ function ivs_tg_on_message( $m ) {
 		ivs_tg_go( $chat, 0, 'pick', 0 );
 	} elseif ( '/blocks' === $cmd || IVS_TG_BTN_BLOCKS === $text ) {
 		ivs_tg_go( $chat, 0, 'blocks' );
+	} elseif ( '/income' === $cmd ) {
+		ivs_tg_go( $chat, 0, 'income', 'm' );
 	} elseif ( '/today' === $cmd ) {
 		ivs_tg_go( $chat, 0, 'today' );
 	} elseif ( '/block' === $cmd ) {
@@ -414,7 +417,7 @@ function ivs_tg_screen_home( $note = '' ) {
 		array( array( 'text' => '📅 Забронировать (снять с сайта)', 'callback_data' => 'bl|0' ) ),
 		array( array( 'text' => '📋 Брони' . ( $act ? ' (' . count( $act ) . ')' : '' ), 'callback_data' => 'ol' ), array( 'text' => '📆 Сегодня и завтра', 'callback_data' => 'td' ) ),
 		array( array( 'text' => '🚫 Снятые' . ( $bl ? ' (' . $bl . ')' : '' ), 'callback_data' => 'ul' ), array( 'text' => '🗓 Выходные дни', 'callback_data' => 'dp|' . substr( ivs_book_today(), 0, 7 ) ) ),
-		array( array( 'text' => '🔄 Обновить', 'callback_data' => 'h' ) ),
+		array( array( 'text' => '💶 Доход', 'callback_data' => 'in|m' ), array( 'text' => '🔄 Обновить', 'callback_data' => 'h' ) ),
 	);
 	return array( $t . "\n\nНомер заказа, отправленный сообщением, откроет его.", $kb );
 }
@@ -690,6 +693,61 @@ function ivs_tg_add_block( $pid, $from, $to, $tf = '', $tt = '' ) {
 }
 
 
+/* ---------- Доход ---------- */
+
+/** Доход за период: аренда без залога. Считаем подтверждённые и закрытые заказы. */
+function ivs_tg_income( $from, $to ) {
+	$orders = wc_get_orders( array(
+		'status'       => array( 'processing', 'completed' ),
+		'limit'        => -1,
+		'date_created' => $from . '...' . $to,
+		'return'       => 'objects',
+	) );
+	$gross = 0.0;
+	$n     = 0;
+	foreach ( $orders as $o ) {
+		if ( ! ivs_order_has_booking( $o ) ) {
+			continue;
+		}
+		list( , $dep ) = ivs_order_lines( $o );
+		$gross        += max( 0, (float) $o->get_total() - (float) $dep );
+		$n++;
+	}
+	return array( round( $gross, 2 ), $n );
+}
+
+function ivs_tg_screen_income( $per = 'm' ) {
+	$today = ivs_book_today();
+	$ym    = substr( $today, 0, 7 );
+	$y     = substr( $today, 0, 4 );
+	$pm    = wp_date( 'Y-m', strtotime( $ym . '-01 -1 month' ) );
+	$map   = array(
+		'd'  => array( 'Сегодня', $today, $today ),
+		'm'  => array( 'Этот месяц', $ym . '-01', $today ),
+		'pm' => array( 'Прошлый месяц', $pm . '-01', wp_date( 'Y-m-t', strtotime( $pm . '-01' ) ) ),
+		'y'  => array( 'Этот год', $y . '-01-01', $today ),
+		'a'  => array( 'За всё время', '2020-01-01', $today ),
+	);
+	if ( ! isset( $map[ $per ] ) ) {
+		$per = 'm';
+	}
+	list( $label, $from, $to ) = $map[ $per ];
+	list( $gross, $n )         = ivs_tg_income( $from . ' 00:00:00', $to . ' 23:59:59' );
+	$net = round( $gross / 1.21, 2 );
+	$t   = '💶 <b>Доход: ' . $label . "</b>\n";
+	$t  .= ivs_tg_fmt_date( $from ) . ' – ' . ivs_tg_fmt_date( $to ) . "\n\n";
+	$t  .= 'С PVN 21%: <b>' . ivs_tg_h( ivs_money( $gross ) ) . "</b>\n";
+	$t  .= 'Без PVN: <b>' . ivs_tg_h( ivs_money( $net ) ) . "</b>\n";
+	$t  .= 'PVN: ' . ivs_tg_h( ivs_money( round( $gross - $net, 2 ) ) ) . "\n";
+	$t  .= 'Заказов: ' . $n . ( $n ? ' · средний чек с PVN ' . ivs_tg_h( ivs_money( round( $gross / $n, 2 ) ) ) : '' ) . "\n\n";
+	$t  .= '<i>Считаются подтверждённые и закрытые заказы, залог не входит.</i>';
+	$row = array();
+	foreach ( $map as $k => $v ) {
+		$row[] = array( 'text' => ( $k === $per ? '• ' : '' ) . $v[0], 'callback_data' => 'in|' . $k );
+	}
+	return array( $t, array( array_slice( $row, 0, 3 ), array_slice( $row, 3 ), ivs_tg_home_row() ) );
+}
+
 /* ---------- Заказ: текст и кнопки ---------- */
 
 function ivs_tg_order_text( $order ) {
@@ -808,6 +866,8 @@ function ivs_tg_on_callback( $cb ) {
 		ivs_tg_go( $chat, $mid, 'order', absint( $p[1] ?? 0 ) );
 	} elseif ( 'td' === $k ) {
 		ivs_tg_go( $chat, $mid, 'today' );
+	} elseif ( 'in' === $k ) {
+		ivs_tg_go( $chat, $mid, 'income', $p[1] ?? 'm' );
 	} elseif ( 'ul' === $k ) {
 		ivs_tg_go( $chat, $mid, 'blocks' );
 	} elseif ( 'o' === $k && isset( $p[2] ) ) {
