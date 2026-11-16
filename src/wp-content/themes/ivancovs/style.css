@@ -135,3 +135,9 @@ body.pp main{padding-bottom:70px}
 .ivs-times select{padding:8px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font-size:15px}
 .ivs-sum{margin:8px 0 12px}
 .ivs-book .btn.block{width:100%;text-align:center}.ivs-book .btn:disabled{opacity:.5;cursor:not-allowed}
+
+/* Distances līgums и ссылка на него в оформлении заказа */
+.ivs-terms { max-width: 760px; margin: 0 auto; }
+.ivs-terms h2 { margin: 1.6em 0 .5em; font-size: 1.15rem; }
+.ivs-terms p { margin: 0 0 .8em; line-height: 1.6; }
+.ivs-terms-link { margin: 0 0 12px; }

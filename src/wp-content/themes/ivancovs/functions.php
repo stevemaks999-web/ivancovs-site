@@ -165,4 +165,5 @@ require_once get_template_directory() . '/inc/shortcodes.php';
 require_once get_template_directory() . '/inc/woocommerce.php';
 require_once get_template_directory() . '/inc/booking.php';
 require_once get_template_directory() . '/inc/booking-docs.php';
+require_once get_template_directory() . '/inc/terms.php';
 require_once get_template_directory() . '/inc/telegram.php';
