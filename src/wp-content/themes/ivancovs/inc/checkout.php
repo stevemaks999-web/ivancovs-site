@@ -55,3 +55,48 @@ add_action( 'wp_enqueue_scripts', function () {
 		'total'    => ivs_t( 'Kopā par', 'Всего за', 'Total for' ),
 	) ) . ';', 'before' );
 } );
+
+/* ---------- Юридические лица (необязательные поля) ---------- */
+
+// Название организации: необязательное поле в оформлении.
+add_filter( 'pre_option_woocommerce_checkout_company_field', function () {
+	return 'optional';
+} );
+
+/** Рег. номер, номер плательщика PVN и юридический адрес. Заполняют только юрлица. */
+add_action( 'woocommerce_init', function () {
+	if ( ! function_exists( 'woocommerce_register_additional_checkout_field' ) ) {
+		return;
+	}
+	$fields = array(
+		'reg-nr'        => ivs_t( 'Reģistrācijas Nr. (juridiskai personai)', 'Регистрационный № (для юрлиц)', 'Registration No. (companies)' ),
+		'vat-nr'        => ivs_t( 'PVN Nr. (ja ir)', 'Номер плательщика PVN (если есть)', 'VAT No. (if any)' ),
+		'legal-address' => ivs_t( 'Juridiskā adrese (juridiskai personai)', 'Юридический адрес (для юрлиц)', 'Registered address (companies)' ),
+	);
+	foreach ( $fields as $key => $label ) {
+		woocommerce_register_additional_checkout_field( array(
+			'id'       => 'ivancovs/' . $key,
+			'label'    => $label,
+			'location' => 'address',
+			'type'     => 'text',
+			'required' => false,
+		) );
+	}
+} );
+
+/** Данные юрлица из заказа: [ reg, vat, address ]. */
+function ivs_order_company_data( $order ) {
+	$get = function ( $k ) use ( $order ) {
+		$v = $order->get_meta( '_wc_billing/ivancovs/' . $k );
+		return is_string( $v ) ? trim( $v ) : '';
+	};
+	return array( $get( 'reg-nr' ), $get( 'vat-nr' ), $get( 'legal-address' ) );
+}
+
+// Данные юрлица в админке заказа и в письмах.
+add_action( 'woocommerce_admin_order_data_after_billing_address', function ( $order ) {
+	list( $reg, $vat, $addr ) = ivs_order_company_data( $order );
+	if ( $reg || $vat || $addr ) {
+		echo '<p><strong>Juridiskā persona:</strong> ' . esc_html( trim( $order->get_billing_company() ) ) . '<br>Reģ. Nr.: ' . esc_html( $reg ) . '<br>PVN Nr.: ' . esc_html( $vat ) . '<br>Adrese: ' . esc_html( $addr ) . '</p>';
+	}
+} );

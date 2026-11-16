@@ -201,6 +201,17 @@ function ivs_render_invoice( $order ) {
 		$buyer = $order->get_billing_company() . ', ' . $buyer;
 	}
 	$addr = trim( implode( ', ', array_filter( array( $order->get_billing_address_1(), $order->get_billing_city(), $order->get_billing_postcode() ) ) ) );
+	list( $c_reg, $c_vat, $c_addr ) = ivs_order_company_data( $order );
+	if ( $c_addr ) {
+		$addr = $c_addr;
+	}
+	$company_ids = '';
+	if ( $c_reg ) {
+		$company_ids .= '<br>Reģ. Nr. ' . esc_html( $c_reg );
+	}
+	if ( $c_vat ) {
+		$company_ids .= '<br>PVN Nr. ' . esc_html( $c_vat );
+	}
 	$date = $order->get_date_created() ? $order->get_date_created()->date_i18n( 'd.m.Y' ) : wp_date( 'd.m.Y' );
 
 	ivs_doc_head( 'Rēķins ' . $no );
@@ -209,7 +220,7 @@ function ivs_render_invoice( $order ) {
 	if ( $s['bank'] || $s['iban'] ) {
 		echo '<br>' . esc_html( trim( $s['bank'] . ' ' . $s['iban'] ) );
 	}
-	echo '</div><div><b>Pakalpojuma saņēmējs</b><br>' . esc_html( $buyer ) . '<br>' . esc_html( $addr ) . '<br>' . esc_html( $order->get_billing_email() ) . '</div></div>';
+	echo '</div><div><b>Pakalpojuma saņēmējs</b><br>' . esc_html( $buyer ) . $company_ids . '<br>' . esc_html( $addr ) . '<br>' . esc_html( $order->get_billing_email() ) . '</div></div>';
 	echo '<table><tr><th>Pakalpojums</th><th>Periods</th><th class="r">Skaits</th><th class="r">Bez PVN</th><th class="r">PVN ' . (int) IVS_VAT_RATE . '%</th><th class="r">Kopā</th></tr>';
 	foreach ( $rent as $r ) {
 		echo '<tr><td>Mērinstrumenta noma: ' . esc_html( $r['name'] ) . '</td><td>' . esc_html( $r['from'] . ' ' . $r['t_from'] . ' – ' . $r['to'] . ' ' . $r['t_to'] ) . ' (' . (int) $r['days'] . ' d.)</td><td class="r">' . (int) $r['qty'] . '</td><td class="r">' . esc_html( ivs_money( $r['net'] ) ) . '</td><td class="r">' . esc_html( ivs_money( $r['vat'] ) ) . '</td><td class="r">' . esc_html( ivs_money( $r['gross'] ) ) . '</td></tr>';
