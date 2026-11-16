@@ -238,3 +238,12 @@ add_filter( 'render_block', function ( $html, $block ) {
 	$note = '<p class="ivs-terms-link"><a href="' . esc_url( $url ) . '" target="_blank" rel="noopener">' . esc_html( ivs_t( 'Lasīt Distances līgumu (lietošanas noteikumus)', 'Читать договор (условия использования)', 'Read the Distance contract (terms of use)' ) ) . '</a></p>';
 	return $note . $html;
 }, 10, 2 );
+
+/** Открытие сайта: один раз выключаем режим «скоро откроется» WooCommerce. */
+add_action( 'init', function () {
+	if ( get_option( 'ivs_site_live_v1' ) ) {
+		return;
+	}
+	update_option( 'woocommerce_coming_soon', 'no' );
+	update_option( 'ivs_site_live_v1', 1 );
+}, 40 );
