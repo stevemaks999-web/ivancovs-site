@@ -4,7 +4,7 @@
 Usage: python3 scripts/build_status.py [output_path]
 Env:   GITHUB_REPOSITORY (default stevemaks999-web/ivancovs-site), GITHUB_TOKEN (optional locally), GITHUB_SHA, GITHUB_REF_NAME
 """
-import json, os, re, subprocess, sys, time, urllib.request
+import json, os, re, subprocess, sys, time, urllib.parse, urllib.request
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -61,6 +61,38 @@ def checks_state(sha):
     return "success" if all(r["conclusion"] in ("success", "skipped", "neutral") for r in runs) else "failure"
 
 
+def metrics():
+    """Цифры за 28 дней из Search Console и GA4; без ключа или при сбое возвращает None."""
+    try:
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import google_api_check as g
+        tok = g.get_token(g.load_key())
+        out = {"period_days": 28}
+        st, res = g.call(tok, "https://www.googleapis.com/webmasters/v3/sites/" + urllib.parse.quote(g.SC_SITE, safe="") + "/searchAnalytics/query",
+                         {"startDate": time.strftime("%Y-%m-%d", time.gmtime(time.time() - 28 * 86400)),
+                          "endDate": time.strftime("%Y-%m-%d", time.gmtime()), "dimensions": []})
+        if st == 200:
+            r = (res.get("rows") or [{}])[0]
+            out["clicks"], out["impressions"] = int(r.get("clicks", 0)), int(r.get("impressions", 0))
+        base = f"https://analyticsdata.googleapis.com/v1beta/properties/{g.GA4_PROPERTY}:runReport"
+        st, res = g.call(tok, base, {"dateRanges": [{"startDate": "28daysAgo", "endDate": "today"}],
+                                     "metrics": [{"name": "activeUsers"}, {"name": "sessions"}]})
+        if st == 200:
+            rows = res.get("rows")
+            v = [int(x["value"]) for x in rows[0]["metricValues"]] if rows else [0, 0]
+            out["users"], out["sessions"] = v
+        st, res = g.call(tok, base, {"dateRanges": [{"startDate": "28daysAgo", "endDate": "today"}],
+                                     "dimensions": [{"name": "eventName"}], "metrics": [{"name": "eventCount"}],
+                                     "dimensionFilter": {"filter": {"fieldName": "eventName", "inListFilter": {"values": [
+                                         "view_item", "add_to_cart", "purchase", "click_call", "click_whatsapp"]}}}})
+        if st == 200:
+            out["events"] = {r["dimensionValues"][0]["value"]: int(r["metricValues"][0]["value"]) for r in res.get("rows", [])}
+        return out if len(out) > 1 else None
+    except Exception as e:
+        print("metrics skipped:", type(e).__name__)
+        return None
+
+
 def main():
     pulls = []
     for pr in api(f"repos/{REPO}/pulls?state=all&per_page=30"):
@@ -79,7 +111,7 @@ def main():
             for r in api(f"repos/{REPO}/actions/runs?per_page=12").get("workflow_runs", [])]
     data = {"generated_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
             "commit": os.environ.get("GITHUB_SHA", ""), "branch": branch,
-            "phases": phases(), "pulls": pulls, "issues": issues, "commits": commits, "runs": runs}
+            "metrics": metrics(), "phases": phases(), "pulls": pulls, "issues": issues, "commits": commits, "runs": runs}
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(data, ensure_ascii=False, indent=1), encoding="utf-8")
     print(f"wrote {OUT} phases={len(data['phases'])} pulls={len(pulls)} issues={len(issues)}")
