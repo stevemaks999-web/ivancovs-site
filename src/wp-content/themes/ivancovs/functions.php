@@ -179,6 +179,7 @@ require_once get_template_directory() . '/inc/kit-titles.php';
 require_once get_template_directory() . '/inc/cross-sell.php';
 require_once get_template_directory() . '/inc/i18n-pages.php';
 require_once get_template_directory() . '/inc/cart-clean.php';
+require_once get_template_directory() . '/inc/click-log.php';
 
 /**
  * Главная на RU/EN: у страницы «Sākums» нет перевода в Polylang, и /ru/ и /en/ показывали

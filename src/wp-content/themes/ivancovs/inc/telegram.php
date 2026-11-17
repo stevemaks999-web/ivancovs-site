@@ -83,11 +83,12 @@ function ivs_tg_setup_menu() {
 		array( 'command' => 'blocks', 'description' => 'Снятые с сайта приборы' ),
 		array( 'command' => 'today', 'description' => 'Сегодня и завтра: выдачи и возвраты' ),
 		array( 'command' => 'income', 'description' => 'Доход с PVN и без' ),
+		array( 'command' => 'calls', 'description' => 'Звонки, WhatsApp и заказы' ),
 		array( 'command' => 'menu', 'description' => 'Главное меню' ),
 	) ) );
 	ivs_tg_call( 'setChatMenuButton', array( 'menu_button' => array( 'type' => 'commands' ) ) );
 	$o         = ivs_tg_opts();
-	$o['menu'] = 2;
+	$o['menu'] = 3;
 	ivs_tg_save( $o );
 }
 
@@ -185,7 +186,7 @@ add_action( 'rest_api_init', function () {
 			if ( ! $o['secret'] || ! $hdr || ! hash_equals( $o['secret'], $hdr ) ) {
 				return new WP_REST_Response( array( 'ok' => false ), 403 );
 			}
-			if ( (int) $o['menu'] < 2 ) {
+			if ( (int) $o['menu'] < 3 ) {
 				ivs_tg_setup_menu();
 			}
 			$u = $req->get_json_params();
@@ -255,6 +256,8 @@ function ivs_tg_on_message( $m ) {
 		ivs_tg_go( $chat, 0, 'pick', 0 );
 	} elseif ( '/blocks' === $cmd || IVS_TG_BTN_BLOCKS === $text ) {
 		ivs_tg_go( $chat, 0, 'blocks' );
+	} elseif ( '/calls' === $cmd ) {
+		ivs_tg_go( $chat, 0, 'calls', 'w' );
 	} elseif ( '/income' === $cmd ) {
 		ivs_tg_go( $chat, 0, 'income', 'm' );
 	} elseif ( '/today' === $cmd ) {
@@ -442,7 +445,8 @@ function ivs_tg_screen_home( $note = '' ) {
 		array( array( 'text' => '📅 Забронировать (снять с сайта)', 'callback_data' => 'bl|0' ) ),
 		array( array( 'text' => '📋 Брони' . ( $act ? ' (' . count( $act ) . ')' : '' ), 'callback_data' => 'ol' ), array( 'text' => '📆 Сегодня и завтра', 'callback_data' => 'td' ) ),
 		array( array( 'text' => '🚫 Снятые' . ( $bl ? ' (' . $bl . ')' : '' ), 'callback_data' => 'ul' ), array( 'text' => '🗓 Выходные дни', 'callback_data' => 'dp|' . substr( ivs_book_today(), 0, 7 ) ) ),
-		array( array( 'text' => '💶 Доход', 'callback_data' => 'in|m' ), array( 'text' => '🔄 Обновить', 'callback_data' => 'h' ) ),
+		array( array( 'text' => '💶 Доход', 'callback_data' => 'in|m' ), array( 'text' => '📞 Звонки', 'callback_data' => 'cl|w' ) ),
+		array( array( 'text' => '🔄 Обновить', 'callback_data' => 'h' ) ),
 	);
 	return array( $t . "\n\nНомер заказа, отправленный сообщением, откроет его.", $kb );
 }
@@ -773,6 +777,38 @@ function ivs_tg_screen_income( $per = 'm' ) {
 	return array( $t, array( array_slice( $row, 0, 3 ), array_slice( $row, 3 ), ivs_tg_home_row() ) );
 }
 
+function ivs_tg_screen_calls( $per = 'w' ) {
+	$today = ivs_book_today();
+	$map   = array(
+		'd' => array( 'Сегодня', $today ),
+		'w' => array( '7 дней', wp_date( 'Y-m-d', strtotime( $today . ' -6 days' ) ) ),
+		'm' => array( '30 дней', wp_date( 'Y-m-d', strtotime( $today . ' -29 days' ) ) ),
+	);
+	if ( ! isset( $map[ $per ] ) ) {
+		$per = 'w';
+	}
+	list( $label, $from ) = $map[ $per ];
+	$c                    = ivs_click_stats( $from, $today );
+	list( , $n )          = ivs_tg_income( $from . ' 00:00:00', $today . ' 23:59:59' );
+	$t                    = '📞 <b>Звонки и заказы: ' . $label . "</b>\n";
+	$t                   .= ivs_tg_fmt_date( $from ) . ' – ' . ivs_tg_fmt_date( $today ) . "\n\n";
+	$t                   .= 'Нажатий «Позвонить»: <b>' . $c['call'] . "</b>\n";
+	$t                   .= 'Нажатий WhatsApp: <b>' . $c['wa'] . "</b>\n";
+	$t                   .= 'Оплаченных заказов: <b>' . $n . "</b>\n";
+	if ( $c['src'] ) {
+		$t .= "\n<b>Откуда нажимали:</b>\n";
+		foreach ( array_slice( $c['src'], 0, 8, true ) as $s => $k ) {
+			$t .= '• ' . ivs_tg_h( $s ) . ': ' . $k . "\n";
+		}
+	}
+	$t  .= "\n<i>Считаются нажатия на кнопки на сайте, не сами звонки. Источник: реклама, поиск, прямой заход.</i>";
+	$row = array();
+	foreach ( $map as $k => $v ) {
+		$row[] = array( 'text' => ( $k === $per ? '• ' : '' ) . $v[0], 'callback_data' => 'cl|' . $k );
+	}
+	return array( $t, array( $row, ivs_tg_home_row() ) );
+}
+
 /* ---------- Заказ: текст и кнопки ---------- */
 
 function ivs_tg_order_text( $order ) {
@@ -895,6 +931,8 @@ function ivs_tg_on_callback( $cb ) {
 		ivs_tg_go( $chat, $mid, 'today' );
 	} elseif ( 'in' === $k ) {
 		ivs_tg_go( $chat, $mid, 'income', $p[1] ?? 'm' );
+	} elseif ( 'cl' === $k ) {
+		ivs_tg_go( $chat, $mid, 'calls', $p[1] ?? 'w' );
 	} elseif ( 'ul' === $k ) {
 		ivs_tg_go( $chat, $mid, 'blocks' );
 	} elseif ( 'o' === $k && isset( $p[2] ) ) {
