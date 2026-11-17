@@ -186,3 +186,13 @@ add_filter( 'template_include', function ( $template ) {
 	}
 	return $template;
 }, 20 );
+
+/** Атрибут lang страниц каталога и приборов: язык берётся из ?ivl=, а не из Polylang (там он латышский). */
+add_filter( 'language_attributes', function ( $out ) {
+	$lang = ivs_lang();
+	if ( 'lv' === $lang || ! function_exists( 'is_woocommerce' ) || ! is_woocommerce() ) {
+		return $out;
+	}
+	$code = 'ru' === $lang ? 'ru-RU' : 'en-GB';
+	return preg_replace( '/lang="[^"]*"/', 'lang="' . $code . '"', $out );
+} );
