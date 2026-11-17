@@ -88,7 +88,7 @@ function ivs_tg_setup_menu() {
 	) ) );
 	ivs_tg_call( 'setChatMenuButton', array( 'menu_button' => array( 'type' => 'commands' ) ) );
 	$o         = ivs_tg_opts();
-	$o['menu'] = 2;
+	$o['menu'] = 3;
 	ivs_tg_save( $o );
 }
 
@@ -186,7 +186,7 @@ add_action( 'rest_api_init', function () {
 			if ( ! $o['secret'] || ! $hdr || ! hash_equals( $o['secret'], $hdr ) ) {
 				return new WP_REST_Response( array( 'ok' => false ), 403 );
 			}
-			if ( (int) $o['menu'] < 2 ) {
+			if ( (int) $o['menu'] < 3 ) {
 				ivs_tg_setup_menu();
 			}
 			$u = $req->get_json_params();
