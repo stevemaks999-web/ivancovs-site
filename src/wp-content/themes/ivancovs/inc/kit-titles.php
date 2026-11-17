@@ -33,7 +33,8 @@ function ivs_kit_titles() {
 }
 
 add_filter( 'the_title', function ( $title, $id = 0 ) {
-	if ( is_admin() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) || ! $id || 'product' !== get_post_type( $id ) ) {
+	// Название комплекта остаётся оригинальным (латышским); ниже идёт короткая подпись «для чего». Перевод включается константой.
+	if ( ! defined( 'IVS_TRANSLATE_KIT_TITLES' ) || ! IVS_TRANSLATE_KIT_TITLES || is_admin() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) || ! $id || 'product' !== get_post_type( $id ) ) {
 		return $title;
 	}
 	$lang = ivs_lang();

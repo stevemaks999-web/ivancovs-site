@@ -171,3 +171,17 @@ require_once get_template_directory() . '/inc/telegram.php';
 require_once get_template_directory() . '/inc/analytics.php';
 require_once get_template_directory() . '/inc/kit-titles.php';
 require_once get_template_directory() . '/inc/cross-sell.php';
+
+/**
+ * Главная на RU/EN: у страницы «Sākums» нет перевода в Polylang, и /ru/ и /en/ показывали
+ * пустую ленту записей («Ничего не найдено»). Пока перевода нет, отдаём шаблон главной.
+ */
+add_filter( 'template_include', function ( $template ) {
+	if ( is_home() && ! is_paged() && ! is_search() && ! is_admin() ) {
+		$front = get_theme_file_path( 'front-page.php' );
+		if ( file_exists( $front ) ) {
+			return $front;
+		}
+	}
+	return $template;
+}, 20 );
