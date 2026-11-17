@@ -27,7 +27,7 @@ function ivs_seo_fix_host( $v ) {
 	}
 	return $v;
 }
-foreach ( array( 'wpseo_canonical', 'wpseo_opengraph_url', 'wpseo_schema_graph', 'pll_rel_hreflang_attributes', 'redirect_canonical', 'wp_redirect', 'wpseo_sitemap_url' ) as $ivs_hook ) {
+foreach ( array( 'wpseo_canonical', 'wpseo_opengraph_url', 'wpseo_schema_graph', 'pll_rel_hreflang_attributes', 'redirect_canonical', 'wp_redirect', 'wpseo_sitemap_url', 'oembed_discovery_links' ) as $ivs_hook ) {
 	add_filter( $ivs_hook, 'ivs_seo_fix_host', 99 );
 }
 
@@ -36,9 +36,15 @@ function ivs_is_catalog_page() {
 	return function_exists( 'is_woocommerce' ) && is_woocommerce() && ! is_cart() && ! is_checkout() && ! is_account_page();
 }
 
+/** Адрес каталога: если WooCommerce отдаёт ?page_id=, берём красивый /noma/. */
+function ivs_shop_url() {
+	$u = wc_get_page_permalink( 'shop' );
+	return ( ! $u || false !== strpos( $u, '?' ) ) ? home_url( '/noma/' ) : $u;
+}
+
 /** Язык версии страницы: на товарах RU/EN лежат на том же адресе с ?ivl=. */
 function ivs_catalog_lang_url( $lang ) {
-	$base = ( is_singular( 'product' ) ) ? get_permalink() : ( ( is_tax() || is_post_type_archive( 'product' ) ) ? ( is_tax() ? get_term_link( get_queried_object() ) : wc_get_page_permalink( 'shop' ) ) : '' );
+	$base = ( is_singular( 'product' ) ) ? get_permalink() : ( ( is_tax() || is_post_type_archive( 'product' ) ) ? ( is_tax() ? get_term_link( get_queried_object() ) : ivs_shop_url() ) : '' );
 	if ( ! $base || is_wp_error( $base ) ) {
 		return '';
 	}
@@ -51,8 +57,8 @@ add_filter( 'wpseo_canonical', function ( $canonical ) {
 	if ( is_string( $canonical ) && false !== strpos( $canonical, '?page_id=' ) && is_page() ) {
 		return get_permalink( get_queried_object_id() );
 	}
-	if ( is_post_type_archive( 'product' ) && ( false !== strpos( (string) $canonical, '?page_id=' ) || ! $canonical ) ) {
-		$canonical = wc_get_page_permalink( 'shop' );
+	if ( is_post_type_archive( 'product' ) && ( false !== strpos( (string) $canonical, '?' ) || ! $canonical ) ) {
+		$canonical = ivs_shop_url();
 	}
 	if ( ivs_is_catalog_page() && 'lv' !== ivs_lang() ) {
 		$u = ivs_catalog_lang_url( ivs_lang() );
