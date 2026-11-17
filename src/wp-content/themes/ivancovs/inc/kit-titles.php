@@ -32,19 +32,35 @@ function ivs_kit_titles() {
 	);
 }
 
-add_filter( 'the_title', function ( $title, $id = 0 ) {
-	// Название комплекта остаётся оригинальным (латышским); ниже идёт короткая подпись «для чего». Перевод включается константой.
-	if ( ! defined( 'IVS_TRANSLATE_KIT_TITLES' ) || ! IVS_TRANSLATE_KIT_TITLES || is_admin() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) || ! $id || 'product' !== get_post_type( $id ) ) {
-		return $title;
-	}
+/** Подписи комплектов, исправленные вместо тех, что лежат в базе: [RU, EN]. */
+function ivs_kit_captions() {
+	return array(
+		'Ventilācijas Nodošana Ekspluatācijā PRO' => array( 'Сдача вентиляции в эксплуатацию.', 'Ventilation commissioning and handover.' ),
+		'Elektromotoru & Gultņu Veselības Tests' => array( 'Вибрация и состояние подшипников моторов.', 'Motor and bearing vibration check.' ),
+	);
+}
+
+function ivs_kit_key( $title ) {
+	return trim( html_entity_decode( wp_strip_all_tags( $title ), ENT_QUOTES ), "«» \t\n\r" );
+}
+
+add_filter( 'get_the_excerpt', function ( $excerpt, $post ) {
 	$lang = ivs_lang();
-	if ( 'lv' === $lang ) {
+	if ( 'lv' === $lang || ! $post || 'product' !== $post->post_type ) {
+		return $excerpt;
+	}
+	$map = ivs_kit_captions();
+	$key = ivs_kit_key( $post->post_title );
+	return isset( $map[ $key ] ) ? $map[ $key ][ 'ru' === $lang ? 0 : 1 ] : $excerpt;
+}, 30, 2 );
+
+/** Название комплекта показываем оригинальным и без кавычек (как у приборов). */
+add_filter( 'the_title', function ( $title, $id = 0 ) {
+	if ( is_admin() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) || ! $id || 'product' !== get_post_type( $id ) ) {
 		return $title;
 	}
-	$key = trim( html_entity_decode( wp_strip_all_tags( $title ), ENT_QUOTES ), "«» \t\n\r" );
-	$map = ivs_kit_titles();
-	if ( ! isset( $map[ $key ] ) ) {
-		return $title;
-	}
-	return '«' . $map[ $key ][ 'ru' === $lang ? 0 : 1 ] . '»';
+	$clean = trim( $title );
+	$clean = preg_replace( '/^(«|&laquo;|&#171;)\s*/u', '', $clean );
+	$clean = preg_replace( '/\s*(»|&raquo;|&#187;)$/u', '', $clean );
+	return $clean;
 }, 10, 2 );
