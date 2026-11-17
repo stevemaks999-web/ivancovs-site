@@ -4,7 +4,9 @@
   var exact = {
     'Additional order information': T.extra,
     'Add coupons': T.coupon,
-    'Phone': T.phone
+    'Phone': T.phone,
+    'Proceed to Checkout': T.proceed,
+    'Estimated total': T.estimate
   };
   function fix(s) {
     var t = s.trim();
