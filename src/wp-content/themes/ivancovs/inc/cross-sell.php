@@ -162,5 +162,11 @@ add_filter( 'render_block_woocommerce/cart', function ( $content ) {
 	foreach ( WC()->cart->get_cart() as $row ) {
 		$ids[] = (int) $row['product_id'];
 	}
-	return $content . ivs_cross_html( ivs_t( 'Pievienot pie pasūtījuma', 'Добавьте к заказу', 'Add to your order' ), ivs_cross_suggest( $ids ) ); // phpcs:ignore
+	$html = ivs_cross_html( ivs_t( 'Pievienot pie pasūtījuma', 'Добавьте к заказу', 'Add to your order' ), ivs_cross_suggest( $ids ) );
+	if ( '' === $html ) {
+		return $content;
+	}
+	// Когда последнюю позицию убрали, корзина пуста: предложения прячем.
+	$js = '<script>(function(){function f(){var c=document.querySelector(".cross");if(!c)return;c.style.display=document.querySelector(".wc-block-cart-items")?"":"none";}f();new MutationObserver(f).observe(document.body,{childList:true,subtree:true});})();</script>';
+	return $content . $html . $js; // phpcs:ignore
 } );
