@@ -77,29 +77,29 @@ function ivs_kit_device_title( $key ) {
 	return implode( ' + ', $parts );
 }
 
-/** Подписи комплектов, исправленные вместо тех, что лежат в базе: [RU, EN]. */
+/** Подписи комплектов, заменяющие те, что лежат в базе: [RU, EN, LV]. */
 function ivs_kit_captions() {
 	return array(
-		'Ventilācijas Nodošana Ekspluatācijā PRO' => array( 'Расход и скорость воздуха, дым для видимости потоков.', 'Airflow and air velocity, smoke to visualise air movement.' ),
-		'Gaisa Vadu Noplūžu un Spiediena Tests' => array( 'Давление в воздуховодах и дым для поиска утечек.', 'Duct pressure and smoke for tracing leaks.' ),
-		'Komforta Mikroklimats un Caurvējš' => array( 'Скорость воздуха, CO₂, температура и влажность.', 'Air velocity, CO₂, temperature and humidity.' ),
-		'Ventilācijas Ātrā Pārbaude DUO' => array( 'Скорость и температура воздуха.', 'Air velocity and temperature.' ),
-		'Siltumsūkņu & Chiller Master Kit' => array( 'Давление и температура в системах отопления и холода.', 'Pressure and temperature in heating and refrigeration systems.' ),
-		'F-Gāzu Noplūžu & Spiediena Tests' => array( 'Давление в системах холода и кондиционирования, проверка антифриза.', 'Pressure in refrigeration and A/C systems, antifreeze check.' ),
-		'Cauruļu Ultraskaņas Plūsmas & Siltuma Audits' => array( 'Расход в трубах без врезки и толщина стенок.', 'Pipe flow without cutting in, and wall thickness.' ),
-		'Katlu Mājas Hidrauliskā Balansēšana' => array( 'Перепад давления, температура, проверка антифриза.', 'Differential pressure, temperature and antifreeze check.' ),
-		'Mājas Siltuma Zudumu Pilnais Audits' => array( 'Тепловизор, влажность материалов, температура и влажность.', 'Thermal imaging, material moisture, temperature and humidity.' ),
-		'Dūmu Pārbaude & Blower Door Trace' => array( 'Дым и давление: герметичность помещений и каналов.', 'Smoke and pressure: airtightness of rooms and ducts.' ),
-		'Auto Pircēja Super-Check' => array( 'Толщина краски, осмотр эндоскопом, проверка антифриза.', 'Paint thickness, borescope inspection, antifreeze check.' ),
-		'Dzinēja & Turbīnas Padziļinātā Diagnostika' => array( 'Осмотр эндоскопом, нагрев и ток.', 'Borescope inspection, heat and current.' ),
-		'Darba Vides Pilnā Sertifikācija' => array( 'Освещённость, шум, CO₂, температура и влажность.', 'Light, noise, CO₂, temperature and humidity.' ),
-		'Aku, Tvertņu un Šahtu Drošības Komplekts' => array( 'Газы (кислород, CO, H₂S, горючие) и электромагнитные поля.', 'Gas detection (O₂, CO, H₂S, combustible) and electromagnetic fields.' ),
-		'Grīdas Ieklāšanas & Mitruma Drošība' => array( 'Влажность материалов, температура и влажность воздуха.', 'Material moisture, air temperature and humidity.' ),
-		'Tīrtelpu & Cleanroom Daļiņu Audits' => array( 'Частицы в воздухе, давление и скорость воздуха.', 'Airborne particles, pressure and air velocity.' ),
-		'Cauruļu Noplūžu & Aizsērējumu Detektīvs' => array( 'Осмотр эндоскопом и тепловизором.', 'Borescope and thermal imaging inspection.' ),
-		'Elektromotoru & Gultņu Veselības Tests' => array( 'Вибрация, обороты и нагрев.', 'Vibration, rotation speed and heat.' ),
-		'Elektrosadales & Jaudas Parametru Audits' => array( 'Ток, форма сигнала и нагрев.', 'Current, waveform and heat.' ),
-		'Noliktavu Temperatūras Kartēšana' => array( 'Температура и влажность с записью данных.', 'Temperature and humidity data logging.' ),
+		'Ventilācijas Nodošana Ekspluatācijā PRO' => array( 'Расход и скорость воздуха, дым для видимости потоков.', 'Airflow and air velocity, smoke to visualise air movement.', 'Gaisa plūsma un ātrums, dūmi gaisa kustības redzamībai.' ),
+		'Gaisa Vadu Noplūžu un Spiediena Tests' => array( 'Давление в воздуховодах и дым для поиска утечек.', 'Duct pressure and smoke for tracing leaks.', 'Spiediens gaisa vados un dūmi noplūžu meklēšanai.' ),
+		'Komforta Mikroklimats un Caurvējš' => array( 'Скорость воздуха, CO₂, температура и влажность.', 'Air velocity, CO₂, temperature and humidity.', 'Gaisa ātrums, CO₂, temperatūra un mitrums.' ),
+		'Ventilācijas Ātrā Pārbaude DUO' => array( 'Скорость и температура воздуха.', 'Air velocity and temperature.', 'Gaisa ātrums un temperatūra.' ),
+		'Siltumsūkņu & Chiller Master Kit' => array( 'Давление и температура в системах отопления и холода.', 'Pressure and temperature in heating and refrigeration systems.', 'Spiediens un temperatūra apkures un aukstuma sistēmās.' ),
+		'F-Gāzu Noplūžu & Spiediena Tests' => array( 'Давление в системах холода и кондиционирования, проверка антифриза.', 'Pressure in refrigeration and A/C systems, antifreeze check.', 'Spiediens aukstuma un gaisa kondicionēšanas sistēmās, antifrīza pārbaude.' ),
+		'Cauruļu Ultraskaņas Plūsmas & Siltuma Audits' => array( 'Расход в трубах без врезки и толщина стенок.', 'Pipe flow without cutting in, and wall thickness.', 'Plūsma caurulēs bez iegriešanās un sieniņu biezums.' ),
+		'Katlu Mājas Hidrauliskā Balansēšana' => array( 'Перепад давления, температура, проверка антифриза.', 'Differential pressure, temperature and antifreeze check.', 'Spiediena starpība, temperatūra, antifrīza pārbaude.' ),
+		'Mājas Siltuma Zudumu Pilnais Audits' => array( 'Тепловизор, влажность материалов, температура и влажность.', 'Thermal imaging, material moisture, temperature and humidity.', 'Termokamera, materiālu mitrums, temperatūra un gaisa mitrums.' ),
+		'Dūmu Pārbaude & Blower Door Trace' => array( 'Дым и давление: герметичность помещений и каналов.', 'Smoke and pressure: airtightness of rooms and ducts.', 'Dūmi un spiediens: telpu un kanālu hermētiskums.' ),
+		'Auto Pircēja Super-Check' => array( 'Толщина краски, осмотр эндоскопом, проверка антифриза.', 'Paint thickness, borescope inspection, antifreeze check.', 'Krāsas biezums, apskate ar endoskopu, antifrīza pārbaude.' ),
+		'Dzinēja & Turbīnas Padziļinātā Diagnostika' => array( 'Осмотр эндоскопом, нагрев и ток.', 'Borescope inspection, heat and current.', 'Apskate ar endoskopu, uzsilšana un strāva.' ),
+		'Darba Vides Pilnā Sertifikācija' => array( 'Освещённость, шум, CO₂, температура и влажность.', 'Light, noise, CO₂, temperature and humidity.', 'Apgaismojums, troksnis, CO₂, temperatūra un mitrums.' ),
+		'Aku, Tvertņu un Šahtu Drošības Komplekts' => array( 'Газы (кислород, CO, H₂S, горючие) и электромагнитные поля.', 'Gas detection (O₂, CO, H₂S, combustible) and electromagnetic fields.', 'Gāzes (skābeklis, CO, H₂S, degošās) un elektromagnētiskie lauki.' ),
+		'Grīdas Ieklāšanas & Mitruma Drošība' => array( 'Влажность материалов, температура и влажность воздуха.', 'Material moisture, air temperature and humidity.', 'Materiālu mitrums, gaisa temperatūra un mitrums.' ),
+		'Tīrtelpu & Cleanroom Daļiņu Audits' => array( 'Частицы в воздухе, давление и скорость воздуха.', 'Airborne particles, pressure and air velocity.', 'Daļiņas gaisā, spiediens un gaisa ātrums.' ),
+		'Cauruļu Noplūžu & Aizsērējumu Detektīvs' => array( 'Осмотр эндоскопом и тепловизором.', 'Borescope and thermal imaging inspection.', 'Apskate ar endoskopu un termokameru.' ),
+		'Elektromotoru & Gultņu Veselības Tests' => array( 'Вибрация, обороты и нагрев.', 'Vibration, rotation speed and heat.', 'Vibrācija, griešanās ātrums un uzsilšana.' ),
+		'Elektrosadales & Jaudas Parametru Audits' => array( 'Ток, форма сигнала и нагрев.', 'Current, waveform and heat.', 'Strāva, signāla forma un uzsilšana.' ),
+		'Noliktavu Temperatūras Kartēšana' => array( 'Температура и влажность с записью данных.', 'Temperature and humidity data logging.', 'Temperatūra un mitrums ar datu ierakstu.' ),
 	);
 }
 
@@ -109,12 +109,13 @@ function ivs_kit_key( $title ) {
 
 add_filter( 'get_the_excerpt', function ( $excerpt, $post ) {
 	$lang = ivs_lang();
-	if ( 'lv' === $lang || ! $post || 'product' !== $post->post_type ) {
+	if ( ! $post || 'product' !== $post->post_type ) {
 		return $excerpt;
 	}
 	$map = ivs_kit_captions();
 	$key = ivs_kit_key( $post->post_title );
-	return isset( $map[ $key ] ) ? $map[ $key ][ 'ru' === $lang ? 0 : 1 ] : $excerpt;
+	$idx = array( 'ru' => 0, 'en' => 1, 'lv' => 2 );
+	return isset( $map[ $key ] ) ? $map[ $key ][ $idx[ $lang ] ?? 2 ] : $excerpt;
 }, 30, 2 );
 
 /** Название комплекта показываем оригинальным и без кавычек (как у приборов). */
