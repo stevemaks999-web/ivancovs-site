@@ -181,6 +181,7 @@ require_once get_template_directory() . '/inc/i18n-pages.php';
 require_once get_template_directory() . '/inc/cart-clean.php';
 require_once get_template_directory() . '/inc/click-log.php';
 require_once get_template_directory() . '/inc/seo.php';
+require_once get_template_directory() . '/inc/product-seo.php';
 
 /**
  * Главная на RU/EN: у страницы «Sākums» нет перевода в Polylang, и /ru/ и /en/ показывали
