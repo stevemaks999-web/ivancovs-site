@@ -129,3 +129,32 @@ add_filter( 'the_title', function ( $title, $id = 0 ) {
 	$real  = ivs_kit_device_title( ivs_kit_key( $clean ) );
 	return '' !== $real ? $real : $clean;
 }, 10, 2 );
+
+/** Корзина и оформление берут название и описание из товара (Store API), поэтому подменяем и там. */
+function ivs_kit_front_context() {
+	if ( is_admin() ) {
+		return false;
+	}
+	return ! ( defined( 'REST_REQUEST' ) && REST_REQUEST && current_user_can( 'edit_products' ) );
+}
+
+add_filter( 'woocommerce_product_get_name', function ( $name, $product ) {
+	if ( ! ivs_kit_front_context() ) {
+		return $name;
+	}
+	$real = ivs_kit_device_title( ivs_kit_key( $name ) );
+	return '' !== $real ? $real : $name;
+}, 20, 2 );
+
+add_filter( 'woocommerce_product_get_short_description', function ( $desc, $product ) {
+	if ( ! ivs_kit_front_context() ) {
+		return $desc;
+	}
+	$map = ivs_kit_captions();
+	$key = ivs_kit_key( $product->get_name( 'edit' ) );
+	if ( ! isset( $map[ $key ] ) ) {
+		return $desc;
+	}
+	$idx = array( 'ru' => 0, 'en' => 1, 'lv' => 2 );
+	return $map[ $key ][ $idx[ ivs_lang() ] ?? 2 ];
+}, 20, 2 );

@@ -151,3 +151,7 @@ body.pp main{padding-bottom:70px}
  footer a{display:inline-block;padding:8px 0}
  .logo{display:inline-block;padding:8px 0}
 }
+
+/* Каталог: полоса прокрутки рядов «Комплекты» и категорий не должна упираться в соседний ряд */
+.krow{padding-bottom:16px;margin-bottom:8px}
+.chipbar{padding-bottom:16px}
