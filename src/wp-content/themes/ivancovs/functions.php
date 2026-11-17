@@ -181,6 +181,7 @@ require_once get_template_directory() . '/inc/i18n-pages.php';
 require_once get_template_directory() . '/inc/cart-clean.php';
 require_once get_template_directory() . '/inc/click-log.php';
 require_once get_template_directory() . '/inc/seo.php';
+require_once get_template_directory() . '/inc/perf.php';
 require_once get_template_directory() . '/inc/product-seo.php';
 
 /**
