@@ -25,7 +25,14 @@ $cat_terms = is_wp_error( $cat_terms ) ? array() : $cat_terms;
 ?>
 <div class="wrap">
 	<div class="crumbs"><a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php ivs_e( 'Sākums', 'Главная', 'Home' ); ?></a> › <?php ivs_e( 'Noma', 'Аренда', 'Rental' ); ?></div>
-	<h1 style="margin:0 0 16px;font-size:32px"><?php ivs_e( 'Mērinstrumentu noma Rīgā', 'Аренда измерительных приборов в Риге', 'Measuring instrument rental in Riga' ); ?></h1>
+	<h1 style="margin:0 0 16px;font-size:32px"><?php
+	if ( $current instanceof WP_Term ) {
+		echo esc_html( $current->name ) . ' ';
+		ivs_e( 'noma Rīgā', 'аренда в Риге', 'rental in Riga' );
+	} else {
+		ivs_e( 'Mērinstrumentu noma Rīgā', 'Аренда измерительных приборов в Риге', 'Measuring instrument rental in Riga' );
+	}
+?></h1>
 
 	<form class="bar" role="search" method="get" action="<?php echo esc_url( $shop ); ?>">
 		<?php if ( 'lv' !== ivs_lang() ) : ?><input type="hidden" name="ivl" value="<?php echo esc_attr( ivs_lang() ); ?>"><?php endif; ?>
