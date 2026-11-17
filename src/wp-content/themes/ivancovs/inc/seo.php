@@ -149,9 +149,9 @@ add_filter( 'wpseo_title', function ( $title ) {
 		$base = is_singular() ? get_the_title( get_queried_object_id() ) : single_cat_title( '', false );
 		$base = ivs_seo_name( $base );
 		if ( is_category() ) {
-			$base .= ivs_t( ' – raksti', ' – статьи', ' – articles' );
+			$base .= ivs_t( ' – raksti par ventilāciju', ' – статьи о вентиляции', ' – ventilation articles' );
 		}
-		if ( $base && mb_strlen( $base . $brand ) < 30 ) {
+		if ( $base && ! is_category() && mb_strlen( $base . $brand ) < 30 ) {
 			$base .= ivs_t( ' – ventilācija un mērījumi', ' – вентиляция и измерения', ' – ventilation and measurements' );
 		}
 		if ( $base ) {
