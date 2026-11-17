@@ -143,7 +143,7 @@ function ivs_lang_switch() {
 					$out[] = $on ? '<b>' . esc_html( $name ) . '</b>' : '<a href="' . esc_url( $url ) . '">' . esc_html( $name ) . '</a>';
 					continue;
 				}
-				$out[] = $l['current_lang'] ? '<b>' . esc_html( $name ) . '</b>' : '<a href="' . esc_url( $l['url'] ) . '">' . esc_html( $name ) . '</a>';
+				$out[] = $l['current_lang'] ? '<b>' . esc_html( $name ) . '</b>' : '<a href="' . esc_url( ivs_seo_fix_host( $l['url'] ) ) . '">' . esc_html( $name ) . '</a>';
 			}
 			echo '<span class="lang">' . implode( ' · ', $out ) . '</span>'; // phpcs:ignore
 			return;
