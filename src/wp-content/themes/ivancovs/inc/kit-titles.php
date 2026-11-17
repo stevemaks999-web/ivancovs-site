@@ -37,7 +37,7 @@ function ivs_kit_titles() {
 function ivs_kit_device_titles() {
 	$endo  = array( 'Эндоскоп Anesok', 'Anesok borescope', 'Anesok endoskops' );
 	$refr  = array( 'Рефрактометр RHA-503ATC', 'Refractometer RHA-503ATC', 'Refraktometrs RHA-503ATC' );
-	$tool  = array( 'Тепловизор Tooltop T7', 'Tooltop T7 thermal imager', 'Termokamera Tooltop T7' );
+	$tool  = array( 'Тепловизор Tooltop T3/T7', 'Tooltop T3/T7 thermal imager', 'Termokamera Tooltop T3/T7' );
 	$smoke = array( 'Дым-генератор Telesin C40', 'Telesin C40 smoke generator', 'Dūmu ģenerators Telesin C40' );
 	return array(
 		'Ventilācijas Nodošana Ekspluatācijā PRO' => array( 'Testo 420', 'Testo 417', $smoke ),
