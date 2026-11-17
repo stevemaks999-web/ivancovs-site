@@ -61,6 +61,7 @@ while ( have_posts() ) :
 				</ul>
 				<a class="btn wa block" href="<?php echo ivs_wa_link( $wa_text ); // phpcs:ignore ?>"><?php ivs_e( 'Jautāt WhatsApp', 'Спросить в WhatsApp', 'Ask on WhatsApp' ); ?></a>
 			</div>
+			<?php do_action( 'ivs_after_booking', $product ); ?>
 
 			<?php if ( has_excerpt() ) : ?>
 				<h2 style="margin-top:24px"><?php ivs_e( 'Kam nepieciešams', 'Для чего нужен', 'What it is for' ); ?></h2>
