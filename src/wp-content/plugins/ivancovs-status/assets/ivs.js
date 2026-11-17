@@ -80,12 +80,24 @@
 
     var card1 = h('div', { class: 'ivs-card' }, h('h3', { class: 'ivs-h', text: 'Табло проекта' }), hero, st);
 
+    var m = data.metrics, card0 = null;
+    if (m) {
+      var ev = m.events || {};
+      var fmt = function (n) { return n == null ? '—' : String(n); };
+      card0 = h('div', { class: 'ivs-card' }, h('h3', { class: 'ivs-h', text: 'Цифры за ' + m.period_days + ' дней' }),
+        h('div', { class: 'ivs-stats' },
+          stat(fmt(m.clicks), 'Клики Google'), stat(fmt(m.impressions), 'Показы Google'),
+          stat(fmt(m.users), 'Посетители'), stat(fmt(m.sessions), 'Сеансы')),
+        h('div', { class: 'ivs-stats', style: 'margin-top:8px' },
+          stat(fmt(ev.view_item || 0), 'Просмотры приборов'), stat(fmt(ev.add_to_cart || 0), 'Брони'),
+          stat(fmt(ev.purchase || 0), 'Оплаты'), stat((ev.click_call || 0) + (ev.click_whatsapp || 0), 'Звонки и WhatsApp')));
+    }
     var tabs = h('div', { class: 'ivs-tabs' });
     [['activity', 'Лог'], ['pulls', 'Pull requests'], ['issues', 'Issues']].forEach(function (t) {
       tabs.appendChild(h('button', { class: 'ivs-tab' + (state.tab === t[0] ? ' on' : ''), type: 'button', text: t[1], onclick: function () { state.tab = t[0]; render(); } }));
     });
     var card2 = h('div', { class: 'ivs-card' }, h('h3', { class: 'ivs-h', text: 'GitHub' }), tabs, feed());
-    return h('aside', { class: 'ivs-board' }, card1, card2);
+    return h('aside', { class: 'ivs-board' }, card1, card0, card2);
   }
 
   function stat(v, l) { return h('div', { class: 'ivs-stat' }, h('b', { text: String(v) }), h('span', { text: l })); }
