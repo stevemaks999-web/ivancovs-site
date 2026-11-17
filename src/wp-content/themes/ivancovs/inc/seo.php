@@ -122,7 +122,7 @@ add_filter( 'wpseo_title', function ( $title ) {
 	$brand = ' | IVANCOVS';
 	$l     = ivs_lang();
 	if ( is_front_page() ) {
-		return ivs_t( 'Ventilācijas regulēšana un mērinstrumentu noma Rīgā', 'Регулировка вентиляции и аренда приборов в Риге', 'Ventilation balancing and instrument rental in Riga' ) . $brand;
+		return ivs_t( 'Ventilācijas regulēšana, mērinstrumentu noma Rīgā', 'Регулировка вентиляции и аренда приборов в Риге', 'Ventilation balancing and instrument rental in Riga' ) . $brand;
 	}
 	if ( is_singular( 'product' ) ) {
 		$name = ivs_seo_name( get_the_title() );
@@ -132,6 +132,9 @@ add_filter( 'wpseo_title', function ( $title ) {
 		if ( mb_strlen( $full ) > 60 ) {
 			$full = $name . $tail . $brand;
 		}
+		if ( mb_strlen( $full ) > 60 ) {
+			$full = $name . $tail;
+		}
 		return $full;
 	}
 	if ( is_post_type_archive( 'product' ) && ! is_tax() ) {
@@ -140,6 +143,23 @@ add_filter( 'wpseo_title', function ( $title ) {
 	if ( is_tax( 'product_cat' ) ) {
 		$cat = ivs_seo_name( single_term_title( '', false ) );
 		return $cat . ivs_t( ' noma Rīgā', ': аренда в Риге', ' rental in Riga' ) . $brand;
+	}
+	// Страницы, записи и рубрики: короткие названия дополняем, длинные сокращаем (30–60 знаков).
+	if ( is_singular() || is_category() || is_home() ) {
+		$base = is_singular() ? get_the_title( get_queried_object_id() ) : single_cat_title( '', false );
+		$base = ivs_seo_name( $base );
+		if ( is_category() ) {
+			$base .= ivs_t( ' – raksti', ' – статьи', ' – articles' );
+		}
+		if ( $base && mb_strlen( $base . $brand ) < 30 ) {
+			$base .= ivs_t( ' – ventilācija un mērījumi', ' – вентиляция и измерения', ' – ventilation and measurements' );
+		}
+		if ( $base ) {
+			if ( mb_strlen( $base . $brand ) > 60 ) {
+				$base = ivs_seo_cut( $base, 60 - mb_strlen( $brand ) );
+			}
+			return $base . $brand;
+		}
 	}
 	return $title;
 }, 98 );
