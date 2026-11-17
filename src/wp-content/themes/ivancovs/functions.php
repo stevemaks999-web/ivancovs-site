@@ -169,3 +169,4 @@ require_once get_template_directory() . '/inc/terms.php';
 require_once get_template_directory() . '/inc/checkout.php';
 require_once get_template_directory() . '/inc/telegram.php';
 require_once get_template_directory() . '/inc/analytics.php';
+require_once get_template_directory() . '/inc/kit-titles.php';
