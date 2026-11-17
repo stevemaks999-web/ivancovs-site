@@ -177,19 +177,19 @@ add_filter( 'wpseo_metadesc', function ( $desc ) {
 		$name = ivs_seo_name( get_the_title() );
 		$p    = ivs_seo_price( wc_get_product( get_the_ID() ) );
 		if ( 'ru' === ivs_lang() ) {
-			$d = $name . ' — аренда в Риге' . ( $p ? ' от ' . $p . ' € в сутки' : '' ) . '. Выберите даты на сайте и оплатите онлайн, прибор выдаём в Риге. Залог и условия указаны на странице.';
+			$d = $name . ' — аренда в Риге' . ( $p ? ' от ' . $p . ' € в сутки' : '' ) . '. Выберите даты на сайте и забронируйте онлайн, прибор выдаём в Риге. Залог и условия указаны на странице.';
 		} elseif ( 'en' === ivs_lang() ) {
-			$d = $name . ' rental in Riga' . ( $p ? ' from €' . $p . ' per day' : '' ) . '. Pick your dates and pay online, pick up the instrument in Riga. Deposit and terms are shown on the page.';
+			$d = $name . ' rental in Riga' . ( $p ? ' from €' . $p . ' per day' : '' ) . '. Pick your dates and book online, pick up the instrument in Riga. Deposit and terms are shown on the page.';
 		} else {
-			$d = $name . ' noma Rīgā' . ( $p ? ' no ' . $p . ' € dienā' : '' ) . '. Izvēlieties datumus un apmaksājiet tiešsaistē, instrumentu saņemsiet Rīgā. Depozīts un nosacījumi norādīti lapā.';
+			$d = $name . ' noma Rīgā' . ( $p ? ' no ' . $p . ' € dienā' : '' ) . '. Izvēlieties datumus un rezervējiet tiešsaistē, instrumentu saņemsiet Rīgā. Depozīts un nosacījumi norādīti lapā.';
 		}
 		return ivs_seo_cut( $d, 158 );
 	}
 	if ( is_post_type_archive( 'product' ) && ! is_tax() ) {
 		return ivs_t(
-			'Mērinstrumentu noma Rīgā: termokameras, anemometri, manometri, CO₂ un gāzes detektori. Cena par dienu, rezervācija un apmaksa tiešsaistē.',
-			'Аренда измерительных приборов в Риге: тепловизоры, анемометры, манометры, CO₂ и газоанализаторы. Цена за сутки, бронь и оплата онлайн.',
-			'Measuring instrument rental in Riga: thermal cameras, anemometers, manometers, CO₂ and gas detectors. Daily prices, online booking and payment.'
+			'Mērinstrumentu noma Rīgā: termokameras, anemometri, manometri, CO₂ un gāzes detektori. Cena par dienu, rezervācija tiešsaistē.',
+			'Аренда измерительных приборов в Риге: тепловизоры, анемометры, манометры, CO₂ и газоанализаторы. Цена за сутки, бронь онлайн.',
+			'Measuring instrument rental in Riga: thermal cameras, anemometers, manometers, CO₂ and gas detectors. Daily prices, online booking.'
 		);
 	}
 	if ( is_tax( 'product_cat' ) ) {

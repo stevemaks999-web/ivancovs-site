@@ -71,6 +71,7 @@ while ( have_posts() ) :
 				<h2 style="margin-top:20px"><?php ivs_e( 'Tehniskie dati', 'Технические данные', 'Technical data' ); ?></h2>
 				<div class="entry-body"><?php the_content(); ?></div>
 			<?php endif; ?>
+			<?php do_action( 'ivs_after_content', $product ); ?>
 		</div>
 	</div>
 </div>
