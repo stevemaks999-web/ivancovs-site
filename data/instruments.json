@@ -569,8 +569,8 @@
   "source_url": "https://hanmatek.com/blogs/news/hanmatek%C2%AE-co601-clamp-oscilloscope-portable-precision-for-modern-technicians",
   "status": "partial",
   "check_ru": "Напряжение у производителя указано 600 В или 1000 В в разных источниках: сверить по руководству",
-  "datasheet_kind": "specs",
-  "datasheet_note": "Oficiālā specifikācija (HANMATEK)",
+  "datasheet_kind": "official",
+  "datasheet_note": "Oficiālā produkta lapa (HANMATEK), PDF nav atrasts",
   "purpose_ru": "Токовые клещи с осциллографом: форма тока и напряжения, диагностика электрики.",
   "specs_ru": [
    "Осциллограф: 1 МГц по напряжению, 1 кГц по току, 5 МС/с",
@@ -579,7 +579,8 @@
   ],
   "short_ru": "Токовые клещи с осциллографом: форма тока и напряжения.",
   "short_lv": "Strāvas spailes ar osciloskopu: strāvas un sprieguma formas.",
-  "short_en": "Clamp meter with oscilloscope: current and voltage waveforms."
+  "short_en": "Clamp meter with oscilloscope: current and voltage waveforms.",
+  "datasheet_url": "https://hanmatek.com/products/hanmatek-co601-clamp-oscilloscope-1mhz-600a-true-rms-bluetooth"
  },
  {
   "id": 26,
@@ -756,8 +757,8 @@
   "photo": "https://ivancovs.com/wp-content/uploads/2025/07/TELESIN.png",
   "source_url": "https://www.telesinstore.com/blogs/news/telesin-c40-portable-fog-machine-comprehensive-faqs-and-answers",
   "status": "partial",
-  "datasheet_kind": "specs",
-  "datasheet_note": "Oficiālā specifikācija (TELESIN C40)",
+  "datasheet_kind": "manual",
+  "datasheet_note": "Lietotāja rokasgrāmata (manuals.plus, trešās puses kopija)",
   "purpose_ru": "Переносной дым-генератор 40 Вт: показать направление потоков воздуха и найти утечки.",
   "specs_ru": [
    "Мощность 40 Вт, пульт управления",
@@ -767,7 +768,8 @@
   "check_ru": "Время работы от батареи расходится в источниках (от 5 до 28 минут): проверить",
   "short_ru": "Портативный дым-генератор: потоки воздуха и утечки.",
   "short_lv": "Portatīvs dūmu ģenerators gaisa plūsmu un noplūžu parādīšanai.",
-  "short_en": "Portable fog machine for showing airflow and leaks."
+  "short_en": "Portable fog machine for showing airflow and leaks.",
+  "datasheet_url": "https://manuals.plus/asin/B0D8FTY6VB"
  },
  {
   "id": 34,
@@ -803,8 +805,8 @@
   "photo": "https://ivancovs.com/wp-content/uploads/2025/07/TOOLTOP.png",
   "source_url": "https://www.tooltop.com/",
   "status": "partial",
-  "datasheet_kind": "specs",
-  "datasheet_note": "Oficiālā specifikācija (TOOLTOP T3/T7)",
+  "datasheet_kind": "manual",
+  "datasheet_note": "Lietotāja rokasgrāmata T7 (manuals.plus, trešās puses kopija)",
   "purpose_ru": "Тепловизор для смартфона на Android: утечки тепла, перегрев электрики, проверка полов.",
   "specs_ru": [
    "Разрешение 256×192 (T7) или 96×96 (T3)",
@@ -814,7 +816,8 @@
   "check_ru": "Нужно уточнить модель: T3 или T7",
   "short_ru": "Мобильный тепловизор для Android: утечки тепла и перегрев.",
   "short_lv": "Mobilā termokamera Android tālrunim: siltuma zudumi un pārkaršana.",
-  "short_en": "Mobile thermal camera for Android: heat loss and overheating."
+  "short_en": "Mobile thermal camera for Android: heat loss and overheating.",
+  "datasheet_url": "https://manuals.plus/asin/B0F5N1XRGB"
  },
  {
   "id": 36,
@@ -857,11 +860,12 @@
   "kit_ru": "",
   "source_note": "Руководство PM2019A/S (manuals.plus), страницы продавцов",
   "check_ru": "В описаниях расходятся: True RMS и измерение напряжения; уточнить по руководству",
-  "datasheet_kind": "specs",
-  "datasheet_note": "Tehniskā specifikācija (Peakmeter PM2019A)",
+  "datasheet_kind": "manual",
+  "datasheet_note": "Lietotāja rokasgrāmata PM2019A (manuals.plus, trešās puses kopija)",
   "short_ru": "Токовые клещи с гибкой катушкой Роговского до 3000 А.",
   "short_lv": "Elastīgas Rogovska spoles strāvas mērītājs līdz 3000 A.",
-  "short_en": "Flexible Rogowski coil clamp meter up to 3000 A."
+  "short_en": "Flexible Rogowski coil clamp meter up to 3000 A.",
+  "datasheet_url": "https://manuals.plus/asin/B07RBMQ3MK.pdf"
  },
  {
   "id": 38,
