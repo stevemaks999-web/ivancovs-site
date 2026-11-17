@@ -31,6 +31,32 @@ foreach ( array( 'wpseo_canonical', 'wpseo_opengraph_url', 'wpseo_schema_graph',
 	add_filter( $ivs_hook, 'ivs_seo_fix_host', 99 );
 }
 
+/** Главная страница на RU или EN (/ru/ и /en/): это языковая главная Polylang, а не обычная страница. */
+function ivs_is_lang_home() {
+	if ( is_admin() || is_singular() || is_404() ) {
+		return false;
+	}
+	$q = (string) wp_parse_url( $_SERVER['REQUEST_URI'] ?? '', PHP_URL_QUERY ); // phpcs:ignore
+	$p = trim( (string) wp_parse_url( $_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH ), '/' ); // phpcs:ignore
+	return in_array( $p, array( 'ru', 'en' ), true ) && ( '' === $q || 0 === strpos( $q, 'ivl=' ) || 0 === strpos( $q, 'lang=' ) );
+}
+
+function ivs_is_any_home() {
+	return is_front_page() || ivs_is_lang_home();
+}
+
+function ivs_home_title() {
+	return ivs_t( 'Ventilācijas regulēšana, mērinstrumentu noma Rīgā', 'Регулировка вентиляции и аренда приборов в Риге', 'Ventilation balancing and instrument rental in Riga' ) . ' | IVANCOVS';
+}
+
+function ivs_home_desc() {
+	return ivs_t(
+		'Ventilācijas sistēmu regulēšana, auditi un ekspertīzes Rīgā. Profesionālu mērinstrumentu noma: anemometri, termokameras, CO₂ mērītāji. Dmitrijs Ivancovs.',
+		'Регулировка, аудит и экспертиза вентиляции в Риге. Аренда профессиональных приборов: анемометры, тепловизоры, CO₂-измерители. Дмитрий Иванцов.',
+		'Ventilation balancing, audits and expert assessments in Riga. Rental of professional instruments: anemometers, thermal cameras and CO₂ meters.'
+	);
+}
+
 /** Страница каталога, товара или категории приборов. */
 function ivs_is_catalog_page() {
 	return function_exists( 'is_woocommerce' ) && is_woocommerce() && ! is_cart() && ! is_checkout() && ! is_account_page();
@@ -121,8 +147,8 @@ function ivs_seo_price( $product ) {
 add_filter( 'wpseo_title', function ( $title ) {
 	$brand = ' | IVANCOVS';
 	$l     = ivs_lang();
-	if ( is_front_page() ) {
-		return ivs_t( 'Ventilācijas regulēšana, mērinstrumentu noma Rīgā', 'Регулировка вентиляции и аренда приборов в Риге', 'Ventilation balancing and instrument rental in Riga' ) . $brand;
+	if ( ivs_is_any_home() ) {
+		return ivs_home_title();
 	}
 	if ( is_singular( 'product' ) ) {
 		$name = ivs_seo_name( get_the_title() );
@@ -145,7 +171,7 @@ add_filter( 'wpseo_title', function ( $title ) {
 		return $cat . ivs_t( ' noma Rīgā', ': аренда в Риге', ' rental in Riga' ) . $brand;
 	}
 	// Страницы, записи и рубрики: короткие названия дополняем, длинные сокращаем (30–60 знаков).
-	if ( is_singular() || is_category() || is_home() ) {
+	if ( is_singular() || is_category() || ( is_home() && ! ivs_is_lang_home() ) ) {
 		$base = is_singular() ? get_the_title( get_queried_object_id() ) : single_cat_title( '', false );
 		$base = ivs_seo_name( $base );
 		if ( is_category() ) {
@@ -166,12 +192,8 @@ add_filter( 'wpseo_title', function ( $title ) {
 
 /** Description: приборы, категории, каталог, главная; запасной вариант из текста страницы. Цель 140–160 знаков. */
 add_filter( 'wpseo_metadesc', function ( $desc ) {
-	if ( is_front_page() ) {
-		return ivs_t(
-			'Ventilācijas sistēmu regulēšana, auditi un ekspertīzes Rīgā. Profesionālu mērinstrumentu noma: anemometri, termokameras, CO₂ mērītāji. Dmitrijs Ivancovs.',
-			'Регулировка, аудит и экспертиза вентиляции в Риге. Аренда профессиональных приборов: анемометры, тепловизоры, CO₂-измерители. Дмитрий Иванцов.',
-			'Ventilation balancing, audits and expert assessments in Riga. Rental of professional instruments: anemometers, thermal cameras and CO₂ meters.'
-		);
+	if ( ivs_is_any_home() ) {
+		return ivs_home_desc();
 	}
 	if ( is_singular( 'product' ) ) {
 		$name = ivs_seo_name( get_the_title() );
@@ -200,7 +222,7 @@ add_filter( 'wpseo_metadesc', function ( $desc ) {
 			$cat . ': instrument rental in Riga. Daily price, deposit, online booking. Choose a single instrument or a ready kit for your task.'
 		), 158 );
 	}
-	if ( ! $desc && ( is_singular() || is_home() || is_category() ) ) {
+	if ( ! $desc && ( is_singular() || is_category() || ( is_home() && ! ivs_is_lang_home() ) ) ) {
 		$post = is_singular() ? get_queried_object() : null;
 		$txt  = $post ? ( $post->post_excerpt ? $post->post_excerpt : strip_shortcodes( $post->post_content ) ) : '';
 		$txt  = ivs_seo_cut( $txt, 158 );
@@ -300,7 +322,7 @@ add_action( 'wp_head', function () {
 		if ( $img ) {
 			$data['image'] = ivs_seo_fix_host( $img );
 		}
-	} elseif ( is_front_page() ) {
+	} elseif ( ivs_is_any_home() ) {
 		$data = array(
 			'@context'    => 'https://schema.org',
 			'@type'       => 'LocalBusiness',
@@ -391,3 +413,31 @@ add_action( 'init', function () {
 add_filter( 'wpseo_sitemap_index', function ( $xml ) {
 	return $xml . '<sitemap><loc>' . esc_url( home_url( '/ivl-sitemap.xml' ) ) . '</loc></sitemap>';
 } );
+
+/** Языковая главная (/ru/, /en/): Yoast на ней метатеги не выводит, поэтому здесь canonical, hreflang и Open Graph выводим сами. */
+add_filter( 'pre_get_document_title', function ( $t ) {
+	return ivs_is_lang_home() ? ivs_home_title() : $t;
+}, 99 );
+add_filter( 'wpseo_canonical', function ( $c ) {
+	return ivs_is_lang_home() ? '' : $c;
+}, 99 );
+add_action( 'wp_head', function () {
+	if ( ! ivs_is_lang_home() ) {
+		return;
+	}
+	$l   = ivs_lang();
+	$url = home_url( '/' . $l . '/' );
+	$loc = array( 'ru' => 'ru_RU', 'en' => 'en_GB' );
+	echo '<link rel="canonical" href="' . esc_url( ivs_seo_fix_host( $url ) ) . '" />' . "\n";
+	foreach ( array( 'lv' => '/', 'ru' => '/ru/', 'en' => '/en/', 'x-default' => '/' ) as $code => $path ) {
+		echo '<link rel="alternate" hreflang="' . esc_attr( $code ) . '" href="' . esc_url( ivs_seo_fix_host( home_url( $path ) ) ) . '" />' . "\n";
+	}
+	echo '<meta property="og:locale" content="' . esc_attr( $loc[ $l ] ?? 'lv_LV' ) . '" />' . "\n";
+	echo '<meta property="og:type" content="website" />' . "\n";
+	echo '<meta property="og:title" content="' . esc_attr( ivs_home_title() ) . '" />' . "\n";
+	echo '<meta property="og:description" content="' . esc_attr( ivs_home_desc() ) . '" />' . "\n";
+	echo '<meta property="og:url" content="' . esc_url( ivs_seo_fix_host( $url ) ) . '" />' . "\n";
+	echo '<meta property="og:site_name" content="IVANCOVS" />' . "\n";
+	echo '<meta property="og:image" content="' . esc_url( get_template_directory_uri() . '/assets/dmitrijs.jpg' ) . '" />' . "\n";
+	echo '<meta name="twitter:card" content="summary_large_image" />' . "\n";
+}, 2 );
