@@ -98,7 +98,8 @@ function ivs_primary_nav() {
 		array( '/blog-2/', ivs_t( 'Blogs', 'Блог', 'Blog' ) ),
 	);
 	foreach ( $items as $i ) {
-		printf( '<a href="%s">%s</a>', ivs_url( $i[0] ), esc_html( $i[1] ) );
+		$href = ivs_url( $i[0] );
+		printf( '<a href="%s">%s</a>', '/noma/' === $i[0] ? esc_url( ivs_lang_url( $href ) ) : $href, esc_html( $i[1] ) );
 	}
 }
 
