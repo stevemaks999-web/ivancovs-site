@@ -95,3 +95,23 @@ add_filter( 'get_term', function ( $term ) {
 	}
 	return $term;
 } );
+
+/** В общем списке «Visi instrumenti» показываем отдельные приборы, комплекты открываются через ряд «Komplekti». Поиск и категории не затрагиваем. */
+add_action( 'pre_get_posts', function ( $q ) {
+	if ( is_admin() || ! $q->is_main_query() || ! $q->is_post_type_archive( 'product' ) || $q->is_tax() || $q->is_search() ) {
+		return;
+	}
+	$kits = ivs_kits_term();
+	if ( ! $kits ) {
+		return;
+	}
+	$tax   = (array) $q->get( 'tax_query' );
+	$tax[] = array(
+		'taxonomy'         => 'product_cat',
+		'field'            => 'term_id',
+		'terms'            => array( $kits->term_id ),
+		'operator'         => 'NOT IN',
+		'include_children' => true,
+	);
+	$q->set( 'tax_query', $tax );
+} );
