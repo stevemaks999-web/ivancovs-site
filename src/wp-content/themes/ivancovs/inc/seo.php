@@ -187,6 +187,15 @@ add_filter( 'wpseo_metadesc', function ( $desc ) {
 		if ( mb_strlen( $txt ) >= 60 ) {
 			return $txt;
 		}
+		// Текста мало (страница собирается шаблоном): описание по названию страницы.
+		$t = ivs_seo_name( is_singular() ? get_the_title( get_queried_object_id() ) : wp_strip_all_tags( get_the_archive_title() ) );
+		if ( $t ) {
+			return ivs_seo_cut( ivs_t(
+				$t . ': ventilācijas regulēšana, auditi, ekspertīzes un apmācības Rīgā. Dmitrijs Ivancovs, praktiska pieredze un mērinstrumenti.',
+				$t . ': регулировка вентиляции, аудиты, экспертизы и обучение в Риге. Дмитрий Иванцов, практический опыт и измерительные приборы.',
+				$t . ': ventilation balancing, audits, expert assessments and training in Riga. Dmitrijs Ivancovs, hands-on experience and instruments.'
+			), 158 );
+		}
 	}
 	return $desc;
 }, 98 );
