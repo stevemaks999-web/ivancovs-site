@@ -19,10 +19,10 @@ function ivs_i18n_pages_map() {
 		'apmacibas/komforts'               => array( 'apmacibas', array( 'Тепловой комфорт', 'teplovoj-komfort' ), array( 'Thermal comfort', 'thermal-comfort' ), 2 ),
 		'apmacibas/ventilacijas-sistemas'  => array( 'apmacibas', array( 'Вентиляционные системы', 'ventilyacionnye-sistemy' ), array( 'Ventilation systems', 'ventilation-systems' ), 3 ),
 		'apmacibas/ventilacijas-iekartas'  => array( 'apmacibas', array( 'Вентиляционное оборудование', 'ventilyacionnoe-oborudovanie' ), array( 'Ventilation equipment', 'ventilation-equipment' ), 4 ),
-		'apmacibas/gaisa_attirisana'       => array( 'apmacibas', array( 'Очистка воздуха', 'ochistka-vozduha' ), array( 'Air purification', 'air-purification' ), 7 ),
-		'apmacibas/ventilacijas_parbaude'  => array( 'apmacibas', array( 'Проверка вентиляции', 'proverka-ventilyacii' ), array( 'Ventilation testing', 'ventilation-testing' ), 6 ),
+		'apmacibas/gaisa-attirisana'       => array( 'apmacibas', array( 'Очистка воздуха', 'ochistka-vozduha' ), array( 'Air purification', 'air-purification' ), 7 ),
+		'apmacibas/ventilacijas-parbaude'  => array( 'apmacibas', array( 'Проверка вентиляции', 'proverka-ventilyacii' ), array( 'Ventilation testing', 'ventilation-testing' ), 6 ),
 		'apmacibas/apkure'                 => array( 'apmacibas', array( 'Отопление', 'otoplenie' ), array( 'Heating', 'heating' ), 6 ),
-		'apmacibas/gaisa_kondicionesana'   => array( 'apmacibas', array( 'Кондиционирование воздуха', 'kondicionirovanie-vozduha' ), array( 'Air conditioning', 'air-conditioning' ), 6 ),
+		'apmacibas/gaisa-kondicionesana'   => array( 'apmacibas', array( 'Кондиционирование воздуха', 'kondicionirovanie-vozduha' ), array( 'Air conditioning', 'air-conditioning' ), 6 ),
 		'blog-2'                           => array( '', array( 'Блог', 'blog' ), array( 'Blog', 'the-blog' ), 0 ),
 	);
 }
@@ -43,6 +43,12 @@ function ivs_page_url( $lv_path ) {
 
 /** Ссылки на латышские страницы внутри текста заменяем ссылками на переводы. */
 function ivs_i18n_rewrite_links( $content, $lang ) {
+	// Старые адреса с подчёркиванием заменены на адреса с дефисом.
+	$content = str_replace(
+		array( 'apmacibas/gaisa_attirisana/', 'apmacibas/gaisa_kondicionesana/', 'apmacibas/ventilacijas_parbaude/' ),
+		array( 'apmacibas/gaisa-attirisana/', 'apmacibas/gaisa-kondicionesana/', 'apmacibas/ventilacijas-parbaude/' ),
+		$content
+	);
 	return preg_replace_callback(
 		'#https?://ivancovs\.com/((?:apmacibas/[A-Za-z0-9_-]+)|apmacibas|noderigi|blog-2)/#',
 		function ( $m ) use ( $lang ) {

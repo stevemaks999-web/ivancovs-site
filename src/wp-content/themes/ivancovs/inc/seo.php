@@ -311,6 +311,11 @@ add_action( 'template_redirect', function () {
 	$map  = array(
 		'en/blog-3'                                       => '/en/the-blog/',
 		'en/blog'                                         => '/en/the-blog/',
+		'apmacibas/gaisa_attirisana'                      => '/apmacibas/gaisa-attirisana/',
+		'apmacibas/gaisa_kondicionesana'                  => '/apmacibas/gaisa-kondicionesana/',
+		'apmacibas/ventilacijas_parbaude'                 => '/apmacibas/ventilacijas-parbaude/',
+		'%d0%b8%d0%b7%d0%bc%d0%b5%d1%80%d0%b5%d0%bd%d0%b8%d1%8f-%d0%bf%d0%be-iso-7730' => '/izmereniya-po-iso-7730/',
+		'%d0%b8%d0%b7%d0%bc%d0%b5%d1%80%d0%b5%d0%bd%d0%b8%d0%b5-%d0%bc%d0%b5%d1%82%d0%be%d0%b4%d0%be%d0%bc-%d0%ba-%d1%84%d0%b0%d0%ba%d1%82%d0%be%d1%80' => '/izmerenie-metodom-k-faktor/',
 		'product-category/co%e2%82%82-un-gaisa-kvalitate' => '/product-category/co2-un-gaisa-kvalitate/',
 	);
 	$path = strtolower( trim( (string) wp_parse_url( $_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH ), '/' ) ); // phpcs:ignore
