@@ -23,7 +23,7 @@ function ivs_i18n_pages_map() {
 		'apmacibas/ventilacijas_parbaude'  => array( 'apmacibas', array( 'Проверка вентиляции', 'proverka-ventilyacii' ), array( 'Ventilation testing', 'ventilation-testing' ), 6 ),
 		'apmacibas/apkure'                 => array( 'apmacibas', array( 'Отопление', 'otoplenie' ), array( 'Heating', 'heating' ), 6 ),
 		'apmacibas/gaisa_kondicionesana'   => array( 'apmacibas', array( 'Кондиционирование воздуха', 'kondicionirovanie-vozduha' ), array( 'Air conditioning', 'air-conditioning' ), 6 ),
-		'blog-2'                           => array( '', array( 'Блог', 'blog-ru' ), array( 'Blog', 'blog-en' ), 0 ),
+		'blog-2'                           => array( '', array( 'Блог', 'blog' ), array( 'Blog', 'blog' ), 0 ),
 	);
 }
 
@@ -147,3 +147,25 @@ add_action( 'init', function () {
 	}
 	update_option( 'ivs_i18n_pages_v2', 1 );
 }, 50 );
+
+/** Короткий адрес блога: слаг «blog» занимала старая картинка в медиатеке, освобождаем его и ставим переводам. */
+add_action( 'init', function () {
+	global $wpdb;
+	if ( get_option( 'ivs_i18n_pages_v3' ) || ! get_option( 'ivs_i18n_pages_v2' ) || ! function_exists( 'pll_get_post' ) || wp_doing_ajax() ) {
+		return;
+	}
+	$att = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM {$wpdb->posts} WHERE post_name = %s AND post_type = 'attachment'", 'blog' ) );
+	foreach ( $att as $aid ) {
+		wp_update_post( array( 'ID' => (int) $aid, 'post_name' => 'blog-image' ) );
+	}
+	$lv = get_page_by_path( 'blog-2' );
+	if ( $lv ) {
+		foreach ( array( 'ru', 'en' ) as $lang ) {
+			$id = pll_get_post( $lv->ID, $lang );
+			if ( $id ) {
+				wp_update_post( array( 'ID' => $id, 'post_name' => 'blog' ) );
+			}
+		}
+	}
+	update_option( 'ivs_i18n_pages_v3', 1 );
+}, 60 );
