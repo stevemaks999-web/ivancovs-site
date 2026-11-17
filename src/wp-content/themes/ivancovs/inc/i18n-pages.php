@@ -23,7 +23,7 @@ function ivs_i18n_pages_map() {
 		'apmacibas/ventilacijas_parbaude'  => array( 'apmacibas', array( 'Проверка вентиляции', 'proverka-ventilyacii' ), array( 'Ventilation testing', 'ventilation-testing' ), 6 ),
 		'apmacibas/apkure'                 => array( 'apmacibas', array( 'Отопление', 'otoplenie' ), array( 'Heating', 'heating' ), 6 ),
 		'apmacibas/gaisa_kondicionesana'   => array( 'apmacibas', array( 'Кондиционирование воздуха', 'kondicionirovanie-vozduha' ), array( 'Air conditioning', 'air-conditioning' ), 6 ),
-		'blog-2'                           => array( '', array( 'Блог', 'blog' ), array( 'Blog', 'blog' ), 0 ),
+		'blog-2'                           => array( '', array( 'Блог', 'blog-ru' ), array( 'Blog', 'blog-en' ), 0 ),
 	);
 }
 
@@ -109,15 +109,41 @@ add_action( 'init', function () {
 		}
 		pll_save_post_translations( $tr );
 	}
-	// Вторым проходом правим ссылки внутри текстов (переводы уже существуют).
-	foreach ( $created as $id => $lang ) {
-		$post = get_post( $id );
-		if ( $post ) {
-			$new = ivs_i18n_rewrite_links( $post->post_content, $lang );
-			if ( $new !== $post->post_content ) {
-				wp_update_post( array( 'ID' => $id, 'post_content' => wp_slash( $new ) ) );
-			}
-		}
-	}
 	update_option( 'ivs_i18n_pages_v1', 1 );
 }, 40 );
+
+/** Ссылки на латышские страницы в тексте показываем ссылками на переводы (язык берём на момент показа, чтобы был префикс /ru/ или /en/). */
+add_filter( 'the_content', function ( $content ) {
+	$lang = function_exists( 'ivs_lang' ) ? ivs_lang() : 'lv';
+	if ( 'lv' === $lang || ! is_page() || false === strpos( $content, 'ivancovs.com/' ) ) {
+		return $content;
+	}
+	return ivs_i18n_rewrite_links( $content, $lang );
+}, 9 );
+
+/** Исправление: возвращаем тексты переводов из файлов (без подмены ссылок на момент создания) и задаём адреса. */
+add_action( 'init', function () {
+	if ( get_option( 'ivs_i18n_pages_v2' ) || ! get_option( 'ivs_i18n_pages_v1' ) || ! function_exists( 'pll_get_post' ) || wp_doing_ajax() ) {
+		return;
+	}
+	$dir = get_theme_file_path( 'i18n/pages/' );
+	foreach ( ivs_i18n_pages_map() as $lv_path => $def ) {
+		$lv = get_page_by_path( $lv_path );
+		if ( ! $lv ) {
+			continue;
+		}
+		foreach ( array( 'ru' => 1, 'en' => 2 ) as $lang => $i ) {
+			$id = pll_get_post( $lv->ID, $lang );
+			if ( ! $id ) {
+				continue;
+			}
+			$args = array( 'ID' => $id, 'post_name' => $def[ $i ][1] );
+			$file = $dir . basename( $lv_path ) . '.' . $lang . '.html';
+			if ( file_exists( $file ) ) {
+				$args['post_content'] = wp_slash( file_get_contents( $file ) );
+			}
+			wp_update_post( $args );
+		}
+	}
+	update_option( 'ivs_i18n_pages_v2', 1 );
+}, 50 );
