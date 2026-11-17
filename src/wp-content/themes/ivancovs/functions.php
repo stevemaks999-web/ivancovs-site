@@ -99,7 +99,12 @@ function ivs_primary_nav() {
 	);
 	foreach ( $items as $i ) {
 		$href = ivs_url( $i[0] );
-		printf( '<a href="%s">%s</a>', '/noma/' === $i[0] ? esc_url( ivs_lang_url( $href ) ) : $href, esc_html( $i[1] ) );
+		if ( '/noma/' === $i[0] ) {
+			$href = esc_url( ivs_lang_url( $href ) );
+		} elseif ( function_exists( 'ivs_page_url' ) ) {
+			$href = esc_url( ivs_page_url( $i[0] ) );
+		}
+		printf( '<a href="%s">%s</a>', $href, esc_html( $i[1] ) );
 	}
 }
 
@@ -172,6 +177,7 @@ require_once get_template_directory() . '/inc/telegram.php';
 require_once get_template_directory() . '/inc/analytics.php';
 require_once get_template_directory() . '/inc/kit-titles.php';
 require_once get_template_directory() . '/inc/cross-sell.php';
+require_once get_template_directory() . '/inc/i18n-pages.php';
 require_once get_template_directory() . '/inc/cart-clean.php';
 
 /**
