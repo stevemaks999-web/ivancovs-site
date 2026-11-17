@@ -32,7 +32,7 @@ $has_portrait = file_exists( get_theme_file_path( 'assets/dmitrijs.jpg' ) );
 		<div class="card cat"><b><?php ivs_e( 'Regulēšana', 'Регулировка', 'Balancing' ); ?></b></div>
 		<div class="card cat"><b><?php ivs_e( 'Auditi', 'Аудиты', 'Audits' ); ?></b></div>
 		<div class="card cat"><b><?php ivs_e( 'Ekspertīzes', 'Экспертизы', 'Expert assessments' ); ?></b></div>
-		<a class="card cat" href="<?php echo ivs_url( '/apmacibas/' ); // phpcs:ignore ?>"><b><?php ivs_e( 'Apmācības', 'Обучение', 'Training' ); ?></b></a>
+		<a class="card cat" href="<?php echo ivs_page_url( '/apmacibas/' ); // phpcs:ignore ?>"><b><?php ivs_e( 'Apmācības', 'Обучение', 'Training' ); ?></b></a>
 	</div>
 	<p class="mut" style="margin:14px 0 0"><?php ivs_e( 'Arī: būvuzraudzība, projektēšana, montāža.', 'Также: строительный надзор, проектирование, монтаж.', 'Also: construction supervision, design, installation.' ); ?></p>
 </div></section>
@@ -80,9 +80,9 @@ $has_portrait = file_exists( get_theme_file_path( 'assets/dmitrijs.jpg' ) );
 <section class="blk" style="padding-top:0"><div class="wrap">
 	<h2><?php ivs_e( 'Apmācības, noderīgi, blogs', 'Обучение, полезное, блог', 'Training, useful, blog' ); ?></h2>
 	<div class="grid g3">
-		<a class="card cat" href="<?php echo ivs_url( '/apmacibas/' ); // phpcs:ignore ?>"><b><?php ivs_e( 'Apmācības', 'Обучение', 'Training' ); ?></b></a>
-		<a class="card cat" href="<?php echo ivs_url( '/noderigi/' ); // phpcs:ignore ?>"><b><?php ivs_e( 'Noderīga informācija', 'Полезная информация', 'Useful information' ); ?></b></a>
-		<a class="card cat" href="<?php echo ivs_url( '/blog-2/' ); // phpcs:ignore ?>"><b><?php ivs_e( 'Blogs', 'Блог', 'Blog' ); ?></b></a>
+		<a class="card cat" href="<?php echo ivs_page_url( '/apmacibas/' ); // phpcs:ignore ?>"><b><?php ivs_e( 'Apmācības', 'Обучение', 'Training' ); ?></b></a>
+		<a class="card cat" href="<?php echo ivs_page_url( '/noderigi/' ); // phpcs:ignore ?>"><b><?php ivs_e( 'Noderīga informācija', 'Полезная информация', 'Useful information' ); ?></b></a>
+		<a class="card cat" href="<?php echo ivs_page_url( '/blog-2/' ); // phpcs:ignore ?>"><b><?php ivs_e( 'Blogs', 'Блог', 'Blog' ); ?></b></a>
 	</div>
 </div></section>
 
