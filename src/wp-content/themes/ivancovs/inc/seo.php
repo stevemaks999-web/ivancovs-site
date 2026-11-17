@@ -305,3 +305,17 @@ add_action( 'wp_head', function () {
 		echo '<script type="application/ld+json">' . wp_json_encode( ivs_seo_fix_host( $data ), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES ) . "</script>\n";
 	}
 }, 20 );
+
+/** Постоянные редиректы (301) со старых адресов на новые. Ключ: путь в нижнем регистре без слэшей по краям. */
+add_action( 'template_redirect', function () {
+	$map  = array(
+		'en/blog-3'                                       => '/en/the-blog/',
+		'en/blog'                                         => '/en/the-blog/',
+		'product-category/co%e2%82%82-un-gaisa-kvalitate' => '/product-category/co2-un-gaisa-kvalitate/',
+	);
+	$path = strtolower( trim( (string) wp_parse_url( $_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH ), '/' ) ); // phpcs:ignore
+	if ( isset( $map[ $path ] ) ) {
+		wp_safe_redirect( home_url( $map[ $path ] ), 301 );
+		exit;
+	}
+}, 1 );
