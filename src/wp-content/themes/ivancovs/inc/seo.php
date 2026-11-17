@@ -344,3 +344,50 @@ add_action( 'template_redirect', function () {
 		exit;
 	}
 }, 1 );
+
+/**
+ * Карта сайта для RU и EN версий каталога (адреса с ?ivl=): подключается к индексу Yoast как ivl-sitemap.xml.
+ * Версии приборов и категорий переведены, у каждой свой canonical и hreflang, поэтому Google их показываем явно.
+ */
+function ivs_ivl_sitemap_urls() {
+	$urls = array();
+	$add  = function ( $base, $mod ) use ( &$urls ) {
+		if ( ! $base || is_wp_error( $base ) ) {
+			return;
+		}
+		foreach ( array( 'ru', 'en' ) as $l ) {
+			$urls[] = array( add_query_arg( 'ivl', $l, remove_query_arg( 'ivl', $base ) ), $mod );
+		}
+	};
+	$add( ivs_shop_url(), '' );
+	$ids = get_posts( array( 'post_type' => 'product', 'post_status' => 'publish', 'posts_per_page' => -1, 'fields' => 'ids', 'no_found_rows' => true ) );
+	foreach ( $ids as $id ) {
+		$add( get_permalink( $id ), get_post_modified_time( 'c', true, $id ) );
+	}
+	$terms = get_terms( array( 'taxonomy' => 'product_cat', 'hide_empty' => true ) );
+	if ( ! is_wp_error( $terms ) ) {
+		foreach ( $terms as $t ) {
+			$add( get_term_link( $t ), '' );
+		}
+	}
+	return $urls;
+}
+
+add_action( 'init', function () {
+	global $wpseo_sitemaps;
+	if ( ! isset( $wpseo_sitemaps ) || ! is_object( $wpseo_sitemaps ) || ! method_exists( $wpseo_sitemaps, 'register_sitemap' ) ) {
+		return;
+	}
+	$wpseo_sitemaps->register_sitemap( 'ivl', function () use ( $wpseo_sitemaps ) {
+		$xml = '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
+		foreach ( ivs_ivl_sitemap_urls() as $u ) {
+			$xml .= '<url><loc>' . esc_url( ivs_seo_fix_host( $u[0] ) ) . '</loc>' . ( $u[1] ? '<lastmod>' . esc_html( $u[1] ) . '</lastmod>' : '' ) . '</url>';
+		}
+		$xml .= '</urlset>';
+		$wpseo_sitemaps->set_sitemap( $xml );
+	} );
+}, 20 );
+
+add_filter( 'wpseo_sitemap_index', function ( $xml ) {
+	return $xml . '<sitemap><loc>' . esc_url( home_url( '/ivl-sitemap.xml' ) ) . '</loc></sitemap>';
+} );
