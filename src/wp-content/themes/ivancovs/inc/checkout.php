@@ -53,6 +53,8 @@ add_action( 'wp_enqueue_scripts', function () {
 		'phone'    => ivs_t( 'Tālrunis', 'Телефон', 'Phone' ),
 		'coupon'   => ivs_t( 'Pievienot kuponu', 'Добавить купон', 'Add coupon' ),
 		'total'    => ivs_t( 'Kopā par', 'Всего за', 'Total for' ),
+		'proceed'  => ivs_t( 'Turpināt uz pasūtījumu', 'Перейти к оформлению', 'Proceed to checkout' ),
+		'estimate' => ivs_t( 'Kopā', 'Итого', 'Total' ),
 	) ) . ';', 'before' );
 } );
 
