@@ -11,6 +11,9 @@ $rent = ivs_url( '/noma/' );
 if ( function_exists( 'wc_get_page_permalink' ) && wc_get_page_permalink( 'shop' ) ) {
 	$rent = esc_url( wc_get_page_permalink( 'shop' ) );
 }
+if ( function_exists( 'ivs_lang_url' ) ) {
+	$rent = esc_url( ivs_lang_url( $rent ) );
+}
 $portrait = get_theme_file_uri( 'assets/dmitrijs.jpg' );
 $has_portrait = file_exists( get_theme_file_path( 'assets/dmitrijs.jpg' ) );
 ?>
