@@ -18,7 +18,7 @@ function ivs_seo_fix_host( $v ) {
 		return $v;
 	}
 	if ( is_string( $v ) ) {
-		return str_replace( array( 'https://dev.ivancovs.com', '//dev.ivancovs.com' ), array( 'https://ivancovs.com', '//ivancovs.com' ), $v );
+		return str_replace( array( 'https://dev.ivancovs.com', '//dev.ivancovs.com', 'https%3A%2F%2Fdev.ivancovs.com' ), array( 'https://ivancovs.com', '//ivancovs.com', 'https%3A%2F%2Fivancovs.com' ), $v );
 	}
 	if ( is_array( $v ) ) {
 		foreach ( $v as $k => $item ) {
