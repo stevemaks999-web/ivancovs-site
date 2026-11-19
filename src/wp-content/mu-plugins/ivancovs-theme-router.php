@@ -86,6 +86,15 @@ if ( ivs_router_is_legacy() ) {
 	add_filter( 'pre_option_stylesheet', $ivs_router_child );
 	add_filter( 'pre_option_template', $ivs_router_parent );
 
+	// В общей базе адрес сайта бывает dev.ivancovs.com: старая тема берёт его для логотипа и поиска. На боевом сайте меняем на основной.
+	if ( false === strpos( wp_normalize_path( ABSPATH ), '/dev.ivancovs.com/' ) ) {
+		$ivs_router_host = static function ( $url ) {
+			return is_string( $url ) ? str_replace( array( 'https://dev.ivancovs.com', '//dev.ivancovs.com' ), array( 'https://ivancovs.com', '//ivancovs.com' ), $url ) : $url;
+		};
+		add_filter( 'home_url', $ivs_router_host, 99 );
+		add_filter( 'site_url', $ivs_router_host, 99 );
+	}
+
 	// Из новой темы нужны только общие части, не зависящие от оформления: SEO, переводы страниц, учёт кликов.
 	if ( ! function_exists( 'ivs_lang' ) ) {
 		function ivs_lang() {
