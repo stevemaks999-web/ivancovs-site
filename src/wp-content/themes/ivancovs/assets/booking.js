@@ -44,7 +44,8 @@
   }
   function money(v) { return (Math.round(v * 100) / 100).toFixed(2).replace('.', ',') + ' ' + cfg.cur; }
 
-  function pickable(s) { return s > today && s <= last && !weekend(s) && freeOn(s) > 0; }
+  function want() { return Math.max(1, +qtySel.value || 1); }
+  function pickable(s) { return s > today && s <= last && !weekend(s) && freeOn(s) >= want(); }
 
   function render() {
     var y = +view.slice(0, 4), m = +view.slice(5, 7);
@@ -59,7 +60,7 @@
       var ok = pickable(s);
       var past = s <= today || s > last;
       if (past) cls += ' off';
-      else if (freeOn(s) <= 0) cls += ' busy';
+      else if (freeOn(s) < want()) cls += ' busy';
       else if (weekend(s)) cls += ' we';
       if (from && s === from) cls += ' sel start';
       else if (to && s === to) cls += ' sel end';
@@ -88,12 +89,6 @@
     if (!to) { hint.textContent = T.ret; return; }
     hint.textContent = '';
     var n = days(from, to);
-    var avail = rangeFree(from, to);
-    var cur = +qtySel.value || 1;
-    var o = '';
-    for (var q = 1; q <= Math.max(1, avail); q++) o += '<option value="' + q + '">' + q + '</option>';
-    qtySel.innerHTML = o;
-    qtySel.value = Math.min(cur, Math.max(1, avail));
     renderSum(n);
   }
 
@@ -122,7 +117,7 @@
     else {
       // Внутри периода не должно быть полностью занятых дней.
       var okRange = true;
-      for (var c = from; c <= s; c = addDays(c, 1)) if (freeOn(c) <= 0) okRange = false;
+      for (var c = from; c <= s; c = addDays(c, 1)) if (freeOn(c) < want()) okRange = false;
       if (!okRange || weekend(s)) { hint.textContent = T.busy; from = s; to = ''; if (!pickable(s)) from = ''; }
       else to = s;
     }
@@ -134,7 +129,12 @@
     for (var q = 1; q <= Math.max(1, cfg.max || 1); q++) o += '<option value="' + q + '">' + q + '</option>';
     qtySel.innerHTML = o;
   })();
-  qtySel.addEventListener('change', function () { if (from && to) renderSum(days(from, to)); });
+  qtySel.addEventListener('change', function () {
+    // Календарь пересчитывается под выбранное число штук: занятым считается день, где свободно меньше.
+    if (from && to && rangeFree(from, to) < want()) { from = ''; to = ''; hint.textContent = T.busy; }
+    else if (from && !to && freeOn(from) < want()) { from = ''; }
+    render(); update();
+  });
 
   render(); update();
   fetch(cfg.rest, { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (j) {
