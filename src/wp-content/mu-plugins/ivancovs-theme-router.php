@@ -22,6 +22,42 @@ function ivs_router_rental_roots() {
 }
 
 /**
+ * Красивые адреса языков аренды: /ru/noma/, /en/product/cgp22c/ и т. д.
+ * Товары не переводятся плагином, поэтому язык сидит в параметре ivl. Здесь убираем /ru/ или /en/ из адреса до того,
+ * как адрес разберут WordPress и Polylang, и выставляем ivl. Старые адреса ?ivl=ru ведут на новые редиректом 301.
+ */
+function ivs_router_pretty_langs() {
+	if ( defined( 'WP_ADMIN' ) || defined( 'DOING_AJAX' ) || defined( 'DOING_CRON' ) || defined( 'XMLRPC_REQUEST' ) || defined( 'WP_CLI' ) ) {
+		return;
+	}
+	$script = isset( $_SERVER['SCRIPT_NAME'] ) ? basename( (string) $_SERVER['SCRIPT_NAME'] ) : ''; // phpcs:ignore
+	if ( 'index.php' !== $script || empty( $_SERVER['REQUEST_URI'] ) ) { // phpcs:ignore
+		return;
+	}
+	$uri   = (string) $_SERVER['REQUEST_URI']; // phpcs:ignore
+	$path  = (string) wp_parse_url( $uri, PHP_URL_PATH );
+	$qs    = (string) wp_parse_url( $uri, PHP_URL_QUERY );
+	$roots = '(noma|product|product-category|product-tag)';
+	if ( preg_match( '#^/(ru|en)/' . $roots . '(/.*)?$#', $path, $m ) ) {
+		$_SERVER['REQUEST_URI'] = '/' . $m[2] . ( isset( $m[3] ) ? $m[3] : '' ) . ( '' !== $qs ? '?' . $qs : '' ); // phpcs:ignore
+		$_GET['ivl']            = $m[1]; // phpcs:ignore
+		$_REQUEST['ivl']        = $m[1]; // phpcs:ignore
+		return;
+	}
+	$method = isset( $_SERVER['REQUEST_METHOD'] ) ? strtoupper( (string) $_SERVER['REQUEST_METHOD'] ) : 'GET'; // phpcs:ignore
+	if ( '' !== $qs && in_array( $method, array( 'GET', 'HEAD' ), true ) && preg_match( '#^/' . $roots . '(/.*)?$#', $path ) ) {
+		parse_str( $qs, $args );
+		if ( isset( $args['ivl'] ) && in_array( $args['ivl'], array( 'ru', 'en' ), true ) ) {
+			$lang = $args['ivl'];
+			unset( $args['ivl'] );
+			header( 'Location: /' . $lang . $path . ( $args ? '?' . http_build_query( $args ) : '' ), true, 301 );
+			exit;
+		}
+	}
+}
+ivs_router_pretty_langs();
+
+/**
  * Эту страницу показываем в прежнем дизайне?
  * Только обычный показ страницы посетителю: админка, запросы JS (REST, AJAX), планировщик, формы,
  * корзина с параметрами, документы и всё с лишними параметрами остаются в новой теме, там лежит вся логика аренды.

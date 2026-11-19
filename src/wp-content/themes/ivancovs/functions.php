@@ -120,11 +120,16 @@ class IVS_Flat_Walker extends Walker_Nav_Menu {
 	public function end_lvl( &$output, $depth = 0, $args = null ) {}
 }
 
-/** Добавляет к адресу параметр языка (для lv убирает). Только для страниц каталога и приборов. */
+/** Адрес страницы каталога на нужном языке: /ru/noma/..., /en/product/... (для lv без префикса). Старый параметр ?ivl= убирается. */
 function ivs_lang_url( $url, $lang = null ) {
-	$lang = $lang ? $lang : ivs_lang();
-	$url  = remove_query_arg( 'ivl', $url );
-	return 'lv' === $lang ? $url : add_query_arg( 'ivl', $lang, $url );
+	$lang  = $lang ? $lang : ivs_lang();
+	$roots = '(?:noma|product|product-category|product-tag)(?:/|$|\\?|\\#)';
+	$url   = remove_query_arg( 'ivl', $url );
+	$url   = preg_replace( '~^(https?://[^/]+)/(?:ru|en)/(?=' . $roots . ')~', '$1/', $url );
+	if ( 'lv' === $lang ) {
+		return $url;
+	}
+	return preg_replace( '~^(https?://[^/]+)/(?=' . $roots . ')~', '$1/' . $lang . '/', $url );
 }
 
 /** Переключатель языков: Polylang, иначе просто подпись. */
