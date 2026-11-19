@@ -117,6 +117,10 @@ function ivs_router_is_legacy() {
 	if ( 0 === strpos( $path, 'wp-json' ) || 0 === strpos( $path, 'wp-' ) ) {
 		return $res;
 	}
+	// Карты сайта и служебные файлы (.xml, .xsl, .txt) строит новая тема: в них есть адреса аренды на RU и EN.
+	if ( preg_match( '/\.(xml|xsl|txt)$/i', $path ) ) {
+		return $res;
+	}
 	$parts = '' === $path ? array() : explode( '/', $path );
 	$lang  = '';
 	if ( $parts && in_array( $parts[0], array( 'ru', 'en' ), true ) ) {
