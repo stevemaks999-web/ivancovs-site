@@ -44,6 +44,7 @@ function ivs_router_pretty_langs() {
 		$_SERVER['REQUEST_URI'] = $rest . ( '' !== $qs ? '?' . $qs : '' ); // phpcs:ignore
 		$_GET['ivl']            = $lang; // phpcs:ignore
 		$_REQUEST['ivl']        = $lang; // phpcs:ignore
+		$GLOBALS['ivs_pretty_lang'] = $lang; // phpcs:ignore
 	};
 	// /ru/arenda/..., /en/rent/... показывают каталог.
 	if ( preg_match( '#^/(ru|en)/(arenda|rent)(/.*)?$#', $path, $m ) && $slugs[ $m[1] ] === $m[2] ) {
