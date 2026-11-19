@@ -19,8 +19,19 @@ function ivs_lang() {
 		return 'lv';
 	}
 	// Товары не переводятся плагином, язык страницы прибора берём из параметра ?ivl=ru|en.
-	if ( isset( $_GET['ivl'] ) && in_array( $_GET['ivl'], array( 'ru', 'en' ), true ) && function_exists( 'is_woocommerce' ) && is_woocommerce() ) { // phpcs:ignore WordPress.Security.NonceVerification
-		return $_GET['ivl']; // phpcs:ignore
+	// Адрес /ru/arenda/..., /en/product/...: язык уже определён при разборе адреса (mu-plugin), is_woocommerce() не нужен.
+	if ( ! empty( $GLOBALS['ivs_pretty_lang'] ) && in_array( $GLOBALS['ivs_pretty_lang'], array( 'ru', 'en' ), true ) ) {
+		return $GLOBALS['ivs_pretty_lang'];
+	}
+	// Защита от повторного входа: is_woocommerce() запрашивает категорию, а фильтр названий категорий снова спрашивает язык.
+	static $busy = false;
+	if ( ! $busy && isset( $_GET['ivl'] ) && in_array( $_GET['ivl'], array( 'ru', 'en' ), true ) && function_exists( 'is_woocommerce' ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+		$busy = true;
+		$shop = is_woocommerce();
+		$busy = false;
+		if ( $shop ) {
+			return $_GET['ivl']; // phpcs:ignore
+		}
 	}
 	if ( function_exists( 'pll_current_language' ) ) {
 		$l = pll_current_language();
