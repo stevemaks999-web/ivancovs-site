@@ -120,11 +120,23 @@ class IVS_Flat_Walker extends Walker_Nav_Menu {
 	public function end_lvl( &$output, $depth = 0, $args = null ) {}
 }
 
-/** Добавляет к адресу параметр языка (для lv убирает). Только для страниц каталога и приборов. */
+/**
+ * Адрес страницы каталога на нужном языке: /ru/arenda/, /en/rent/, /ru/product/... (для lv без префикса).
+ * Старый параметр ?ivl= убирается. Любую языковую форму сначала приводим к латышской, потом строим нужную.
+ */
 function ivs_lang_url( $url, $lang = null ) {
 	$lang = $lang ? $lang : ivs_lang();
+	$end  = '(?=/|$|\?|\#)';
+	$sub  = '(?=(?:product|product-category|product-tag)' . $end . ')';
 	$url  = remove_query_arg( 'ivl', $url );
-	return 'lv' === $lang ? $url : add_query_arg( 'ivl', $lang, $url );
+	$url  = preg_replace( '~^(https?://[^/]+)/(?:ru/arenda|en/rent|ru/noma|en/noma)' . $end . '~', '$1/noma', $url );
+	$url  = preg_replace( '~^(https?://[^/]+)/(?:ru|en)/' . $sub . '~', '$1/', $url );
+	if ( 'lv' === $lang ) {
+		return $url;
+	}
+	$slug = 'ru' === $lang ? 'arenda' : 'rent';
+	$url  = preg_replace( '~^(https?://[^/]+)/noma' . $end . '~', '$1/' . $lang . '/' . $slug, $url );
+	return preg_replace( '~^(https?://[^/]+)/' . $sub . '~', '$1/' . $lang . '/', $url );
 }
 
 /** Переключатель языков: Polylang, иначе просто подпись. */

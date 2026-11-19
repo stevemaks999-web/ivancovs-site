@@ -68,17 +68,16 @@ function ivs_shop_url() {
 	return ( ! $u || false !== strpos( $u, '?' ) ) ? home_url( '/noma/' ) : $u;
 }
 
-/** Язык версии страницы: на товарах RU/EN лежат на том же адресе с ?ivl=. */
+/** Язык версии страницы: на товарах RU/EN лежат на адресах с /ru/ и /en/. */
 function ivs_catalog_lang_url( $lang ) {
 	$base = ( is_singular( 'product' ) ) ? get_permalink() : ( ( is_tax() || is_post_type_archive( 'product' ) ) ? ( is_tax() ? get_term_link( get_queried_object() ) : ivs_shop_url() ) : '' );
 	if ( ! $base || is_wp_error( $base ) ) {
 		return '';
 	}
-	$base = remove_query_arg( array( 'ivl', 'paged' ), $base );
-	return 'lv' === $lang ? $base : add_query_arg( 'ivl', $lang, $base );
+	return ivs_lang_url( remove_query_arg( 'paged', $base ), $lang );
 }
 
-/** Canonical: сам на себя. Страница каталога на RU/EN канонична со своим ?ivl=. */
+/** Canonical: сам на себя. Страница каталога на RU/EN канонична со своим адресом /ru/ или /en/. */
 add_filter( 'wpseo_canonical', function ( $canonical ) {
 	if ( is_string( $canonical ) && false !== strpos( $canonical, '?page_id=' ) && is_page() ) {
 		return get_permalink( get_queried_object_id() );
@@ -103,7 +102,7 @@ add_filter( 'pll_rel_hreflang_attributes', function ( $urls ) {
 	return $urls;
 }, 98 );
 
-/** hreflang для каталога: Polylang его не знает, версии лежат на ?ivl=ru|en. */
+/** hreflang для каталога: Polylang его не знает, версии лежат на адресах /ru/... и /en/.... */
 add_action( 'wp_head', function () {
 	if ( ! ivs_is_catalog_page() || ( ! is_singular( 'product' ) && ! is_tax() && ! is_post_type_archive( 'product' ) ) || is_paged() ) {
 		return;
@@ -368,7 +367,7 @@ add_action( 'template_redirect', function () {
 }, 1 );
 
 /**
- * Карта сайта для RU и EN версий каталога (адреса с ?ivl=): подключается к индексу Yoast как ivl-sitemap.xml.
+ * Карта сайта для RU и EN версий каталога (адреса /ru/ и /en/): подключается к индексу Yoast как ivl-sitemap.xml.
  * Версии приборов и категорий переведены, у каждой свой canonical и hreflang, поэтому Google их показываем явно.
  */
 function ivs_ivl_sitemap_urls() {
@@ -378,7 +377,7 @@ function ivs_ivl_sitemap_urls() {
 			return;
 		}
 		foreach ( array( 'ru', 'en' ) as $l ) {
-			$urls[] = array( add_query_arg( 'ivl', $l, remove_query_arg( 'ivl', $base ) ), $mod );
+			$urls[] = array( ivs_lang_url( $base, $l ), $mod );
 		}
 	};
 	$add( ivs_shop_url(), '' );

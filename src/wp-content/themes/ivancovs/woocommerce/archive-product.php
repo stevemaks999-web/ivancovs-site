@@ -34,8 +34,7 @@ $cat_terms = is_wp_error( $cat_terms ) ? array() : $cat_terms;
 	}
 ?></h1>
 
-	<form class="bar" role="search" method="get" action="<?php echo esc_url( $shop ); ?>">
-		<?php if ( 'lv' !== ivs_lang() ) : ?><input type="hidden" name="ivl" value="<?php echo esc_attr( ivs_lang() ); ?>"><?php endif; ?>
+	<form class="bar" role="search" method="get" action="<?php echo esc_url( ivs_lang_url( $shop ) ); ?>">
 		<label class="sr" for="ivs-s"><?php ivs_e( 'Meklēt', 'Поиск', 'Search' ); ?></label>
 		<input id="ivs-s" type="search" name="s" value="<?php echo esc_attr( get_search_query() ); ?>" placeholder="<?php echo esc_attr( ivs_t( 'Meklēt: testo 417, termokamera, CO₂…', 'Поиск: testo 417, тепловизор, CO₂…', 'Search: testo 417, thermal camera, CO₂…' ) ); ?>">
 		<input type="hidden" name="post_type" value="product">
