@@ -120,7 +120,7 @@ add_filter( 'get_the_excerpt', function ( $excerpt, $post ) {
 
 /** Название комплекта показываем оригинальным и без кавычек (как у приборов). */
 add_filter( 'the_title', function ( $title, $id = 0 ) {
-	if ( is_admin() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) || ! $id || 'product' !== get_post_type( $id ) ) {
+	if ( ! ivs_kit_front_context() || ! $id || 'product' !== get_post_type( $id ) ) {
 		return $title;
 	}
 	$clean = trim( $title );

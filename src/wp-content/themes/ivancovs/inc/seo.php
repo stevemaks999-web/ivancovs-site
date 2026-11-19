@@ -245,7 +245,7 @@ add_filter( 'wpseo_metadesc', function ( $desc ) {
 /** og:image: общая картинка по умолчанию, если у страницы своей нет. */
 add_action( 'wpseo_add_opengraph_images', function ( $images ) {
 	if ( is_object( $images ) && method_exists( $images, 'add_image' ) && ! is_singular( 'product' ) && ! has_post_thumbnail() ) {
-		$images->add_image( array( 'url' => get_template_directory_uri() . '/assets/dmitrijs.jpg' ) );
+		$images->add_image( array( 'url' => content_url( '/themes/ivancovs/assets/dmitrijs.jpg' ) ) );
 	}
 } );
 
@@ -332,7 +332,7 @@ add_action( 'wp_head', function () {
 			'url'         => 'https://ivancovs.com/',
 			'telephone'   => '+37125553244',
 			'email'       => 'dmitrijs@ivancovs.com',
-			'image'       => get_template_directory_uri() . '/assets/dmitrijs.jpg',
+			'image'       => content_url( '/themes/ivancovs/assets/dmitrijs.jpg' ),
 			'address'     => array(
 				'@type'           => 'PostalAddress',
 				'streetAddress'   => 'Lastādijas iela 32',
@@ -438,6 +438,6 @@ add_action( 'wp_head', function () {
 	echo '<meta property="og:description" content="' . esc_attr( ivs_home_desc() ) . '" />' . "\n";
 	echo '<meta property="og:url" content="' . esc_url( ivs_seo_fix_host( $url ) ) . '" />' . "\n";
 	echo '<meta property="og:site_name" content="IVANCOVS" />' . "\n";
-	echo '<meta property="og:image" content="' . esc_url( get_template_directory_uri() . '/assets/dmitrijs.jpg' ) . '" />' . "\n";
+	echo '<meta property="og:image" content="' . esc_url( content_url( '/themes/ivancovs/assets/dmitrijs.jpg' ) ) . '" />' . "\n";
 	echo '<meta name="twitter:card" content="summary_large_image" />' . "\n";
 }, 2 );
