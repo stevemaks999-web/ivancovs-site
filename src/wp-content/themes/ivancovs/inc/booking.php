@@ -131,7 +131,7 @@ function ivs_book_kit_comps( $pid ) {
 	$any = false;
 	foreach ( $def as $cid => $n ) {
 		$any   = $any || $n > 1;
-		$out[] = array( 'id' => (int) $cid, 'name' => get_the_title( $cid ), 'def' => (int) $n, 'max' => $n > 1 ? ivs_book_units( $cid ) : (int) $n, 'total' => ivs_book_units( $cid ), 'price' => ivs_book_day_price( $cid ), 'fixed' => $n <= 1 );
+		$out[] = array( 'id' => (int) $cid, 'name' => get_the_title( $cid ), 'def' => (int) $n, 'max' => $n > 1 ? ivs_book_units( $cid ) : (int) $n, 'total' => ivs_book_units( $cid ), 'start' => max( 1, min( (int) $n, ivs_book_units( $cid ) ) ), 'price' => ivs_book_day_price( $cid ), 'fixed' => $n <= 1 );
 	}
 	return $any ? $out : array();
 }
@@ -498,7 +498,7 @@ add_action( 'ivs_booking_calendar', function ( $product ) {
 		<?php foreach ( $ivs_kc as $c ) : ?>
 			<?php if ( $c['fixed'] ) { continue; } ?>
 			<label><span><?php echo esc_html( $c['name'] ); ?></span>
-				<input type="number" name="ivs_kit[<?php echo (int) $c['id']; ?>]" value="<?php echo (int) $c['def']; ?>" min="1" max="<?php echo (int) $c['max']; ?>" step="1" inputmode="numeric">
+				<input type="number" name="ivs_kit[<?php echo (int) $c['id']; ?>]" value="<?php echo (int) $c['start']; ?>" min="1" max="<?php echo (int) $c['max']; ?>" step="1" inputmode="numeric">
 				<small class="mut"><?php echo esc_html( ivs_t( 'no 1 līdz ' . $c['max'] . ', komplektā ' . $c['def'], 'от 1 до ' . $c['max'] . ', в комплекте ' . $c['def'], '1 to ' . $c['max'] . ', kit has ' . $c['def'] ) ); ?></small></label>
 		<?php endforeach; ?>
 	</div>
