@@ -123,6 +123,10 @@ function ivs_book_day_price( $pid ) {
 
 /** Состав комплекта для формы: [ ['id','name','def','max','price','fixed'] ]. Пусто, если менять нечего. */
 function ivs_book_kit_comps( $pid ) {
+	// Комплект берут целиком: выбор числа приборов внутри комплекта выключен (решение владельца). Включить: define( 'IVS_KIT_PARTIAL', true ).
+	if ( ! ( defined( 'IVS_KIT_PARTIAL' ) && IVS_KIT_PARTIAL ) ) {
+		return array();
+	}
 	$def = ivs_book_components_default( $pid );
 	if ( ! ivs_book_is_kit( $pid ) || isset( $def[ (int) $pid ] ) ) {
 		return array();
