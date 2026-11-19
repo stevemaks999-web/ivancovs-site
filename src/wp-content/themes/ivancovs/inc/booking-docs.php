@@ -251,7 +251,7 @@ function ivs_act_rows( $order ) {
 		}
 		$qty = max( 1, (int) $item->get_quantity() );
 		for ( $q = 1; $q <= $qty; $q++ ) {
-			foreach ( ivs_book_components( (int) $item->get_product_id() ) as $cid => $n ) {
+			foreach ( ivs_book_components( (int) $item->get_product_id(), ivs_book_item_sel( $item ) ) as $cid => $n ) {
 				for ( $i = 1; $i <= $n; $i++ ) {
 					$rows[ $item_id . '_' . $q . '_' . $cid . '_' . $i ] = array(
 						'item'  => $item->get_name(),
