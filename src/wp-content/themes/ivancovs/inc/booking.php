@@ -79,7 +79,21 @@ function ivs_book_find_by_title( $title ) {
  * Комплект собирается из поля _ivs_kit_items («Testo 420, 2× testo 549i»).
  * Если названия не нашлись, комплект считается одним целым прибором.
  */
-function ivs_book_components( $product_id ) {
+function ivs_book_components( $product_id, $sel = null ) {
+	$out = ivs_book_components_default( $product_id );
+	if ( ! is_array( $sel ) || ! $sel || isset( $out[ (int) $product_id ] ) ) {
+		return $out;
+	}
+	// Выбранное число приборов внутри комплекта: можно менять только позиции, где в составе больше одной штуки.
+	$c = array();
+	foreach ( $out as $cid => $def ) {
+		$n         = isset( $sel[ $cid ] ) ? (int) $sel[ $cid ] : $def;
+		$c[ $cid ] = $def > 1 ? max( 1, min( $n, ivs_book_units( $cid ) ) ) : $def;
+	}
+	return $c;
+}
+
+function ivs_book_components_default( $product_id ) {
 	$kit = get_post_meta( $product_id, '_ivs_kit_items', true );
 	if ( ! is_string( $kit ) || '' === trim( $kit ) ) {
 		return array( (int) $product_id => 1 );
@@ -101,6 +115,66 @@ function ivs_book_components( $product_id ) {
 	return $out ? $out : array( (int) $product_id => 1 );
 }
 
+/** Цена прибора за сутки (для расчёта доли при неполном составе комплекта). */
+function ivs_book_day_price( $pid ) {
+	$d = (float) get_post_meta( $pid, '_regular_price', true );
+	return $d > 0 ? $d : (float) get_post_meta( $pid, '_price', true );
+}
+
+/** Состав комплекта для формы: [ ['id','name','def','max','price','fixed'] ]. Пусто, если менять нечего. */
+function ivs_book_kit_comps( $pid ) {
+	$def = ivs_book_components_default( $pid );
+	if ( ! ivs_book_is_kit( $pid ) || isset( $def[ (int) $pid ] ) ) {
+		return array();
+	}
+	$out = array();
+	$any = false;
+	foreach ( $def as $cid => $n ) {
+		$any   = $any || $n > 1;
+		$out[] = array( 'id' => (int) $cid, 'name' => get_the_title( $cid ), 'def' => (int) $n, 'max' => $n > 1 ? ivs_book_units( $cid ) : (int) $n, 'total' => ivs_book_units( $cid ), 'price' => ivs_book_day_price( $cid ), 'fixed' => $n <= 1 );
+	}
+	return $any ? $out : array();
+}
+
+/** Доля цены комплекта при выбранном составе: по суточной цене приборов. 1, если состав полный. */
+function ivs_book_kit_ratio( $pid, $sel ) {
+	if ( ! is_array( $sel ) || ! $sel ) {
+		return 1.0;
+	}
+	$def = ivs_book_components_default( $pid );
+	$cur = ivs_book_components( $pid, $sel );
+	$a   = 0.0;
+	$b   = 0.0;
+	foreach ( $def as $cid => $n ) {
+		$p  = ivs_book_day_price( $cid );
+		$p  = $p > 0 ? $p : 1;
+		$a += $p * ( $cur[ $cid ] ?? $n );
+		$b += $p * $n;
+	}
+	return $b > 0 ? min( 1.0, round( $a / $b, 6 ) ) : 1.0;
+}
+
+/** Выбранный состав из запроса: только если он отличается от полного, иначе null. */
+function ivs_book_posted_kit( $pid ) {
+	$raw = isset( $_POST['ivs_kit'] ) && is_array( $_POST['ivs_kit'] ) ? wp_unslash( $_POST['ivs_kit'] ) : array(); // phpcs:ignore WordPress.Security.NonceVerification, WordPress.Security.ValidatedSanitizedInput
+	if ( ! $raw || ! ivs_book_kit_comps( $pid ) ) {
+		return null;
+	}
+	$sel = array();
+	foreach ( $raw as $cid => $n ) {
+		$sel[ (int) $cid ] = (int) $n;
+	}
+	$cur = ivs_book_components( $pid, $sel );
+	return $cur === ivs_book_components_default( $pid ) ? null : $cur;
+}
+
+/** Состав позиции заказа (если клиент менял число приборов в комплекте). */
+function ivs_book_item_sel( $item ) {
+	$j = $item->get_meta( '_ivs_kit' );
+	$a = is_string( $j ) && '' !== $j ? json_decode( $j, true ) : null;
+	return is_array( $a ) && $a ? $a : null;
+}
+
 /** Все приборы, которые закрывает этот товар, и те комплекты, которые закрываются вместе с ним. */
 function ivs_book_is_kit( $product_id ) {
 	return '' !== trim( (string) get_post_meta( $product_id, '_ivs_kit_items', true ) );
@@ -116,10 +190,10 @@ function ivs_book_ymd( $ts ) {
  * Свободно штук на каждый день: [ 'Y-m-d' => число ] для товара (с учётом состава комплекта).
  * Возвращает только дни, где свободно меньше, чем всего (остальные свободны полностью).
  */
-function ivs_book_busy_days( $product_id, $from, $to, $exclude_order = 0 ) {
+function ivs_book_busy_days( $product_id, $from, $to, $exclude_order = 0, $sel = null ) {
 	global $wpdb;
 	$t    = ivs_book_table();
-	$comp = ivs_book_components( $product_id );
+	$comp = ivs_book_components( $product_id, $sel );
 	$free = array(); // date => min free
 	foreach ( $comp as $cid => $need ) {
 		$total = ivs_book_units( $cid );
@@ -148,14 +222,40 @@ function ivs_book_busy_days( $product_id, $from, $to, $exclude_order = 0 ) {
 	return $free;
 }
 
+/** Сколько штук товара (комплекта) всего можно выдать одновременно, без учёта броней. */
+function ivs_book_total_units( $product_id ) {
+	$max = PHP_INT_MAX;
+	foreach ( ivs_book_components( $product_id ) as $cid => $need ) {
+		$max = min( $max, (int) floor( ivs_book_units( $cid ) / $need ) );
+	}
+	return PHP_INT_MAX === $max ? 1 : $max;
+}
+
+/** Сколько штук прибора свободно по дням: [ 'Y-m-d' => число ] (только дни, где свободно меньше, чем всего). */
+function ivs_book_comp_free( $cid, $from, $to ) {
+	global $wpdb;
+	$total = ivs_book_units( $cid );
+	$used  = array();
+	$rows  = $wpdb->get_results( $wpdb->prepare( 'SELECT date_from, date_to, qty FROM ' . ivs_book_table() . ' WHERE component_id=%d AND active=1 AND date_to>=%s AND date_from<=%s', $cid, $from, $to ) ); // phpcs:ignore
+	foreach ( $rows as $r ) {
+		for ( $d = strtotime( $r->date_from . ' UTC' ); $d <= strtotime( $r->date_to . ' UTC' ); $d += DAY_IN_SECONDS ) {
+			$k          = ivs_book_ymd( $d );
+			$used[ $k ] = ( $used[ $k ] ?? 0 ) + (int) $r->qty;
+		}
+	}
+	return array_map( function ( $u ) use ( $total ) {
+		return max( 0, $total - $u );
+	}, $used );
+}
+
 /** Сколько штук товара свободно на весь период (минимум по дням). */
-function ivs_book_free_for_range( $product_id, $from, $to, $exclude_order = 0 ) {
-	$comp = ivs_book_components( $product_id );
+function ivs_book_free_for_range( $product_id, $from, $to, $exclude_order = 0, $sel = null ) {
+	$comp = ivs_book_components( $product_id, $sel );
 	$max  = PHP_INT_MAX;
 	foreach ( $comp as $cid => $need ) {
 		$max = min( $max, (int) floor( ivs_book_units( $cid ) / $need ) );
 	}
-	$busy = ivs_book_busy_days( $product_id, $from, $to, $exclude_order );
+	$busy = ivs_book_busy_days( $product_id, $from, $to, $exclude_order, $sel );
 	foreach ( $busy as $day => $f ) {
 		if ( $day >= $from && $day <= $to ) {
 			$max = min( $max, $f );
@@ -287,7 +387,7 @@ function ivs_book_deposit( $product_id ) {
 /**
  * Проверяет выбранные даты. Возвращает текст ошибки или '' если всё в порядке.
  */
-function ivs_book_validate( $product_id, $from, $to, $t_from, $t_to, $qty, $exclude_order = 0 ) {
+function ivs_book_validate( $product_id, $from, $to, $t_from, $t_to, $qty, $exclude_order = 0, $sel = null ) {
 	if ( ! $exclude_order && function_exists( 'WC' ) && WC()->session ) {
 		$exclude_order = (int) WC()->session->get( 'store_api_draft_order', 0 );
 	}
@@ -312,7 +412,7 @@ function ivs_book_validate( $product_id, $from, $to, $t_from, $t_to, $qty, $excl
 	if ( $qty < 1 ) {
 		return ivs_t( 'Norādiet skaitu.', 'Укажите количество.', 'Please set the quantity.' );
 	}
-	if ( ivs_book_free_for_range( $product_id, $from, $to, $exclude_order ) < $qty ) {
+	if ( ivs_book_free_for_range( $product_id, $from, $to, $exclude_order, $sel ) < $qty ) {
 		return ivs_t( 'Šajos datumos instruments nav pieejams.', 'На эти даты прибор занят.', 'This instrument is not available on these dates.' );
 	}
 	return '';
@@ -333,6 +433,12 @@ add_action( 'rest_api_init', function () {
 			$to   = gmdate( 'Y-m-d', strtotime( $from . ' UTC' ) + IVS_BOOK_HORIZON * DAY_IN_SECONDS );
 			$comp = ivs_book_components( $id );
 			$max  = PHP_INT_MAX;
+			$cfree = array();
+			if ( ivs_book_kit_comps( $id ) ) {
+				foreach ( $comp as $cid => $need ) {
+					$cfree[ $cid ] = (object) ivs_book_comp_free( $cid, $from, $to );
+				}
+			}
 			foreach ( $comp as $cid => $need ) {
 				$max = min( $max, (int) floor( ivs_book_units( $cid ) / $need ) );
 			}
@@ -340,6 +446,7 @@ add_action( 'rest_api_init', function () {
 				'max'  => $max,
 				'free' => (object) ivs_book_busy_days( $id, $from, $to ),
 				'days' => ivs_book_special_days(),
+				'cfree' => (object) $cfree,
 			) );
 			$res->header( 'Cache-Control', 'no-store' );
 			return $res;
@@ -353,6 +460,8 @@ add_action( 'ivs_booking_calendar', function ( $product ) {
 	$id   = $product->get_id();
 	$data = array(
 		'id'      => $id,
+		'max'     => max( 1, ivs_book_total_units( $id ) ),
+		'comps'   => ivs_book_kit_comps( $id ),
 		'rest'    => esc_url_raw( rest_url( 'ivs/v1/availability/' . $id ) ),
 		'day'     => (float) $product->get_price(),
 		'week'    => (float) get_post_meta( $id, '_ivs_price_week', true ),
@@ -381,6 +490,22 @@ add_action( 'ivs_booking_calendar', function ( $product ) {
 	);
 	?>
 <form class="ivs-book" method="post" action="<?php echo esc_url( wc_get_cart_url() ); ?>" data-ivs="<?php echo esc_attr( wp_json_encode( $data ) ); ?>">
+	<?php $ivs_total = ivs_book_total_units( $id ); ?>
+	<?php $ivs_kc = ivs_book_kit_comps( $id ); ?>
+	<?php if ( $ivs_kc ) : ?>
+	<div class="ivs-kit">
+		<b><?php ivs_e( 'Cik instrumentu nepieciešams', 'Сколько приборов нужно', 'How many instruments you need' ); ?></b>
+		<?php foreach ( $ivs_kc as $c ) : ?>
+			<?php if ( $c['fixed'] ) { continue; } ?>
+			<label><span><?php echo esc_html( $c['name'] ); ?></span>
+				<input type="number" name="ivs_kit[<?php echo (int) $c['id']; ?>]" value="<?php echo (int) $c['def']; ?>" min="1" max="<?php echo (int) $c['max']; ?>" step="1" inputmode="numeric">
+				<small class="mut"><?php echo esc_html( ivs_t( 'no 1 līdz ' . $c['max'] . ', komplektā ' . $c['def'], 'от 1 до ' . $c['max'] . ', в комплекте ' . $c['def'], '1 to ' . $c['max'] . ', kit has ' . $c['def'] ) ); ?></small></label>
+		<?php endforeach; ?>
+	</div>
+	<?php endif; ?>
+	<label class="ivs-qty"<?php echo ( $ivs_total > 1 && ! $ivs_kc ) ? '' : ' hidden'; ?>><?php ivs_e( 'Cik vienību nomāt', 'Сколько штук арендовать', 'How many units to rent' ); ?>
+		<select name="quantity"><option value="1">1</option></select>
+		<small class="mut"><?php echo esc_html( ivs_t( 'Pieejami līdz ' . $ivs_total . ' gab.', 'Всего в наличии: ' . $ivs_total . ' шт.', 'Up to ' . $ivs_total . ' units available' ) ); ?></small></label>
 	<div class="ivs-cal" aria-live="polite"></div>
 	<p class="ivs-hint mut"></p>
 	<div class="ivs-times" hidden>
@@ -388,8 +513,6 @@ add_action( 'ivs_booking_calendar', function ( $product ) {
 			<select name="ivs_t_from"><?php ivs_book_time_options( '09:00' ); ?></select></label>
 		<label><?php ivs_e( 'Atgriešanas laiks', 'Время возврата', 'Return time' ); ?>
 			<select name="ivs_t_to"><?php ivs_book_time_options( '18:00' ); ?></select></label>
-		<label class="ivs-qty"><?php ivs_e( 'Skaits', 'Количество', 'Quantity' ); ?>
-			<select name="quantity"><option value="1">1</option></select></label>
 	</div>
 	<div class="ivs-sum" hidden></div>
 	<input type="hidden" name="ivs_from" value="">
@@ -444,7 +567,7 @@ add_filter( 'woocommerce_add_to_cart_validation', function ( $ok, $product_id, $
 		return false;
 	}
 	$p   = ivs_book_posted();
-	$err = ivs_book_validate( (int) $product_id, $p['from'], $p['to'], $p['t_from'], $p['t_to'], (int) $qty );
+	$err = ivs_book_validate( (int) $product_id, $p['from'], $p['to'], $p['t_from'], $p['t_to'], (int) $qty, 0, ivs_book_posted_kit( (int) $product_id ) );
 	if ( '' !== $err ) {
 		wc_add_notice( $err, 'error' );
 		return false;
@@ -459,6 +582,10 @@ add_filter( 'woocommerce_add_cart_item_data', function ( $data, $product_id ) {
 		$data['ivs_to']     = $p['to'];
 		$data['ivs_t_from'] = $p['t_from'];
 		$data['ivs_t_to']   = $p['t_to'];
+		$kit                = ivs_book_posted_kit( (int) $product_id );
+		if ( $kit ) {
+			$data['ivs_kit'] = $kit;
+		}
 	}
 	return $data;
 }, 10, 2 );
@@ -473,7 +600,7 @@ add_action( 'woocommerce_before_calculate_totals', function ( $cart ) {
 			continue;
 		}
 		$days = ivs_book_days( $item['ivs_from'], $item['ivs_to'] );
-		$item['data']->set_price( ivs_book_price( $item['product_id'], $days ) );
+		$item['data']->set_price( round( ivs_book_price( $item['product_id'], $days ) * ivs_book_kit_ratio( $item['product_id'], $item['ivs_kit'] ?? null ), 2 ) );
 	}
 }, 20 );
 
@@ -498,8 +625,19 @@ add_filter( 'woocommerce_get_item_data', function ( $data, $item ) {
 		'key'   => ivs_t( 'Dienas', 'Суток', 'Days' ),
 		'value' => (int) $days,
 	);
+	if ( ! empty( $item['ivs_kit'] ) ) {
+		$data[] = array( 'key' => ivs_t( 'Sastāvs', 'Состав', 'Contents' ), 'value' => esc_html( ivs_book_kit_text( $item['ivs_kit'] ) ) );
+	}
 	return $data;
 }, 10, 2 );
+
+function ivs_book_kit_text( $comp ) {
+	$out = array();
+	foreach ( $comp as $cid => $n ) {
+		$out[] = get_the_title( $cid ) . ' ×' . (int) $n;
+	}
+	return implode( ', ', $out );
+}
 
 /** Залог: отдельной строкой, без PVN, возвращается после возврата прибора. */
 add_action( 'woocommerce_cart_calculate_fees', function ( $cart ) {
@@ -511,7 +649,7 @@ add_action( 'woocommerce_cart_calculate_fees', function ( $cart ) {
 		if ( empty( $item['ivs_from'] ) ) {
 			continue;
 		}
-		$sum += ivs_book_deposit( $item['product_id'] ) * (int) $item['quantity'];
+		$sum += ivs_book_deposit( $item['product_id'] ) * ivs_book_kit_ratio( $item['product_id'], $item['ivs_kit'] ?? null ) * (int) $item['quantity'];
 	}
 	if ( $sum > 0 ) {
 		$cart->add_fee( ivs_t( 'Drošības nauda (atgriežama)', 'Залог (возвращается)', 'Deposit (refundable)' ), $sum, false );
@@ -538,7 +676,7 @@ add_action( 'woocommerce_check_cart_items', function () {
 		if ( empty( $item['ivs_from'] ) ) {
 			continue;
 		}
-		$err = ivs_book_validate( $item['product_id'], $item['ivs_from'], $item['ivs_to'], $item['ivs_t_from'], $item['ivs_t_to'], (int) $item['quantity'] );
+		$err = ivs_book_validate( $item['product_id'], $item['ivs_from'], $item['ivs_to'], $item['ivs_t_from'], $item['ivs_t_to'], (int) $item['quantity'], 0, $item['ivs_kit'] ?? null );
 		if ( '' !== $err ) {
 			wc_add_notice( get_the_title( $item['product_id'] ) . ': ' . $err, 'error' );
 		}
@@ -576,6 +714,10 @@ add_action( 'woocommerce_checkout_create_order_line_item', function ( $item, $ke
 	$item->add_meta_data( ivs_t( 'Saņemšana', 'Выдача', 'Pickup' ), $values['ivs_from'] . ' ' . $values['ivs_t_from'], true );
 	$item->add_meta_data( ivs_t( 'Atgriešana', 'Возврат', 'Return' ), $values['ivs_to'] . ' ' . $values['ivs_t_to'], true );
 	$item->add_meta_data( ivs_t( 'Dienas', 'Суток', 'Days' ), ivs_book_days( $values['ivs_from'], $values['ivs_to'] ), true );
+	if ( ! empty( $values['ivs_kit'] ) ) {
+		$item->add_meta_data( '_ivs_kit', wp_json_encode( $values['ivs_kit'] ), true );
+		$item->add_meta_data( ivs_t( 'Sastāvs', 'Состав', 'Contents' ), ivs_book_kit_text( $values['ivs_kit'] ), true );
+	}
 }, 10, 3 );
 
 /** Заказ создаётся только если приборы всё ещё свободны. */
@@ -584,7 +726,7 @@ add_action( 'woocommerce_after_checkout_validation', function ( $data, $errors )
 		if ( empty( $item['ivs_from'] ) ) {
 			continue;
 		}
-		$err = ivs_book_validate( $item['product_id'], $item['ivs_from'], $item['ivs_to'], $item['ivs_t_from'], $item['ivs_t_to'], (int) $item['quantity'] );
+		$err = ivs_book_validate( $item['product_id'], $item['ivs_from'], $item['ivs_to'], $item['ivs_t_from'], $item['ivs_t_to'], (int) $item['quantity'], 0, $item['ivs_kit'] ?? null );
 		if ( '' !== $err ) {
 			$errors->add( 'ivs_busy', get_the_title( $item['product_id'] ) . ': ' . $err );
 		}
@@ -611,7 +753,7 @@ function ivs_book_save_order( $order ) {
 			continue;
 		}
 		$pid = (int) $item->get_product_id();
-		foreach ( ivs_book_components( $pid ) as $cid => $n ) {
+		foreach ( ivs_book_components( $pid, ivs_book_item_sel( $item ) ) as $cid => $n ) {
 			$wpdb->insert( $t, array( // phpcs:ignore
 				'order_id'     => $order->get_id(),
 				'item_id'      => $item_id,
@@ -696,7 +838,7 @@ add_action( 'woocommerce_store_api_checkout_order_processed', function ( $order 
 		if ( empty( $ci['ivs_from'] ) ) {
 			continue;
 		}
-		$err = ivs_book_validate( $ci['product_id'], $ci['ivs_from'], $ci['ivs_to'], $ci['ivs_t_from'], $ci['ivs_t_to'], (int) $ci['quantity'], $order->get_id() );
+		$err = ivs_book_validate( $ci['product_id'], $ci['ivs_from'], $ci['ivs_to'], $ci['ivs_t_from'], $ci['ivs_t_to'], (int) $ci['quantity'], $order->get_id(), $ci['ivs_kit'] ?? null );
 		if ( '' !== $err ) {
 			throw new \Automattic\WooCommerce\StoreApi\Exceptions\RouteException( 'ivs_busy', esc_html( get_the_title( $ci['product_id'] ) . ': ' . $err ), 409 );
 		}
@@ -712,6 +854,10 @@ add_action( 'woocommerce_store_api_checkout_order_processed', function ( $order 
 			$item->update_meta_data( ivs_t( 'Saņemšana', 'Выдача', 'Pickup' ), $ci['ivs_from'] . ' ' . $ci['ivs_t_from'] );
 			$item->update_meta_data( ivs_t( 'Atgriešana', 'Возврат', 'Return' ), $ci['ivs_to'] . ' ' . $ci['ivs_t_to'] );
 			$item->update_meta_data( ivs_t( 'Dienas', 'Суток', 'Days' ), ivs_book_days( $ci['ivs_from'], $ci['ivs_to'] ) );
+			if ( ! empty( $ci['ivs_kit'] ) ) {
+				$item->update_meta_data( '_ivs_kit', wp_json_encode( $ci['ivs_kit'] ) );
+				$item->update_meta_data( ivs_t( 'Sastāvs', 'Состав', 'Contents' ), ivs_book_kit_text( $ci['ivs_kit'] ) );
+			}
 			$item->save();
 			break;
 		}
