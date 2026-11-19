@@ -19,8 +19,19 @@ function ivs_lang() {
 		return 'lv';
 	}
 	// Товары не переводятся плагином, язык страницы прибора берём из параметра ?ivl=ru|en.
-	if ( isset( $_GET['ivl'] ) && in_array( $_GET['ivl'], array( 'ru', 'en' ), true ) && function_exists( 'is_woocommerce' ) && is_woocommerce() ) { // phpcs:ignore WordPress.Security.NonceVerification
-		return $_GET['ivl']; // phpcs:ignore
+	if ( isset( $_GET['ivl'] ) && in_array( $_GET['ivl'], array( 'ru', 'en' ), true ) && function_exists( 'is_woocommerce' ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+		// is_woocommerce() на странице категории читает термин, а фильтр get_term снова зовёт ivs_lang():
+		// без защиты от повторного входа выходит бесконечная рекурсия и страница виснет.
+		static $busy = false;
+		if ( $busy ) {
+			return $_GET['ivl']; // phpcs:ignore
+		}
+		$busy = true;
+		$shop = is_woocommerce();
+		$busy = false;
+		if ( $shop ) {
+			return $_GET['ivl']; // phpcs:ignore
+		}
 	}
 	if ( function_exists( 'pll_current_language' ) ) {
 		$l = pll_current_language();
