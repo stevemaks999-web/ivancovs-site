@@ -14,7 +14,7 @@ while ( have_posts() ) :
 		continue;
 	}
 	$ids = array_filter( array_merge( array( $product->get_image_id() ), $product->get_gallery_image_ids() ) );
-	$shop = wc_get_page_permalink( 'shop' );
+	$shop = ivs_shop_url();
 	$cats = get_the_terms( get_the_ID(), 'product_cat' );
 	$cat  = ( $cats && ! is_wp_error( $cats ) ) ? $cats[0] : null;
 	$wa_text = sprintf( ivs_t( 'Sveiki! Interesē noma: %s', 'Здравствуйте! Интересует аренда: %s', 'Hello! I am interested in renting: %s' ), get_the_title() );

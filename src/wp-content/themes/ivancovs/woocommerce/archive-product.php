@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 get_header();
 
-$shop      = wc_get_page_permalink( 'shop' );
+$shop      = ivs_shop_url();
 $kits      = ivs_kits_term();
 $current   = get_queried_object();
 $cur_id    = ( $current instanceof WP_Term ) ? $current->term_id : 0;
