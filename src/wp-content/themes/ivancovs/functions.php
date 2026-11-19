@@ -131,23 +131,40 @@ class IVS_Flat_Walker extends Walker_Nav_Menu {
 	public function end_lvl( &$output, $depth = 0, $args = null ) {}
 }
 
+/** Языковые названия частей адреса аренды (как в mu-plugin ivancovs-theme-router): латышское => RU и EN. */
+function ivs_lang_slugs() {
+	return array(
+		'noma'             => array( 'ru' => 'arenda', 'en' => 'rent' ),
+		'product'          => array( 'ru' => 'pribor', 'en' => 'instrument' ),
+		'product-category' => array( 'ru' => 'kategoriya', 'en' => 'category' ),
+		'product-tag'      => array( 'ru' => 'metka', 'en' => 'tag' ),
+	);
+}
+
 /**
- * Адрес страницы каталога на нужном языке: /ru/arenda/, /en/rent/, /ru/product/... (для lv без префикса).
+ * Адрес страницы каталога на нужном языке: /ru/arenda/, /ru/pribor/..., /en/rent/, /en/instrument/... (для lv без префикса).
  * Старый параметр ?ivl= убирается. Любую языковую форму сначала приводим к латышской, потом строим нужную.
  */
 function ivs_lang_url( $url, $lang = null ) {
 	$lang = $lang ? $lang : ivs_lang();
-	$end  = '(?=/|$|\?|\#)';
-	$sub  = '(?=(?:product|product-category|product-tag)' . $end . ')';
 	$url  = remove_query_arg( 'ivl', $url );
-	$url  = preg_replace( '~^(https?://[^/]+)/(?:ru/arenda|en/rent|ru/noma|en/noma)' . $end . '~', '$1/noma', $url );
-	$url  = preg_replace( '~^(https?://[^/]+)/(?:ru|en)/' . $sub . '~', '$1/', $url );
-	if ( 'lv' === $lang ) {
+	if ( ! preg_match( '~^(https?://[^/]+)/(?:(ru|en)/)?([^/?#]+)~', $url, $m ) ) {
 		return $url;
 	}
-	$slug = 'ru' === $lang ? 'arenda' : 'rent';
-	$url  = preg_replace( '~^(https?://[^/]+)/noma' . $end . '~', '$1/' . $lang . '/' . $slug, $url );
-	return preg_replace( '~^(https?://[^/]+)/' . $sub . '~', '$1/' . $lang . '/', $url );
+	$base = '';
+	foreach ( ivs_lang_slugs() as $lv => $tr ) {
+		if ( '' === $m[2] && $m[3] === $lv ) {
+			$base = $lv;
+		} elseif ( '' !== $m[2] && ( $m[3] === $tr[ $m[2] ] || $m[3] === $lv ) ) {
+			$base = $lv;
+		}
+	}
+	if ( '' === $base ) {
+		return $url;
+	}
+	$rest = substr( $url, strlen( $m[0] ) );
+	$slug = ( 'lv' === $lang ) ? $base : $lang . '/' . ivs_lang_slugs()[ $base ][ $lang ];
+	return $m[1] . '/' . $slug . $rest;
 }
 
 /** Переключатель языков: Polylang, иначе просто подпись. */
