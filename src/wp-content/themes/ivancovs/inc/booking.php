@@ -148,6 +148,15 @@ function ivs_book_busy_days( $product_id, $from, $to, $exclude_order = 0 ) {
 	return $free;
 }
 
+/** Сколько штук товара (комплекта) всего можно выдать одновременно, без учёта броней. */
+function ivs_book_total_units( $product_id ) {
+	$max = PHP_INT_MAX;
+	foreach ( ivs_book_components( $product_id ) as $cid => $need ) {
+		$max = min( $max, (int) floor( ivs_book_units( $cid ) / $need ) );
+	}
+	return PHP_INT_MAX === $max ? 1 : $max;
+}
+
 /** Сколько штук товара свободно на весь период (минимум по дням). */
 function ivs_book_free_for_range( $product_id, $from, $to, $exclude_order = 0 ) {
 	$comp = ivs_book_components( $product_id );
@@ -353,6 +362,7 @@ add_action( 'ivs_booking_calendar', function ( $product ) {
 	$id   = $product->get_id();
 	$data = array(
 		'id'      => $id,
+		'max'     => max( 1, ivs_book_total_units( $id ) ),
 		'rest'    => esc_url_raw( rest_url( 'ivs/v1/availability/' . $id ) ),
 		'day'     => (float) $product->get_price(),
 		'week'    => (float) get_post_meta( $id, '_ivs_price_week', true ),
@@ -381,6 +391,10 @@ add_action( 'ivs_booking_calendar', function ( $product ) {
 	);
 	?>
 <form class="ivs-book" method="post" action="<?php echo esc_url( wc_get_cart_url() ); ?>" data-ivs="<?php echo esc_attr( wp_json_encode( $data ) ); ?>">
+	<?php $ivs_total = ivs_book_total_units( $id ); ?>
+	<label class="ivs-qty"<?php echo $ivs_total > 1 ? '' : ' hidden'; ?>><?php ivs_e( 'Cik vienību nomāt', 'Сколько штук арендовать', 'How many units to rent' ); ?>
+		<select name="quantity"><option value="1">1</option></select>
+		<small class="mut"><?php echo esc_html( ivs_t( 'Pieejami līdz ' . $ivs_total . ' gab.', 'Всего в наличии: ' . $ivs_total . ' шт.', 'Up to ' . $ivs_total . ' units available' ) ); ?></small></label>
 	<div class="ivs-cal" aria-live="polite"></div>
 	<p class="ivs-hint mut"></p>
 	<div class="ivs-times" hidden>
@@ -388,8 +402,6 @@ add_action( 'ivs_booking_calendar', function ( $product ) {
 			<select name="ivs_t_from"><?php ivs_book_time_options( '09:00' ); ?></select></label>
 		<label><?php ivs_e( 'Atgriešanas laiks', 'Время возврата', 'Return time' ); ?>
 			<select name="ivs_t_to"><?php ivs_book_time_options( '18:00' ); ?></select></label>
-		<label class="ivs-qty"><?php ivs_e( 'Skaits', 'Количество', 'Quantity' ); ?>
-			<select name="quantity"><option value="1">1</option></select></label>
 	</div>
 	<div class="ivs-sum" hidden></div>
 	<input type="hidden" name="ivs_from" value="">

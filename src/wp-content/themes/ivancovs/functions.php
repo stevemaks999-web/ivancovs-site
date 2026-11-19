@@ -223,6 +223,7 @@ require_once get_template_directory() . '/inc/click-log.php';
 require_once get_template_directory() . '/inc/seo.php';
 require_once get_template_directory() . '/inc/perf.php';
 require_once get_template_directory() . '/inc/product-seo.php';
+require_once get_template_directory() . '/inc/kit-photos.php';
 
 /**
  * Главная на RU/EN: у страницы «Sākums» нет перевода в Polylang, и /ru/ и /en/ показывали

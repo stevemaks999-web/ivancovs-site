@@ -94,7 +94,6 @@
     for (var q = 1; q <= Math.max(1, avail); q++) o += '<option value="' + q + '">' + q + '</option>';
     qtySel.innerHTML = o;
     qtySel.value = Math.min(cur, Math.max(1, avail));
-    qtySel.closest('label').style.display = avail > 1 ? '' : 'none';
     renderSum(n);
   }
 
@@ -130,6 +129,11 @@
     render(); update();
   });
 
+  (function () {
+    var o = '';
+    for (var q = 1; q <= Math.max(1, cfg.max || 1); q++) o += '<option value="' + q + '">' + q + '</option>';
+    qtySel.innerHTML = o;
+  })();
   qtySel.addEventListener('change', function () { if (from && to) renderSum(days(from, to)); });
 
   render(); update();

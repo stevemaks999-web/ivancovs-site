@@ -155,3 +155,4 @@ body.pp main{padding-bottom:70px}
 /* Каталог: полоса прокрутки рядов «Комплекты» и категорий не должна упираться в соседний ряд */
 .krow{padding-bottom:16px;margin-bottom:8px}
 .chipbar{padding-bottom:16px}
+.ivs-book>.ivs-qty{display:flex;flex-direction:column;font-size:13px;color:var(--mut);gap:3px;margin:0 0 10px;max-width:260px}.ivs-book>.ivs-qty[hidden]{display:none}.ivs-book>.ivs-qty select{padding:8px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font-size:15px}
