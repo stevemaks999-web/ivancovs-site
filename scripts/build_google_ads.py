@@ -139,7 +139,7 @@ RU_PATH = {"termokamera": "тепловизор", "endoskops": "эндоскоп
 c3 = "RU | Аренда | Рига"
 campaign(c3, 3, "Russian")
 negatives(c3, NEG_RU)
-group(c3, "Аренда приборов", 0.3, GEN_RU, f"{SITE}/ru/noma/", "аренда", "приборы",
+group(c3, "Аренда приборов", 0.3, GEN_RU, f"{SITE}/ru/arenda/", "аренда", "приборы",
       ["Аренда Приборов В Риге", "Аренда Измерительных Приборов", "Аренда От 3 € В Сутки"] + COMMON_RU, DESC_RU)
 for key, lv, ru, p, url, kl, kr in DEV:
     h1 = f"Аренда {ru}"

@@ -22,9 +22,9 @@ function ivs_router_rental_roots() {
 }
 
 /**
- * Красивые адреса языков аренды: /ru/noma/, /en/product/cgp22c/ и т. д.
- * Товары не переводятся плагином, поэтому язык сидит в параметре ivl. Здесь убираем /ru/ или /en/ из адреса до того,
- * как адрес разберут WordPress и Polylang, и выставляем ivl. Старые адреса ?ivl=ru ведут на новые редиректом 301.
+ * Красивые адреса языков аренды: /ru/arenda/, /en/rent/, /ru/product/cgp22c/ и т. д.
+ * Товары не переводятся плагином, поэтому язык сидит в параметре ivl. Здесь убираем языковую часть из адреса до того,
+ * как адрес разберут WordPress и Polylang, и выставляем ivl. Старые адреса ?ivl=ru и /ru/noma/ ведут на новые редиректом 301.
  */
 function ivs_router_pretty_langs() {
 	if ( defined( 'WP_ADMIN' ) || defined( 'DOING_AJAX' ) || defined( 'DOING_CRON' ) || defined( 'XMLRPC_REQUEST' ) || defined( 'WP_CLI' ) ) {
@@ -34,23 +34,43 @@ function ivs_router_pretty_langs() {
 	if ( 'index.php' !== $script || empty( $_SERVER['REQUEST_URI'] ) ) { // phpcs:ignore
 		return;
 	}
-	$uri   = (string) $_SERVER['REQUEST_URI']; // phpcs:ignore
-	$path  = (string) wp_parse_url( $uri, PHP_URL_PATH );
-	$qs    = (string) wp_parse_url( $uri, PHP_URL_QUERY );
-	$roots = '(noma|product|product-category|product-tag)';
-	if ( preg_match( '#^/(ru|en)/' . $roots . '(/.*)?$#', $path, $m ) ) {
-		$_SERVER['REQUEST_URI'] = '/' . $m[2] . ( isset( $m[3] ) ? $m[3] : '' ) . ( '' !== $qs ? '?' . $qs : '' ); // phpcs:ignore
-		$_GET['ivl']            = $m[1]; // phpcs:ignore
-		$_REQUEST['ivl']        = $m[1]; // phpcs:ignore
+	$uri    = (string) $_SERVER['REQUEST_URI']; // phpcs:ignore
+	$path   = (string) wp_parse_url( $uri, PHP_URL_PATH );
+	$qs     = (string) wp_parse_url( $uri, PHP_URL_QUERY );
+	$method = isset( $_SERVER['REQUEST_METHOD'] ) ? strtoupper( (string) $_SERVER['REQUEST_METHOD'] ) : 'GET'; // phpcs:ignore
+	$slugs  = array( 'ru' => 'arenda', 'en' => 'rent' );
+	$sub    = '(product|product-category|product-tag)';
+	$strip  = function ( $lang, $rest ) use ( $qs ) {
+		$_SERVER['REQUEST_URI'] = $rest . ( '' !== $qs ? '?' . $qs : '' ); // phpcs:ignore
+		$_GET['ivl']            = $lang; // phpcs:ignore
+		$_REQUEST['ivl']        = $lang; // phpcs:ignore
+	};
+	// /ru/arenda/..., /en/rent/... показывают каталог.
+	if ( preg_match( '#^/(ru|en)/(arenda|rent)(/.*)?$#', $path, $m ) && $slugs[ $m[1] ] === $m[2] ) {
+		$strip( $m[1], '/noma' . ( ! empty( $m[3] ) ? $m[3] : '/' ) );
 		return;
 	}
-	$method = isset( $_SERVER['REQUEST_METHOD'] ) ? strtoupper( (string) $_SERVER['REQUEST_METHOD'] ) : 'GET'; // phpcs:ignore
-	if ( '' !== $qs && in_array( $method, array( 'GET', 'HEAD' ), true ) && preg_match( '#^/' . $roots . '(/.*)?$#', $path ) ) {
+	// Приборы и категории: /ru/product/..., /en/product-category/...
+	if ( preg_match( '#^/(ru|en)/' . $sub . '(/.*)?$#', $path, $m ) ) {
+		$strip( $m[1], '/' . $m[2] . ( isset( $m[3] ) ? $m[3] : '' ) );
+		return;
+	}
+	if ( ! in_array( $method, array( 'GET', 'HEAD' ), true ) ) {
+		return;
+	}
+	// Временные адреса /ru/noma/ и /en/noma/ ведут на /ru/arenda/ и /en/rent/.
+	if ( preg_match( '#^/(ru|en)/noma(/.*)?$#', $path, $m ) ) {
+		header( 'Location: /' . $m[1] . '/' . $slugs[ $m[1] ] . ( ! empty( $m[2] ) ? $m[2] : '/' ) . ( '' !== $qs ? '?' . $qs : '' ), true, 301 );
+		exit;
+	}
+	// Старые адреса ?ivl=ru на каталоге, приборах и категориях.
+	if ( '' !== $qs && preg_match( '#^/(noma|product|product-category|product-tag)(/.*)?$#', $path, $m ) ) {
 		parse_str( $qs, $args );
 		if ( isset( $args['ivl'] ) && in_array( $args['ivl'], array( 'ru', 'en' ), true ) ) {
 			$lang = $args['ivl'];
 			unset( $args['ivl'] );
-			header( 'Location: /' . $lang . $path . ( $args ? '?' . http_build_query( $args ) : '' ), true, 301 );
+			$to = 'noma' === $m[1] ? '/' . $lang . '/' . $slugs[ $lang ] . ( ! empty( $m[2] ) ? $m[2] : '/' ) : '/' . $lang . $path;
+			header( 'Location: ' . $to . ( $args ? '?' . http_build_query( $args ) : '' ), true, 301 );
 			exit;
 		}
 	}
