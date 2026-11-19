@@ -107,7 +107,7 @@ function ivs_cross_card( $id ) {
 	if ( ! $p ) {
 		return '';
 	}
-	$img = $p->get_image_id() ? wp_get_attachment_image( $p->get_image_id(), 'woocommerce_thumbnail' ) : '';
+	$img = $p->get_image_id() ? wp_get_attachment_image( $p->get_image_id(), 'medium_large' ) : '';
 	return '<a class="card" href="' . esc_url( ivs_lang_url( get_permalink( $id ) ) ) . '"><div class="ph">' . $img . '</div><div class="b"><h3>' // phpcs:ignore
 		. esc_html( get_the_title( $id ) ) . '</h3>' . ivs_price_html( $p ) . '</div></a>'; // phpcs:ignore
 }

@@ -85,6 +85,7 @@ body.menu-open nav a{padding:12px 0;border-bottom:1px solid var(--line)}
 header.site{position:sticky}
 .screen{display:block}
 .ph img,.gal img{width:100%;height:100%;object-fit:cover;display:block}
+.ph:has(>img){background:#fff}
 .ph{overflow:hidden}
 .btn.block{display:block;text-align:center}
 .entry{padding-top:24px;padding-bottom:24px;overflow-x:hidden}.entry h1{font-size:28px}.entry p{margin:0 0 14px}

@@ -66,7 +66,7 @@ $cat_terms = is_wp_error( $cat_terms ) ? array() : $cat_terms;
 			}
 			?>
 			<a class="card" href="<?php echo esc_url( ivs_lang_url( get_permalink() ) ); ?>">
-				<div class="ph"><?php echo $product->get_image_id() ? wp_get_attachment_image( $product->get_image_id(), 'woocommerce_thumbnail' ) : esc_html( ivs_t( 'foto', 'фото', 'photo' ) ); // phpcs:ignore ?></div>
+				<div class="ph"><?php echo $product->get_image_id() ? wp_get_attachment_image( $product->get_image_id(), 'medium_large' ) : esc_html( ivs_t( 'foto', 'фото', 'photo' ) ); // phpcs:ignore ?></div>
 				<div class="b"><h3><?php the_title(); ?></h3>
 					<?php if ( has_excerpt() ) : ?><div class="mut"><?php echo esc_html( wp_trim_words( get_the_excerpt(), 20 ) ); ?></div><?php endif; ?>
 					<?php echo ivs_price_html( $product ); // phpcs:ignore ?>
