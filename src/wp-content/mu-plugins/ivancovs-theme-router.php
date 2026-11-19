@@ -21,10 +21,20 @@ function ivs_router_rental_roots() {
 	);
 }
 
+/** Языковые названия частей адреса аренды: латышское => RU и EN. */
+function ivs_router_slugs() {
+	return array(
+		'noma'             => array( 'ru' => 'arenda', 'en' => 'rent' ),
+		'product'          => array( 'ru' => 'pribor', 'en' => 'instrument' ),
+		'product-category' => array( 'ru' => 'kategoriya', 'en' => 'category' ),
+		'product-tag'      => array( 'ru' => 'metka', 'en' => 'tag' ),
+	);
+}
+
 /**
- * Красивые адреса языков аренды: /ru/arenda/, /en/rent/, /ru/product/cgp22c/ и т. д.
- * Товары не переводятся плагином, поэтому язык сидит в параметре ivl. Здесь убираем языковую часть из адреса до того,
- * как адрес разберут WordPress и Polylang, и выставляем ivl. Старые адреса ?ivl=ru и /ru/noma/ ведут на новые редиректом 301.
+ * Красивые адреса языков аренды: /ru/arenda/, /en/rent/, /ru/pribor/cgp22c/, /en/instrument/cgp22c/ и т. д.
+ * Товары не переводятся плагином, поэтому язык сидит в параметре ivl. Здесь возвращаем адрес к латышскому виду
+ * до того, как его разберут WordPress и Polylang, и выставляем ivl. Старые адреса (?ivl=ru, /ru/noma/, /ru/product/) ведут на новые редиректом 301.
  */
 function ivs_router_pretty_langs() {
 	if ( defined( 'WP_ADMIN' ) || defined( 'DOING_AJAX' ) || defined( 'DOING_CRON' ) || defined( 'XMLRPC_REQUEST' ) || defined( 'WP_CLI' ) ) {
@@ -38,40 +48,36 @@ function ivs_router_pretty_langs() {
 	$path   = (string) wp_parse_url( $uri, PHP_URL_PATH );
 	$qs     = (string) wp_parse_url( $uri, PHP_URL_QUERY );
 	$method = isset( $_SERVER['REQUEST_METHOD'] ) ? strtoupper( (string) $_SERVER['REQUEST_METHOD'] ) : 'GET'; // phpcs:ignore
-	$slugs  = array( 'ru' => 'arenda', 'en' => 'rent' );
-	$sub    = '(product|product-category|product-tag)';
-	$strip  = function ( $lang, $rest ) use ( $qs ) {
-		$_SERVER['REQUEST_URI'] = $rest . ( '' !== $qs ? '?' . $qs : '' ); // phpcs:ignore
-		$_GET['ivl']            = $lang; // phpcs:ignore
-		$_REQUEST['ivl']        = $lang; // phpcs:ignore
-		$GLOBALS['ivs_pretty_lang'] = $lang; // phpcs:ignore
-	};
-	// /ru/arenda/..., /en/rent/... показывают каталог.
-	if ( preg_match( '#^/(ru|en)/(arenda|rent)(/.*)?$#', $path, $m ) && $slugs[ $m[1] ] === $m[2] ) {
-		$strip( $m[1], '/noma' . ( ! empty( $m[3] ) ? $m[3] : '/' ) );
+	$get    = in_array( $method, array( 'GET', 'HEAD' ), true );
+	$map    = ivs_router_slugs();
+	$tail   = '' !== $qs ? '?' . $qs : '';
+	if ( preg_match( '#^/(ru|en)/([^/]+)(/.*)?$#', $path, $m ) ) {
+		$lang = $m[1];
+		$rest = ! empty( $m[3] ) ? $m[3] : '/';
+		foreach ( $map as $lv => $tr ) {
+			if ( $m[2] === $tr[ $lang ] || ( $m[2] === $lv && ! $get ) ) {
+				// Красивый адрес: показываем как латышский, язык берём из адреса.
+				$_SERVER['REQUEST_URI']     = '/' . $lv . $rest . $tail; // phpcs:ignore
+				$_GET['ivl']                = $lang; // phpcs:ignore
+				$_REQUEST['ivl']            = $lang; // phpcs:ignore
+				$GLOBALS['ivs_pretty_lang'] = $lang; // phpcs:ignore
+				return;
+			}
+			if ( $m[2] === $lv ) {
+				// Прежний вид /ru/noma/, /ru/product/...: на красивый адрес.
+				header( 'Location: /' . $lang . '/' . $tr[ $lang ] . $rest . $tail, true, 301 );
+				exit;
+			}
+		}
 		return;
-	}
-	// Приборы и категории: /ru/product/..., /en/product-category/...
-	if ( preg_match( '#^/(ru|en)/' . $sub . '(/.*)?$#', $path, $m ) ) {
-		$strip( $m[1], '/' . $m[2] . ( isset( $m[3] ) ? $m[3] : '' ) );
-		return;
-	}
-	if ( ! in_array( $method, array( 'GET', 'HEAD' ), true ) ) {
-		return;
-	}
-	// Временные адреса /ru/noma/ и /en/noma/ ведут на /ru/arenda/ и /en/rent/.
-	if ( preg_match( '#^/(ru|en)/noma(/.*)?$#', $path, $m ) ) {
-		header( 'Location: /' . $m[1] . '/' . $slugs[ $m[1] ] . ( ! empty( $m[2] ) ? $m[2] : '/' ) . ( '' !== $qs ? '?' . $qs : '' ), true, 301 );
-		exit;
 	}
 	// Старые адреса ?ivl=ru на каталоге, приборах и категориях.
-	if ( '' !== $qs && preg_match( '#^/(noma|product|product-category|product-tag)(/.*)?$#', $path, $m ) ) {
+	if ( $get && '' !== $qs && preg_match( '#^/([^/]+)(/.*)?$#', $path, $m ) && isset( $map[ $m[1] ] ) ) {
 		parse_str( $qs, $args );
 		if ( isset( $args['ivl'] ) && in_array( $args['ivl'], array( 'ru', 'en' ), true ) ) {
 			$lang = $args['ivl'];
 			unset( $args['ivl'] );
-			$to = 'noma' === $m[1] ? '/' . $lang . '/' . $slugs[ $lang ] . ( ! empty( $m[2] ) ? $m[2] : '/' ) : '/' . $lang . $path;
-			header( 'Location: ' . $to . ( $args ? '?' . http_build_query( $args ) : '' ), true, 301 );
+			header( 'Location: /' . $lang . '/' . $map[ $m[1] ][ $lang ] . ( ! empty( $m[2] ) ? $m[2] : '/' ) . ( $args ? '?' . http_build_query( $args ) : '' ), true, 301 );
 			exit;
 		}
 	}

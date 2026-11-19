@@ -145,7 +145,7 @@ for key, lv, ru, p, url, kl, kr in DEV:
     h1 = f"Аренда {ru}"
     if len(h1) > 30:
         h1 = h1[:30].rsplit(" ", 1)[0]
-    group(c3, f"Аренда {ru.lower()}", 0.3, kr, f"{SITE}/ru{url}", "аренда", RU_PATH[key][:15],
+    group(c3, f"Аренда {ru.lower()}", 0.3, kr, f"{SITE}/ru{url}".replace("/ru/product-category/", "/ru/kategoriya/").replace("/ru/product/", "/ru/pribor/"), "аренда", RU_PATH[key][:15],
           [h1, f"Аренда От {price(p)} € В Сутки", "Бронь Онлайн, Выдача В Риге"] + COMMON_RU, DESC_RU)
 
 if errs:
