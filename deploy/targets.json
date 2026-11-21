@@ -12,6 +12,10 @@
       {
         "from": "src/wp-content/mu-plugins/ivancovs-gtm.php",
         "to": "../../mu-plugins"
+      },
+      {
+        "from": "src/wp-content/mu-plugins/ivancovs-theme-router.php",
+        "to": "../../mu-plugins"
       }
     ]
   }

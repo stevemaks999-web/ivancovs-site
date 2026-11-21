@@ -14,7 +14,7 @@ while ( have_posts() ) :
 		continue;
 	}
 	$ids = array_filter( array_merge( array( $product->get_image_id() ), $product->get_gallery_image_ids() ) );
-	$shop = wc_get_page_permalink( 'shop' );
+	$shop = ivs_shop_url();
 	$cats = get_the_terms( get_the_ID(), 'product_cat' );
 	$cat  = ( $cats && ! is_wp_error( $cats ) ) ? $cats[0] : null;
 	$wa_text = sprintf( ivs_t( 'Sveiki! Interesē noma: %s', 'Здравствуйте! Интересует аренда: %s', 'Hello! I am interested in renting: %s' ), get_the_title() );
@@ -27,7 +27,7 @@ while ( have_posts() ) :
 			<?php if ( count( $ids ) > 1 ) : ?>
 			<div class="grid g4" style="margin-top:12px;grid-template-columns:repeat(4,1fr)">
 				<?php foreach ( array_slice( $ids, 1, 4 ) as $id ) : ?>
-					<div class="ph" style="border-radius:8px"><?php echo wp_get_attachment_image( $id, 'woocommerce_thumbnail' ); // phpcs:ignore ?></div>
+					<div class="ph" style="border-radius:8px"><?php echo wp_get_attachment_image( $id, 'medium_large' ); // phpcs:ignore ?></div>
 				<?php endforeach; ?>
 			</div>
 			<?php endif; ?>

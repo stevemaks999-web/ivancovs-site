@@ -68,17 +68,16 @@ function ivs_shop_url() {
 	return ( ! $u || false !== strpos( $u, '?' ) ) ? home_url( '/noma/' ) : $u;
 }
 
-/** Язык версии страницы: на товарах RU/EN лежат на том же адресе с ?ivl=. */
+/** Язык версии страницы: на товарах RU/EN лежат на адресах с /ru/ и /en/. */
 function ivs_catalog_lang_url( $lang ) {
 	$base = ( is_singular( 'product' ) ) ? get_permalink() : ( ( is_tax() || is_post_type_archive( 'product' ) ) ? ( is_tax() ? get_term_link( get_queried_object() ) : ivs_shop_url() ) : '' );
 	if ( ! $base || is_wp_error( $base ) ) {
 		return '';
 	}
-	$base = remove_query_arg( array( 'ivl', 'paged' ), $base );
-	return 'lv' === $lang ? $base : add_query_arg( 'ivl', $lang, $base );
+	return ivs_lang_url( remove_query_arg( 'paged', $base ), $lang );
 }
 
-/** Canonical: сам на себя. Страница каталога на RU/EN канонична со своим ?ivl=. */
+/** Canonical: сам на себя. Страница каталога на RU/EN канонична со своим адресом /ru/ или /en/. */
 add_filter( 'wpseo_canonical', function ( $canonical ) {
 	if ( is_string( $canonical ) && false !== strpos( $canonical, '?page_id=' ) && is_page() ) {
 		return get_permalink( get_queried_object_id() );
@@ -103,7 +102,7 @@ add_filter( 'pll_rel_hreflang_attributes', function ( $urls ) {
 	return $urls;
 }, 98 );
 
-/** hreflang для каталога: Polylang его не знает, версии лежат на ?ivl=ru|en. */
+/** hreflang для каталога: Polylang его не знает, версии лежат на адресах /ru/... и /en/.... */
 add_action( 'wp_head', function () {
 	if ( ! ivs_is_catalog_page() || ( ! is_singular( 'product' ) && ! is_tax() && ! is_post_type_archive( 'product' ) ) || is_paged() ) {
 		return;
@@ -245,7 +244,7 @@ add_filter( 'wpseo_metadesc', function ( $desc ) {
 /** og:image: общая картинка по умолчанию, если у страницы своей нет. */
 add_action( 'wpseo_add_opengraph_images', function ( $images ) {
 	if ( is_object( $images ) && method_exists( $images, 'add_image' ) && ! is_singular( 'product' ) && ! has_post_thumbnail() ) {
-		$images->add_image( array( 'url' => get_template_directory_uri() . '/assets/dmitrijs.jpg' ) );
+		$images->add_image( array( 'url' => content_url( '/themes/ivancovs/assets/dmitrijs.jpg' ) ) );
 	}
 } );
 
@@ -332,7 +331,7 @@ add_action( 'wp_head', function () {
 			'url'         => 'https://ivancovs.com/',
 			'telephone'   => '+37125553244',
 			'email'       => 'dmitrijs@ivancovs.com',
-			'image'       => get_template_directory_uri() . '/assets/dmitrijs.jpg',
+			'image'       => content_url( '/themes/ivancovs/assets/dmitrijs.jpg' ),
 			'address'     => array(
 				'@type'           => 'PostalAddress',
 				'streetAddress'   => 'Lastādijas iela 32',
@@ -368,7 +367,7 @@ add_action( 'template_redirect', function () {
 }, 1 );
 
 /**
- * Карта сайта для RU и EN версий каталога (адреса с ?ivl=): подключается к индексу Yoast как ivl-sitemap.xml.
+ * Карта сайта для RU и EN версий каталога (адреса /ru/ и /en/): подключается к индексу Yoast как ivl-sitemap.xml.
  * Версии приборов и категорий переведены, у каждой свой canonical и hreflang, поэтому Google их показываем явно.
  */
 function ivs_ivl_sitemap_urls() {
@@ -378,7 +377,7 @@ function ivs_ivl_sitemap_urls() {
 			return;
 		}
 		foreach ( array( 'ru', 'en' ) as $l ) {
-			$urls[] = array( add_query_arg( 'ivl', $l, remove_query_arg( 'ivl', $base ) ), $mod );
+			$urls[] = array( ivs_lang_url( $base, $l ), $mod );
 		}
 	};
 	$add( ivs_shop_url(), '' );
@@ -438,6 +437,6 @@ add_action( 'wp_head', function () {
 	echo '<meta property="og:description" content="' . esc_attr( ivs_home_desc() ) . '" />' . "\n";
 	echo '<meta property="og:url" content="' . esc_url( ivs_seo_fix_host( $url ) ) . '" />' . "\n";
 	echo '<meta property="og:site_name" content="IVANCOVS" />' . "\n";
-	echo '<meta property="og:image" content="' . esc_url( get_template_directory_uri() . '/assets/dmitrijs.jpg' ) . '" />' . "\n";
+	echo '<meta property="og:image" content="' . esc_url( content_url( '/themes/ivancovs/assets/dmitrijs.jpg' ) ) . '" />' . "\n";
 	echo '<meta name="twitter:card" content="summary_large_image" />' . "\n";
 }, 2 );

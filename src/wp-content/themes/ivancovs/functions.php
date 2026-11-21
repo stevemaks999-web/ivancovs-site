@@ -19,8 +19,19 @@ function ivs_lang() {
 		return 'lv';
 	}
 	// Товары не переводятся плагином, язык страницы прибора берём из параметра ?ivl=ru|en.
-	if ( isset( $_GET['ivl'] ) && in_array( $_GET['ivl'], array( 'ru', 'en' ), true ) && function_exists( 'is_woocommerce' ) && is_woocommerce() ) { // phpcs:ignore WordPress.Security.NonceVerification
-		return $_GET['ivl']; // phpcs:ignore
+	// Адрес /ru/arenda/..., /en/product/...: язык уже определён при разборе адреса (mu-plugin), is_woocommerce() не нужен.
+	if ( ! empty( $GLOBALS['ivs_pretty_lang'] ) && in_array( $GLOBALS['ivs_pretty_lang'], array( 'ru', 'en' ), true ) ) {
+		return $GLOBALS['ivs_pretty_lang'];
+	}
+	// Защита от повторного входа: is_woocommerce() запрашивает категорию, а фильтр названий категорий снова спрашивает язык.
+	static $busy = false;
+	if ( ! $busy && isset( $_GET['ivl'] ) && in_array( $_GET['ivl'], array( 'ru', 'en' ), true ) && function_exists( 'is_woocommerce' ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+		$busy = true;
+		$shop = is_woocommerce();
+		$busy = false;
+		if ( $shop ) {
+			return $_GET['ivl']; // phpcs:ignore
+		}
 	}
 	if ( function_exists( 'pll_current_language' ) ) {
 		$l = pll_current_language();
@@ -120,11 +131,40 @@ class IVS_Flat_Walker extends Walker_Nav_Menu {
 	public function end_lvl( &$output, $depth = 0, $args = null ) {}
 }
 
-/** Добавляет к адресу параметр языка (для lv убирает). Только для страниц каталога и приборов. */
+/** Языковые названия частей адреса аренды (как в mu-plugin ivancovs-theme-router): латышское => RU и EN. */
+function ivs_lang_slugs() {
+	return array(
+		'noma'             => array( 'ru' => 'arenda', 'en' => 'rent' ),
+		'product'          => array( 'ru' => 'pribor', 'en' => 'instrument' ),
+		'product-category' => array( 'ru' => 'kategoriya', 'en' => 'category' ),
+		'product-tag'      => array( 'ru' => 'metka', 'en' => 'tag' ),
+	);
+}
+
+/**
+ * Адрес страницы каталога на нужном языке: /ru/arenda/, /ru/pribor/..., /en/rent/, /en/instrument/... (для lv без префикса).
+ * Старый параметр ?ivl= убирается. Любую языковую форму сначала приводим к латышской, потом строим нужную.
+ */
 function ivs_lang_url( $url, $lang = null ) {
 	$lang = $lang ? $lang : ivs_lang();
 	$url  = remove_query_arg( 'ivl', $url );
-	return 'lv' === $lang ? $url : add_query_arg( 'ivl', $lang, $url );
+	if ( ! preg_match( '~^(https?://[^/]+)/(?:(ru|en)/)?([^/?#]+)~', $url, $m ) ) {
+		return $url;
+	}
+	$base = '';
+	foreach ( ivs_lang_slugs() as $lv => $tr ) {
+		if ( '' === $m[2] && $m[3] === $lv ) {
+			$base = $lv;
+		} elseif ( '' !== $m[2] && ( $m[3] === $tr[ $m[2] ] || $m[3] === $lv ) ) {
+			$base = $lv;
+		}
+	}
+	if ( '' === $base ) {
+		return $url;
+	}
+	$rest = substr( $url, strlen( $m[0] ) );
+	$slug = ( 'lv' === $lang ) ? $base : $lang . '/' . ivs_lang_slugs()[ $base ][ $lang ];
+	return $m[1] . '/' . $slug . $rest;
 }
 
 /** Переключатель языков: Polylang, иначе просто подпись. */
@@ -184,6 +224,7 @@ require_once get_template_directory() . '/inc/click-log.php';
 require_once get_template_directory() . '/inc/seo.php';
 require_once get_template_directory() . '/inc/perf.php';
 require_once get_template_directory() . '/inc/product-seo.php';
+require_once get_template_directory() . '/inc/kit-photos.php';
 
 /**
  * Главная на RU/EN: у страницы «Sākums» нет перевода в Polylang, и /ru/ и /en/ показывали

@@ -139,14 +139,13 @@ RU_PATH = {"termokamera": "тепловизор", "endoskops": "эндоскоп
 c3 = "RU | Аренда | Рига"
 campaign(c3, 3, "Russian")
 negatives(c3, NEG_RU)
-group(c3, "Аренда приборов", 0.3, GEN_RU, f"{SITE}/noma/?ivl=ru", "аренда", "приборы",
+group(c3, "Аренда приборов", 0.3, GEN_RU, f"{SITE}/ru/arenda/", "аренда", "приборы",
       ["Аренда Приборов В Риге", "Аренда Измерительных Приборов", "Аренда От 3 € В Сутки"] + COMMON_RU, DESC_RU)
 for key, lv, ru, p, url, kl, kr in DEV:
     h1 = f"Аренда {ru}"
     if len(h1) > 30:
         h1 = h1[:30].rsplit(" ", 1)[0]
-    sep = "&" if "?" in url else "?"
-    group(c3, f"Аренда {ru.lower()}", 0.3, kr, f"{SITE}{url}{sep}ivl=ru", "аренда", RU_PATH[key][:15],
+    group(c3, f"Аренда {ru.lower()}", 0.3, kr, f"{SITE}/ru{url}".replace("/ru/product-category/", "/ru/kategoriya/").replace("/ru/product/", "/ru/pribor/"), "аренда", RU_PATH[key][:15],
           [h1, f"Аренда От {price(p)} € В Сутки", "Бронь Онлайн, Выдача В Риге"] + COMMON_RU, DESC_RU)
 
 if errs:
