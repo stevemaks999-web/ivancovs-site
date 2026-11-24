@@ -338,6 +338,7 @@ function ivs_send_return_email( $order ) {
 		'Equipment returned, order #' . $n . ' completed. Thank you!'
 	);
 	$head = ivs_em( $order, 'Paldies!', 'Спасибо!', 'Thank you!' );
+	$GLOBALS['ivs_mail_order'] = (int) $order->get_id(); // цепочка писем по одному заказу (inc/mail.php)
 	$mailer = WC()->mailer();
 	$mailer->send( $to, $subject, $mailer->wrap_message( $head, $h ) );
 }
@@ -403,6 +404,7 @@ function ivs_send_reminder_email( $order, $due ) {
 		'Напоминание: завтра (' . $date . ') до ' . $time . ' ждём возврат прибора',
 		'Reminder: return scheduled for tomorrow (' . $date . ') by ' . $time
 	);
+	$GLOBALS['ivs_mail_order'] = (int) $order->get_id();
 	$mailer = WC()->mailer();
 	$mailer->send( $order->get_billing_email(), $subject, $mailer->wrap_message( ivs_em( $order, 'Atgādinājums', 'Напоминание', 'Reminder' ), $h ) );
 }

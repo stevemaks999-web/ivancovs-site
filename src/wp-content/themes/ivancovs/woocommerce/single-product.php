@@ -27,7 +27,7 @@ while ( have_posts() ) :
 			<?php if ( count( $ids ) > 1 ) : ?>
 			<div class="grid g4" style="margin-top:12px;grid-template-columns:repeat(4,1fr)">
 				<?php foreach ( array_slice( $ids, 1, 4 ) as $id ) : ?>
-					<div class="ph" style="border-radius:8px"><?php echo wp_get_attachment_image( $id, 'woocommerce_thumbnail' ); // phpcs:ignore ?></div>
+					<div class="ph" style="border-radius:8px"><?php echo wp_get_attachment_image( $id, 'medium_large' ); // phpcs:ignore ?></div>
 				<?php endforeach; ?>
 			</div>
 			<?php endif; ?>

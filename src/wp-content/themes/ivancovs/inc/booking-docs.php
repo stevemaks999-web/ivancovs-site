@@ -251,7 +251,7 @@ function ivs_act_rows( $order ) {
 		}
 		$qty = max( 1, (int) $item->get_quantity() );
 		for ( $q = 1; $q <= $qty; $q++ ) {
-			foreach ( ivs_book_components( (int) $item->get_product_id() ) as $cid => $n ) {
+			foreach ( ivs_book_components( (int) $item->get_product_id(), ivs_book_item_sel( $item ) ) as $cid => $n ) {
 				for ( $i = 1; $i <= $n; $i++ ) {
 					$rows[ $item_id . '_' . $q . '_' . $cid . '_' . $i ] = array(
 						'item'  => $item->get_name(),
@@ -369,6 +369,7 @@ function ivs_do_issue( $order, $who = 'в админке' ) {
 	$order->update_meta_data( '_ivs_issued_at', wp_date( 'd.m.Y H:i' ) );
 	$order->add_order_note( 'Приборы выданы, документ проверен (' . $who . ').' );
 	$order->save();
+	do_action( 'ivs_order_issued', $order );
 	return '';
 }
 
@@ -383,6 +384,7 @@ function ivs_do_return( $order, $who = 'в админке' ) {
 	$order->update_status( 'completed', 'Приборы возвращены (' . $who . ').' );
 	$wpdb->update( ivs_book_table(), array( 'active' => 0 ), array( 'order_id' => $order->get_id() ) ); // phpcs:ignore
 	ivs_send_return_email( $order );
+	do_action( 'ivs_order_returned', $order );
 	return '';
 }
 

@@ -13,6 +13,10 @@
   var inTo = form.querySelector('[name=ivs_to]');
   var qtySel = form.querySelector('[name=quantity]');
   var free = {};
+  var comps = cfg.comps || [];
+  var kit = comps.length > 0;
+  var cfree = {};
+  var kitInputs = form.querySelectorAll('.ivs-kit input');
   var max = 1;
   var from = '', to = '';
   var today = cfg.today;
@@ -44,7 +48,38 @@
   }
   function money(v) { return (Math.round(v * 100) / 100).toFixed(2).replace('.', ',') + ' ' + cfg.cur; }
 
-  function pickable(s) { return s > today && s <= last && !weekend(s) && freeOn(s) > 0; }
+  function want() { return kit ? 1 : Math.max(1, +qtySel.value || 1); }
+  // Выбранное число приборов внутри комплекта: [{c: прибор, n: сколько}].
+  function sel() {
+    var out = [];
+    for (var i = 0; i < comps.length; i++) {
+      var c = comps[i], n = c.def;
+      if (!c.fixed) {
+        var inp = form.querySelector('[name="ivs_kit[' + c.id + ']"]');
+        n = Math.max(1, Math.min(Math.floor(+inp.value) || 1, c.max));
+      }
+      out.push({ c: c, n: n });
+    }
+    return out;
+  }
+  function compFree(c, s) {
+    var m = cfree[c.id];
+    return m && Object.prototype.hasOwnProperty.call(m, s) ? m[s] : c.total;
+  }
+  // Доступен ли день: для обычного прибора свободно не меньше выбранного числа, для комплекта хватает каждого прибора.
+  function availOk(s) {
+    if (!kit) return freeOn(s) >= want();
+    var l = sel();
+    for (var i = 0; i < l.length; i++) if (compFree(l[i].c, s) < l[i].n) return false;
+    return true;
+  }
+  function ratio() {
+    if (!kit) return 1;
+    var a = 0, b = 0, l = sel();
+    for (var i = 0; i < l.length; i++) { var p = l[i].c.price > 0 ? l[i].c.price : 1; a += p * l[i].n; b += p * l[i].c.def; }
+    return b > 0 ? Math.min(1, a / b) : 1;
+  }
+  function pickable(s) { return s > today && s <= last && !weekend(s) && availOk(s); }
 
   function render() {
     var y = +view.slice(0, 4), m = +view.slice(5, 7);
@@ -59,7 +94,7 @@
       var ok = pickable(s);
       var past = s <= today || s > last;
       if (past) cls += ' off';
-      else if (freeOn(s) <= 0) cls += ' busy';
+      else if (!availOk(s)) cls += ' busy';
       else if (weekend(s)) cls += ' we';
       if (from && s === from) cls += ' sel start';
       else if (to && s === to) cls += ' sel end';
@@ -71,10 +106,9 @@
     calEl.innerHTML = h;
   }
 
-  function rangeFree(a, b) {
-    var n = max;
-    for (var s = a; s <= b; s = addDays(s, 1)) n = Math.min(n, freeOn(s));
-    return n;
+  function rangeOk(a, b) {
+    for (var s = a; s <= b; s = addDays(s, 1)) if (!availOk(s)) return false;
+    return true;
   }
 
   function update() {
@@ -88,20 +122,14 @@
     if (!to) { hint.textContent = T.ret; return; }
     hint.textContent = '';
     var n = days(from, to);
-    var avail = rangeFree(from, to);
-    var cur = +qtySel.value || 1;
-    var o = '';
-    for (var q = 1; q <= Math.max(1, avail); q++) o += '<option value="' + q + '">' + q + '</option>';
-    qtySel.innerHTML = o;
-    qtySel.value = Math.min(cur, Math.max(1, avail));
-    qtySel.closest('label').style.display = avail > 1 ? '' : 'none';
     renderSum(n);
   }
 
   function renderSum(n) {
-    var q = +qtySel.value || 1;
-    var rent = price(n) * q;
-    var dep = cfg.deposit * q;
+    var q = kit ? 1 : (+qtySel.value || 1);
+    var r = ratio();
+    var rent = Math.round(price(n) * r * 100) / 100 * q;
+    var dep = cfg.deposit * r * q;
     var h = '<div class="row"><span>' + T.rent + ': ' + n + ' ' + T.days + '</span><span>' + money(rent) + '</span></div>';
     if (dep > 0) h += '<div class="row"><span>' + T.dep + '</span><span>' + money(dep) + '</span></div>';
     sum.innerHTML = h;
@@ -123,17 +151,34 @@
     else {
       // Внутри периода не должно быть полностью занятых дней.
       var okRange = true;
-      for (var c = from; c <= s; c = addDays(c, 1)) if (freeOn(c) <= 0) okRange = false;
+      for (var c = from; c <= s; c = addDays(c, 1)) if (!availOk(c)) okRange = false;
       if (!okRange || weekend(s)) { hint.textContent = T.busy; from = s; to = ''; if (!pickable(s)) from = ''; }
       else to = s;
     }
     render(); update();
   });
 
-  qtySel.addEventListener('change', function () { if (from && to) renderSum(days(from, to)); });
+  (function () {
+    var o = '';
+    for (var q = 1; q <= Math.max(1, cfg.max || 1); q++) o += '<option value="' + q + '">' + q + '</option>';
+    qtySel.innerHTML = o;
+  })();
+  function onQty() {
+    // Календарь пересчитывается под выбранное число штук: занятым считается день, где свободно меньше.
+    if (from && to && !rangeOk(from, to)) { from = ''; to = ''; hint.textContent = T.busy; }
+    else if (from && !to && !availOk(from)) { from = ''; }
+    render(); update();
+  }
+  qtySel.addEventListener('change', onQty);
+  for (var ki = 0; ki < kitInputs.length; ki++) kitInputs[ki].addEventListener('input', onQty);
+  for (var kj = 0; kj < kitInputs.length; kj++) kitInputs[kj].addEventListener('change', function () {
+    var mx = +this.max || 1, v = Math.floor(+this.value) || 1;
+    this.value = Math.max(1, Math.min(v, mx));
+    onQty();
+  });
 
   render(); update();
   fetch(cfg.rest, { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (j) {
-    free = j.free || {}; max = j.max || 1; if (j.days) special = { open: j.days.open || [], closed: j.days.closed || [] }; render(); update();
+    free = j.free || {}; cfree = j.cfree || {}; max = j.max || 1; if (j.days) special = { open: j.days.open || [], closed: j.days.closed || [] }; render(); update();
   }).catch(function () {});
 })();
