@@ -958,6 +958,9 @@ add_action( 'shutdown', function () {
 			ivs_tg_show( $chat, '🆕 ' . ivs_tg_order_text( $order ), ivs_tg_order_keyboard( $order ) );
 			ivs_tg_ping( $chat, '🆕 Новый заказ №' . $order->get_id() . ' — смотрите закреплённое окно' );
 		}
+		if ( ! ivs_wc_email_on( 'WC_Email_New_Order' ) ) {
+			ivs_notify_email( $order, 'Новый заказ №' . $order->get_id() );
+		}
 	}
 	$GLOBALS['ivs_tg_queue'] = array();
 } );
@@ -972,6 +975,7 @@ function ivs_tg_on_callback( $cb ) {
 	if ( ! $chat || ! ivs_tg_is_paired( $chat ) ) {
 		return;
 	}
+	$GLOBALS['ivs_tg_origin'] = 1;
 	ivs_tg_clear_pings( $chat );
 	$p   = explode( '|', $data );
 	$ans = '';

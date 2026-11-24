@@ -369,6 +369,7 @@ function ivs_do_issue( $order, $who = 'в админке' ) {
 	$order->update_meta_data( '_ivs_issued_at', wp_date( 'd.m.Y H:i' ) );
 	$order->add_order_note( 'Приборы выданы, документ проверен (' . $who . ').' );
 	$order->save();
+	do_action( 'ivs_order_issued', $order );
 	return '';
 }
 
@@ -383,6 +384,7 @@ function ivs_do_return( $order, $who = 'в админке' ) {
 	$order->update_status( 'completed', 'Приборы возвращены (' . $who . ').' );
 	$wpdb->update( ivs_book_table(), array( 'active' => 0 ), array( 'order_id' => $order->get_id() ) ); // phpcs:ignore
 	ivs_send_return_email( $order );
+	do_action( 'ivs_order_returned', $order );
 	return '';
 }
 
@@ -432,6 +434,7 @@ function ivs_send_return_email( $order ) {
 	$ru = 'Спасибо! Приборы возвращены.' . ( $d ? ' Залог ' . ivs_money( $deposit ) . ' будет возвращён.' : '' );
 	$en = 'Thank you! The instruments have been returned.' . ( $d ? ' The deposit of ' . ivs_money( $deposit ) . ' will be refunded.' : '' );
 	$body = '<p>' . esc_html( $lv ) . '</p><p>' . esc_html( $ru ) . '</p><p>' . esc_html( $en ) . '</p>';
+	$GLOBALS['ivs_mail_order'] = (int) $order->get_id();
 	$mailer = WC()->mailer();
 	$mailer->send( $to, 'Instrumenti atgriezti / Приборы возвращены / Instruments returned', $mailer->wrap_message( 'Paldies! / Спасибо! / Thank you!', $body ) );
 }
