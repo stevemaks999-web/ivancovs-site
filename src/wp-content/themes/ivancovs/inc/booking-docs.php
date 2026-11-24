@@ -419,52 +419,32 @@ add_action( 'admin_post_ivs_return', function () {
 	exit;
 } );
 
-/* ---------- Письма клиенту ---------- */
+/* ---------- Удалённый заказ освобождает даты ---------- */
 
-function ivs_send_return_email( $order ) {
-	$to = $order->get_billing_email();
-	if ( ! $to ) {
-		return;
-	}
-	list( , $deposit ) = ivs_order_lines( $order );
-	$d  = $deposit > 0;
-	$lv = 'Paldies! Instrumenti ir atgriezti.' . ( $d ? ' Drošības nauda ' . ivs_money( $deposit ) . ' tiks atmaksāta.' : '' );
-	$ru = 'Спасибо! Приборы возвращены.' . ( $d ? ' Залог ' . ivs_money( $deposit ) . ' будет возвращён.' : '' );
-	$en = 'Thank you! The instruments have been returned.' . ( $d ? ' The deposit of ' . ivs_money( $deposit ) . ' will be refunded.' : '' );
-	$body = '<p>' . esc_html( $lv ) . '</p><p>' . esc_html( $ru ) . '</p><p>' . esc_html( $en ) . '</p>';
-	$mailer = WC()->mailer();
-	$mailer->send( $to, 'Instrumenti atgriezti / Приборы возвращены / Instruments returned', $mailer->wrap_message( 'Paldies! / Спасибо! / Thank you!', $body ) );
+// С хранением заказов в отдельных таблицах (HPOS) хук before_delete_post не срабатывает: слушаем свои.
+function ivs_release_dates_of_order( $order_id ) {
+	global $wpdb;
+	$wpdb->delete( ivs_book_table(), array( 'order_id' => (int) $order_id ) ); // phpcs:ignore
 }
+add_action( 'woocommerce_before_delete_order', 'ivs_release_dates_of_order' );
+add_action( 'woocommerce_delete_order', 'ivs_release_dates_of_order' );
 
-/** В письма о заказе добавляем ссылку на счёт и правила выдачи. */
-add_action( 'woocommerce_email_after_order_table', function ( $order, $sent_to_admin, $plain_text ) {
-	if ( $sent_to_admin || ! ivs_order_has_booking( $order ) ) {
+// Один раз чистим брони уже удалённых заказов.
+add_action( 'init', function () {
+	if ( get_option( 'ivs_orphan_bookings_cleaned' ) || ! function_exists( 'wc_get_order' ) ) {
 		return;
 	}
-	$link = ivs_doc_url( $order, 'invoice' );
-	$rows = array(
-		array( 'Rēķins (PVN 21%)', 'Счёт (PVN 21%)', 'Invoice (21% VAT)' ),
-	);
-	$rules = array(
-		'Izsniegšana un atgriešana 9:00–18:00. Brīvdienās tikai pēc vienošanās ar Dmitriju. Uzrādiet vienu dokumentu: pase, tiesības vai ID. Instrumentu var saņemt tikai pasūtījumā norādītā persona.',
-		'Выдача и возврат с 9:00 до 18:00. В выходные только по договорённости с Дмитрием. Покажите один документ: паспорт, права или ID. Прибор заберёт только человек, указанный в заказе.',
-		'Pickup and return 9:00–18:00. Weekends only by arrangement with Dmitrijs. Show one ID: passport, licence or ID card. Only the person named in the order can collect the instrument.',
-	);
-	list( , $deposit ) = ivs_order_lines( $order );
-	if ( $deposit > 0 ) {
-		$rules[0] .= ' Drošības nauda ' . ivs_money( $deposit ) . ' tiks atmaksāta pēc instrumenta atgriešanas.';
-		$rules[1] .= ' Залог ' . ivs_money( $deposit ) . ' будет возвращён после возврата прибора.';
-		$rules[2] .= ' The deposit of ' . ivs_money( $deposit ) . ' is refunded after the instrument is returned.';
+	global $wpdb;
+	$ids = $wpdb->get_col( 'SELECT DISTINCT order_id FROM ' . ivs_book_table() . ' WHERE order_id > 0' ); // phpcs:ignore
+	foreach ( $ids as $id ) {
+		if ( ! wc_get_order( (int) $id ) ) {
+			ivs_release_dates_of_order( $id );
+		}
 	}
-	if ( $plain_text ) {
-		echo "\n" . $link . "\n" . implode( "\n", $rules ) . "\n"; // phpcs:ignore
-		return;
-	}
-	echo '<p><a href="' . esc_url( $link ) . '">' . esc_html( $rows[0][0] . ' / ' . $rows[0][1] . ' / ' . $rows[0][2] ) . '</a></p>';
-	foreach ( $rules as $r ) {
-		echo '<p style="font-size:13px;color:#555">' . esc_html( $r ) . '</p>';
-	}
-}, 20, 3 );
+	update_option( 'ivs_orphan_bookings_cleaned', '1', false );
+}, 30 );
+
+/* ---------- Письма клиенту: см. inc/emails.php ---------- */
 
 /** Ссылка на счёт на странице «Заказ получен». */
 add_action( 'woocommerce_thankyou', function ( $order_id ) {
