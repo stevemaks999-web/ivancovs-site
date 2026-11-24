@@ -20,6 +20,14 @@ function ivs_hide_address_fields( $fields ) {
 			$fields[ $k ]['hidden']   = true;
 		}
 	}
+	// Имя и фамилия одним полем: фамилию скрываем, в поле имени пишут оба слова.
+	if ( isset( $fields['last_name'] ) ) {
+		$fields['last_name']['required'] = false;
+		$fields['last_name']['hidden']   = true;
+	}
+	if ( isset( $fields['first_name'] ) ) {
+		$fields['first_name']['label'] = ivs_t( 'Vārds, uzvārds', 'Имя и фамилия', 'Full name' );
+	}
 	return $fields;
 }
 add_filter( 'woocommerce_default_address_fields', 'ivs_hide_address_fields', 99 );
@@ -30,6 +38,9 @@ add_filter( 'woocommerce_get_country_locale', function ( $locale ) {
 			$locale[ $cc ][ $k ]['required'] = false;
 			$locale[ $cc ][ $k ]['hidden']   = true;
 		}
+		$locale[ $cc ]['last_name']['required'] = false;
+		$locale[ $cc ]['last_name']['hidden']   = true;
+		$locale[ $cc ]['first_name']['label']   = ivs_t( 'Vārds, uzvārds', 'Имя и фамилия', 'Full name' );
 	}
 	return $locale;
 }, 99 );
