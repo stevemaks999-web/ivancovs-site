@@ -105,6 +105,17 @@ function ivs_em_btn( $url, $text, $bg = IVS_EM_BLUE, $color = '#ffffff' ) {
 		. '<a href="' . esc_url( $url ) . '" style="display:inline-block;padding:12px 22px;font-weight:700;font-size:15px;color:' . esc_attr( $color ) . ';text-decoration:none;border-radius:8px">' . esc_html( $text ) . '</a></td></tr></table>';
 }
 
+/** Адрес выдачи и ссылка на точку в Google Maps. */
+function ivs_em_map_url() {
+	return 'https://www.google.com/maps/search/?api=1&query=' . rawurlencode( 'Lastādijas iela 32, Rīga, LV-1050' );
+}
+
+function ivs_em_address_row( $order, $last = false ) {
+	$v = 'Lastādijas iela 32, Rīga, LV-1050<br><a href="' . esc_url( ivs_em_map_url() ) . '" style="color:' . IVS_EM_BLUE . ';font-weight:600;font-size:14px">'
+		. esc_html( ivs_em( $order, 'Atvērt Google Maps', 'Открыть на Google Maps', 'Open in Google Maps' ) ) . ' →</a>';
+	return ivs_em_row( ivs_em( $order, 'Adrese', 'Адрес', 'Address' ), $v, $last );
+}
+
 /** «Заголовок: текст» -> жирное начало и обычный остаток. */
 function ivs_em_lead( $text ) {
 	$pos = strpos( $text, ': ' );
@@ -202,6 +213,7 @@ function ivs_em_order_intro( $order, $kind ) {
 		echo ivs_em_row( ivs_em( $order, 'Atgriešana', 'Возврат', 'Return' ), esc_html( ivs_em_date( $r['to'] ) . ', ' . ivs_em( $order, 'līdz', 'до', 'by' ) . ' ' . $r['t_to'] ) ); // phpcs:ignore WordPress.Security.EscapeOutput
 	}
 	echo ivs_em_row( ivs_em( $order, 'Saņēmējs', 'Прибор заберёт', 'Pickup person' ), esc_html( ivs_book_pickup_name( $order ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput
+	echo ivs_em_address_row( $order ); // phpcs:ignore WordPress.Security.EscapeOutput
 	echo ivs_em_row( ivs_em( $order, 'Apmaksa', 'Оплата', 'Payment' ), esc_html( ivs_em_pay_label( $order, $d['kind'] ) ), true ); // phpcs:ignore WordPress.Security.EscapeOutput
 	echo '</table>';
 	echo '<div>' . ivs_em_btn( ivs_doc_url( $order, 'invoice' ), ivs_em( $order, 'Atvērt rēķinu (PVN 21%)', 'Открыть счёт (PVN 21%)', 'Open invoice (21% VAT)' ) ) . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput
@@ -436,7 +448,7 @@ function ivs_send_reminder_email( $order, $due ) {
 		'This is a friendly reminder that the rental period for ' . $names . ' ends tomorrow, ' . $date . ' by ' . $time . '.'
 	) ) . '</p>';
 	$h    .= ivs_em_card_open() . ivs_em_row( ivs_em( $order, 'Instruments', 'Прибор', 'Equipment' ), esc_html( $names ) )
-		. ivs_em_row( ivs_em( $order, 'Atgriešana', 'Возврат', 'Return' ), esc_html( $date . ', ' . ivs_em( $order, 'līdz', 'до', 'by' ) . ' ' . $time ), true ) . '</table>';
+		. ivs_em_row( ivs_em( $order, 'Atgriešana', 'Возврат', 'Return' ), esc_html( $date . ', ' . ivs_em( $order, 'līdz', 'до', 'by' ) . ' ' . $time )) . ivs_em_address_row( $order, true ) . '</table>';
 	$h    .= '<p>' . esc_html( ivs_em(
 		$order,
 		'Ja paspējat laikā, vienkārši nogādājiet instrumentu pie mums. Ja darbi ir iekavējušies un nepieciešams pagarināt nomu, uzrakstiet mums WhatsApp. Ja instruments ir pieejams nākamajām dienām, pagarināsim pasūtījumu.',
