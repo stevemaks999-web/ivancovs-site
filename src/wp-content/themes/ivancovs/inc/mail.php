@@ -87,7 +87,8 @@ function ivs_wc_email_on( $class ) {
 /** Письмо владельцу о событии заказа, в цепочке этого заказа. */
 function ivs_notify_email( $order, $label ) {
 	$GLOBALS['ivs_mail_order'] = (int) $order->get_id();
-	$body = nl2br( wp_kses( '<b>' . $label . "</b>\n\n" . ivs_tg_order_text( $order ), array( 'b' => array() ) ) );
+	$who  = ! empty( $GLOBALS['ivs_tg_actor'] ) ? "\nКто: " . ivs_tg_h( $GLOBALS['ivs_tg_actor'] ) . ' (Telegram)' : '';
+	$body = nl2br( wp_kses( '<b>' . $label . '</b>' . $who . "\n\n" . ivs_tg_order_text( $order ), array( 'b' => array() ) ) );
 	$body .= '<p><a href="' . esc_url( $order->get_edit_order_url() ) . '">Открыть заказ</a></p>';
 	wp_mail( IVS_EMAIL, 'Заказ', $body, array( 'Content-Type: text/html; charset=UTF-8' ) );
 	unset( $GLOBALS['ivs_mail_order'] );
@@ -96,13 +97,14 @@ function ivs_notify_email( $order, $label ) {
 /**
  * Событие заказа: сообщение в Telegram и письмо на рабочую почту.
  * Канал, из которого действие сделано (кнопка в Telegram), не дублируем.
- * Письмо пропускаем, если магазин сам уже шлёт такое ($wc_email — класс письма WooCommerce).
+ * Письмо пропускаем, если магазин сам уже шлёт такое ($wc_email — класс письма WooCommerce),
+ * кроме действий из Telegram: там в письме указываем, кто нажал.
  */
 function ivs_notify_event( $order, $label, $wc_email = '' ) {
 	if ( empty( $GLOBALS['ivs_tg_origin'] ) && ivs_tg_token() && ivs_tg_opts()['chats'] ) {
 		ivs_tg_send_all( '🔔 <b>' . ivs_tg_h( $label ) . '</b>' . "\n" . ivs_tg_order_text( $order ), ivs_tg_order_keyboard( $order ) );
 	}
-	if ( ! $wc_email || ! ivs_wc_email_on( $wc_email ) ) {
+	if ( ! empty( $GLOBALS['ivs_tg_actor'] ) || ! $wc_email || ! ivs_wc_email_on( $wc_email ) ) {
 		ivs_notify_email( $order, $label );
 	}
 }
@@ -127,3 +129,23 @@ add_action( 'ivs_order_issued', function ( $order ) {
 add_action( 'ivs_order_returned', function ( $order ) {
 	ivs_notify_event( $order, 'Заказ №' . $order->get_id() . ': приборы возвращены' );
 } );
+
+/** Кто нажал кнопку в Telegram: ник или имя. */
+function ivs_tg_actor_name( $from ) {
+	if ( ! empty( $from['username'] ) ) {
+		return '@' . $from['username'];
+	}
+	$n = trim( ( $from['first_name'] ?? '' ) . ' ' . ( $from['last_name'] ?? '' ) );
+	return $n ? $n : 'неизвестный пользователь';
+}
+
+/** Действие в Telegram не по заказу (снять прибор, выходной день): письмо с именем того, кто нажал. */
+function ivs_notify_tg_action( $text ) {
+	$who = ! empty( $GLOBALS['ivs_tg_actor'] ) ? $GLOBALS['ivs_tg_actor'] : 'Telegram';
+	wp_mail(
+		IVS_EMAIL,
+		'Ivancovs · действие в Telegram',
+		nl2br( esc_html( $who . " (Telegram) сделал изменение на сайте:\n\n" . $text ) ),
+		array( 'Content-Type: text/html; charset=UTF-8' )
+	);
+}
