@@ -116,16 +116,16 @@ function ivs_em_order_subject( $order, $kind ) {
 	if ( 'confirmed' === $kind ) {
 		return ivs_em(
 			$order,
-			sprintf( 'Pasūtījums Nr. %s apstiprināts: gaidām Jūs %s plkst. %s', $n, $date, $time ),
-			sprintf( 'Заказ №%s подтверждён: ждём вас %s к %s', $n, $date, $time ),
-			sprintf( 'Order #%s confirmed: see you on %s at %s', $n, $date, $time )
+			sprintf( 'Pasūtījums Nr. %s pieņemts: gaidām Jūs %s plkst. %s', $n, $date, $time ),
+			sprintf( 'Заказ №%s принят: ждём вас %s к %s', $n, $date, $time ),
+			sprintf( 'Order #%s received: see you on %s at %s', $n, $date, $time )
 		);
 	}
 	return ivs_em(
 		$order,
-		sprintf( 'Pasūtījums Nr. %s pieņemts, drīz apstiprināsim', $n ),
-		sprintf( 'Заказ №%s принят, скоро подтвердим', $n ),
-		sprintf( 'Order #%s received, we will confirm it shortly', $n )
+		sprintf( 'Pasūtījums Nr. %s pieņemts', $n ),
+		sprintf( 'Заказ №%s принят', $n ),
+		sprintf( 'Order #%s received', $n )
 	);
 }
 
@@ -139,14 +139,14 @@ function ivs_em_order_intro( $order, $kind ) {
 			$order,
 			'Jūsu pasūtījums ir pieņemts, un aprīkojums ir rezervēts tieši Jūsu izvēlētajā laikā.',
 			'Ваш заказ принят, прибор(ы) забронированы точно под ваше время.',
-			'Your order is confirmed, and your equipment has been reserved for your exact schedule.'
+			'We have received your order, and your equipment has been reserved for your exact schedule.'
 		);
 	} else {
 		$t = ivs_em(
 			$order,
-			'Jūsu pasūtījums ir pieņemts, un aprīkojums ir rezervēts izvēlētajām dienām. Drīz to apstiprināsim.',
-			'Ваш заказ принят, прибор(ы) забронированы на выбранные даты. Скоро мы его подтвердим.',
-			'We have received your order and reserved the equipment for your dates. We will confirm it shortly.'
+			'Jūsu pasūtījums ir pieņemts, un aprīkojums ir rezervēts izvēlētajām dienām.',
+			'Ваш заказ принят, прибор(ы) забронированы на выбранные даты.',
+			'We have received your order and reserved the equipment for your dates.'
 		);
 	}
 	echo '<p>' . esc_html( $t ) . '</p>';
