@@ -958,6 +958,9 @@ add_action( 'shutdown', function () {
 			ivs_tg_show( $chat, '🆕 ' . ivs_tg_order_text( $order ), ivs_tg_order_keyboard( $order ) );
 			ivs_tg_ping( $chat, '🆕 Новый заказ №' . $order->get_id() . ' — смотрите закреплённое окно' );
 		}
+		if ( ! ivs_wc_email_on( 'WC_Email_New_Order' ) ) {
+			ivs_notify_email( $order, 'Новый заказ №' . $order->get_id() );
+		}
 	}
 	$GLOBALS['ivs_tg_queue'] = array();
 } );
@@ -972,6 +975,8 @@ function ivs_tg_on_callback( $cb ) {
 	if ( ! $chat || ! ivs_tg_is_paired( $chat ) ) {
 		return;
 	}
+	$GLOBALS['ivs_tg_origin'] = 1;
+	$GLOBALS['ivs_tg_actor']  = ivs_tg_actor_name( $cb['from'] ?? array() );
 	ivs_tg_clear_pings( $chat );
 	$p   = explode( '|', $data );
 	$ans = '';
@@ -1019,6 +1024,7 @@ function ivs_tg_on_callback( $cb ) {
 		global $wpdb;
 		$wpdb->delete( ivs_book_table(), array( 'id' => absint( $p[1] ), 'order_id' => 0 ) ); // phpcs:ignore
 		$ans = 'Прибор снова на сайте';
+		ivs_notify_tg_action( 'Прибор снова на сайте (снятие отменено, запись №' . absint( $p[1] ) . ')' );
 		ivs_tg_go( $chat, $mid, 'blocks' );
 	} elseif ( 'bl' === $k ) {
 		ivs_tg_go( $chat, $mid, 'pick', (int) ( $p[1] ?? 0 ) );
@@ -1050,6 +1056,7 @@ function ivs_tg_on_callback( $cb ) {
 			$ans = $err;
 		} else {
 			$ans = 'Готово';
+			ivs_notify_tg_action( 'Прибор «' . get_the_title( $pid ) . '» снят с сайта с ' . ivs_tg_fmt_date( $from ) . ' ' . ivs_tg_fmt_time( $p[3] ) . ' до ' . ivs_tg_fmt_date( $to ) . ' ' . ivs_tg_fmt_time( $p[5] ) );
 			ivs_tg_show( $chat, '🚫 <b>' . ivs_tg_h( get_the_title( $pid ) ) . ( $qty > 1 ? ' × ' . $qty . ' шт.' : '' ) . "</b> снят с сайта\nс " . ivs_tg_fmt_date( $from ) . ' ' . ivs_tg_fmt_time( $p[3] ) . "\nдо " . ivs_tg_fmt_date( $to ) . ' ' . ivs_tg_fmt_time( $p[5] ) . "\n\nВернуть на сайт раньше можно в разделе «Снятые».", array( array( array( 'text' => '📅 Забронировать ещё', 'callback_data' => 'bl|0' ), array( 'text' => '🚫 Снятые', 'callback_data' => 'ul' ) ), ivs_tg_home_row() ), $mid );
 		}
 	} elseif ( 'dp' === $k && isset( $p[1] ) ) {
@@ -1062,6 +1069,7 @@ function ivs_tg_on_callback( $cb ) {
 			list( $t, $kb ) = ivs_tg_screen_dp( substr( $date, 0, 7 ), $note );
 			ivs_tg_show( $chat, $t, $kb, $mid );
 			$ans = $note;
+			ivs_notify_tg_action( 'Выходной день ' . ivs_tg_fmt_date( $date ) . ': ' . $note );
 		}
 	}
 	ivs_tg_call( 'answerCallbackQuery', array( 'callback_query_id' => $qid, 'text' => $ans, 'show_alert' => strlen( $ans ) > 40 ) );
