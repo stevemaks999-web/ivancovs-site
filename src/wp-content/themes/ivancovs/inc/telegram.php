@@ -145,7 +145,7 @@ function ivs_tg_page() {
 	if ( $msg ) {
 		echo '<div class="updated"><p>' . esc_html( $msg ) . '</p></div>';
 	}
-	echo '<p>Бот присылает новые заказы и позволяет подтвердить, выдать, принять и отменить бронь кнопками.</p>';
+	echo '<p>Бот присылает новые заказы и позволяет отметить выдачу и возврат прибора кнопками.</p>';
 	echo '<form method="post">';
 	wp_nonce_field( 'ivs_tg', 'ivs_tg_nonce' );
 	echo '<table class="form-table"><tr><th>Токен бота</th><td><input type="password" name="ivs_tg_token" class="regular-text" autocomplete="off" placeholder="' . ( ivs_tg_token() ? '•••••• сохранён, вставьте новый, чтобы заменить' : '123456:ABC...' ) . '"><p class="description">Токен выдаёт @BotFather. Он хранится только на сайте.</p></td></tr>';
@@ -825,7 +825,7 @@ function ivs_tg_screen_income( $per = 'm' ) {
 	$t  .= 'Без PVN: <b>' . ivs_tg_h( ivs_money( $net ) ) . "</b>\n";
 	$t  .= 'PVN: ' . ivs_tg_h( ivs_money( round( $gross - $net, 2 ) ) ) . "\n";
 	$t  .= 'Заказов: ' . $n . ( $n ? ' · средний чек с PVN ' . ivs_tg_h( ivs_money( round( $gross / $n, 2 ) ) ) : '' ) . "\n\n";
-	$t  .= '<i>Считаются подтверждённые и закрытые заказы, залог не входит.</i>';
+	$t  .= '<i>Считаются принятые и закрытые заказы, залог не входит.</i>';
 	$row = array();
 	foreach ( $map as $k => $v ) {
 		$row[] = array( 'text' => ( $k === $per ? '• ' : '' ) . $v[0], 'callback_data' => 'in|' . $k );
@@ -871,7 +871,7 @@ function ivs_tg_order_text( $order ) {
 	$st    = array(
 		'on-hold'    => 'ждёт оплаты',
 		'pending'    => 'не оплачен',
-		'processing' => 'подтверждён',
+		'processing' => 'принят',
 		'completed'  => 'закрыт',
 		'cancelled'  => 'отменён',
 	);
@@ -903,16 +903,8 @@ function ivs_tg_order_keyboard( $order ) {
 	$id  = $order->get_id();
 	$st  = $order->get_status();
 	$row = array();
-	if ( in_array( $st, array( 'on-hold', 'pending' ), true ) ) {
-		$row = array(
-			array( 'text' => '✅ Подтвердить', 'callback_data' => 'o|' . $id . '|confirm' ),
-			array( 'text' => '❌ Отменить', 'callback_data' => 'o|' . $id . '|cancel' ),
-		);
-	} elseif ( 'processing' === $st && ! $order->get_meta( '_ivs_issued_at' ) ) {
-		$row = array(
-			array( 'text' => '📦 Выдано', 'callback_data' => 'o|' . $id . '|issue' ),
-			array( 'text' => '❌ Отменить', 'callback_data' => 'o|' . $id . '|cancel' ),
-		);
+	if ( in_array( $st, array( 'on-hold', 'pending', 'processing' ), true ) && ! $order->get_meta( '_ivs_issued_at' ) ) {
+		$row = array( array( 'text' => '📦 Выдано', 'callback_data' => 'o|' . $id . '|issue' ) );
 	} elseif ( 'processing' === $st && $order->get_meta( '_ivs_issued_at' ) && ! $order->get_meta( '_ivs_returned_at' ) ) {
 		$row = array( array( 'text' => '↩️ Возвращено', 'callback_data' => 'o|' . $id . '|return' ) );
 	}
@@ -1003,13 +995,7 @@ function ivs_tg_on_callback( $cb ) {
 			$ans = 'Заказ не найден';
 		} else {
 			$act = $p[2];
-			if ( 'confirm' === $act && in_array( $order->get_status(), array( 'on-hold', 'pending' ), true ) ) {
-				$order->update_status( 'processing', 'Подтверждено в Telegram.' );
-				$ans = 'Подтверждено';
-			} elseif ( 'cancel' === $act && ! in_array( $order->get_status(), array( 'cancelled', 'completed' ), true ) ) {
-				$order->update_status( 'cancelled', 'Отменено в Telegram.' );
-				$ans = 'Бронь отменена, даты свободны';
-			} elseif ( 'issue' === $act ) {
+			if ( 'issue' === $act ) {
 				$err = ivs_do_issue( $order, 'в Telegram' );
 				$ans = $err ? $err : 'Выдача отмечена';
 			} elseif ( 'return' === $act ) {

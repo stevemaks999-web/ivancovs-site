@@ -66,6 +66,31 @@ add_action( 'wp_enqueue_scripts', function () {
 	) ) . ';', 'before' );
 } );
 
+/* ---------- Оплата наличными при получении ---------- */
+
+// Способ «наличными при получении»: аренда и залог вносятся при выдаче прибора, без доставки.
+function ivs_cod_settings( $o ) {
+	$o = is_array( $o ) ? $o : array();
+	$o['enabled']            = 'yes';
+	$o['enable_for_virtual'] = 'yes';
+	$o['enable_for_methods'] = array();
+	$o['title']              = ivs_t( 'Skaidrā naudā saņemot', 'Наличными при получении', 'Cash on pickup' );
+	$o['description']        = ivs_t(
+		'Nomu un drošības naudu maksājat skaidrā naudā, saņemot instrumentu. Drošības nauda tiek atdota skaidrā naudā pēc instrumenta atgriešanas un pārbaudes.',
+		'Аренду и залог вы платите наличными при получении прибора. Залог мы возвращаем наличными после возврата и осмотра прибора.',
+		'You pay the rental and the deposit in cash when you collect the instrument. The deposit is returned in cash after the instrument is returned and checked.'
+	);
+	$o['instructions'] = ivs_t(
+		'Nomu un drošības naudu maksājiet skaidrā naudā, saņemot instrumentu.',
+		'Аренду и залог оплачиваете наличными при получении прибора.',
+		'Pay the rental and the deposit in cash when you collect the instrument.'
+	);
+	return $o;
+}
+// Если настройки способа ещё не сохранялись, опции в базе нет, и срабатывает только фильтр значения по умолчанию.
+add_filter( 'option_woocommerce_cod_settings', 'ivs_cod_settings' );
+add_filter( 'default_option_woocommerce_cod_settings', 'ivs_cod_settings' );
+
 /* ---------- Юридические лица (необязательные поля) ---------- */
 
 // Название организации: необязательное поле в оформлении.
