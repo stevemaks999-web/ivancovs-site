@@ -55,6 +55,14 @@ add_action( 'wp_enqueue_scripts', function () {
 		'total'    => ivs_t( 'Kopā par', 'Всего за', 'Total for' ),
 		'proceed'  => ivs_t( 'Turpināt uz pasūtījumu', 'Перейти к оформлению', 'Proceed to checkout' ),
 		'estimate' => ivs_t( 'Kopā', 'Итого', 'Total' ),
+		'lookupUrl'  => esc_url_raw( rest_url( 'ivancovs/v1/company' ) ),
+		'lookupBtn'  => ivs_t( 'Aizpildīt rekvizītus pēc reģ. Nr.', 'Заполнить реквизиты по рег. номеру', 'Fill in company details by reg. no.' ),
+		'lookupBusy' => ivs_t( 'Meklējam…', 'Ищем…', 'Searching…' ),
+		'lookupNeed' => ivs_t( 'Ievadiet reģistrācijas numuru (11 cipari) un nospiediet pogu.', 'Введите регистрационный номер (11 цифр) и нажмите кнопку.', 'Enter the registration number (11 digits) and press the button.' ),
+		'lookupNone' => ivs_t( 'Uzņēmums netika atrasts. Aizpildiet datus manuāli.', 'Фирма не найдена. Заполните данные вручную.', 'Company not found. Please fill in the details manually.' ),
+		'lookupErr'  => ivs_t( 'Neizdevās ielādēt datus. Aizpildiet manuāli.', 'Не удалось загрузить данные. Заполните вручную.', 'Could not load the data. Please fill in manually.' ),
+		'lookupOk'   => ivs_t( 'Rekvizīti aizpildīti. Pārbaudiet datus.', 'Реквизиты заполнены. Проверьте данные.', 'Details filled in. Please check them.' ),
+		'lookupOff'  => ivs_t( 'Uzņēmums reģistrā ir likvidēts vai izslēgts.', 'Фирма в реестре ликвидирована или исключена.', 'The company is liquidated or struck off in the register.' ),
 	) ) . ';', 'before' );
 } );
 
@@ -127,3 +135,72 @@ add_action( 'woocommerce_admin_order_data_after_billing_address', function ( $or
 		echo '<p><strong>Juridiskā persona:</strong> ' . esc_html( trim( $order->get_billing_company() ) ) . '<br>Reģ. Nr.: ' . esc_html( $reg ) . '<br>PVN Nr.: ' . esc_html( $vat ) . '<br>Adrese: ' . esc_html( $addr ) . '</p>';
 	}
 } );
+
+
+/* ---------- Подтяжка реквизитов по рег. номеру (Латвия) ---------- */
+
+// Поиск фирмы: название и юр. адрес из открытых данных Uzņēmumu reģistrs (data.gov.lv), номер PVN проверяется через VIES.
+add_action( 'rest_api_init', function () {
+	register_rest_route( 'ivancovs/v1', '/company', array(
+		'methods'             => 'GET',
+		'permission_callback' => '__return_true',
+		'args'                => array( 'reg' => array( 'required' => true ) ),
+		'callback'            => 'ivs_rest_company',
+	) );
+} );
+
+function ivs_rest_company( WP_REST_Request $req ) {
+	$reg = preg_replace( '/\D+/', '', (string) preg_replace( '/^\s*LV/i', '', (string) $req->get_param( 'reg' ) ) );
+	if ( 11 !== strlen( $reg ) ) {
+		return new WP_REST_Response( array( 'found' => false, 'error' => 'format' ), 400 );
+	}
+	$key = 'ivs_co_' . $reg;
+	$hit = get_transient( $key );
+	if ( is_array( $hit ) ) {
+		return new WP_REST_Response( $hit );
+	}
+	// Не больше 20 запросов за 10 минут с одного адреса.
+	$rl = 'ivs_corl_' . md5( (string) ( $_SERVER['REMOTE_ADDR'] ?? '' ) );
+	$n  = (int) get_transient( $rl );
+	if ( $n >= 20 ) {
+		return new WP_REST_Response( array( 'found' => false, 'error' => 'limit' ), 429 );
+	}
+	set_transient( $rl, $n + 1, 10 * MINUTE_IN_SECONDS );
+
+	$url = add_query_arg( array(
+		'resource_id' => '25e80bf3-f107-4ab4-89ef-251b5b9374e9',
+		'filters'     => wp_json_encode( array( 'regcode' => $reg ) ),
+	), 'https://data.gov.lv/dati/api/3/action/datastore_search' );
+	$res = wp_remote_get( $url, array( 'timeout' => 8 ) );
+	if ( is_wp_error( $res ) || 200 !== wp_remote_retrieve_response_code( $res ) ) {
+		return new WP_REST_Response( array( 'found' => false, 'error' => 'upstream' ), 502 );
+	}
+	$rec = json_decode( wp_remote_retrieve_body( $res ), true )['result']['records'][0] ?? null;
+	if ( ! $rec ) {
+		$out = array( 'found' => false );
+		set_transient( $key, $out, HOUR_IN_SECONDS );
+		return new WP_REST_Response( $out );
+	}
+	$addr = trim( (string) ( $rec['address'] ?? '' ) );
+	if ( $addr && ! empty( $rec['index'] ) ) {
+		$addr .= ', LV-' . $rec['index'];
+	}
+	// Номер плательщика PVN: подтверждаем в VIES, иначе поле оставляем пустым.
+	$vat = '';
+	$v   = wp_remote_get( 'https://ec.europa.eu/taxation_customs/vies/rest-api/ms/LV/vat/' . $reg, array( 'timeout' => 6 ) );
+	if ( ! is_wp_error( $v ) && 200 === wp_remote_retrieve_response_code( $v ) ) {
+		$vj = json_decode( wp_remote_retrieve_body( $v ), true );
+		if ( ! empty( $vj['isValid'] ) ) {
+			$vat = 'LV' . $reg;
+		}
+	}
+	$out = array(
+		'found'   => true,
+		'name'    => (string) ( $rec['name'] ?? '' ),
+		'address' => $addr,
+		'vat'     => $vat,
+		'active'  => empty( $rec['terminated'] ) && '' === trim( (string) ( $rec['closed'] ?? '' ) ),
+	);
+	set_transient( $key, $out, DAY_IN_SECONDS );
+	return new WP_REST_Response( $out );
+}
