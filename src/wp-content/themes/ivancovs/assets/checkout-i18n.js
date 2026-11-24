@@ -69,7 +69,7 @@
       if (!box || box.parentNode.querySelector('.ivs-lookup')) continue;
       var wrap = document.createElement('div');
       wrap.className = 'ivs-lookup';
-      wrap.style.cssText = 'margin:6px 0 12px';
+      wrap.style.cssText = 'margin:6px 0 12px;flex:0 0 100%;width:100%';
       var btn = document.createElement('button');
       btn.type = 'button';
       btn.textContent = T.lookupBtn;
