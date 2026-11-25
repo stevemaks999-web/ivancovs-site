@@ -33,7 +33,7 @@ foreach ( array( 'wpseo_canonical', 'wpseo_opengraph_url', 'wpseo_schema_graph',
 
 /** Главная страница на RU или EN (/ru/ и /en/): это языковая главная Polylang, а не обычная страница. */
 function ivs_is_lang_home() {
-	if ( is_admin() || is_singular() || is_404() ) {
+	if ( is_admin() || is_404() ) {
 		return false;
 	}
 	$q = (string) wp_parse_url( $_SERVER['REQUEST_URI'] ?? '', PHP_URL_QUERY ); // phpcs:ignore
@@ -425,11 +425,12 @@ add_action( 'wp_head', function () {
 		return;
 	}
 	$l   = ivs_lang();
-	$url = home_url( '/' . $l . '/' );
-	$loc = array( 'ru' => 'ru_RU', 'en' => 'en_GB' );
+	$root = 'https://' . preg_replace( '/[^a-z0-9.-]/i', '', (string) ( $_SERVER['HTTP_HOST'] ?? 'ivancovs.com' ) ); // phpcs:ignore -- не home_url() и не option home: Polylang подставляет в них адрес языка
+	$url  = $root . '/' . $l . '/';
+	$loc  = array( 'ru' => 'ru_RU', 'en' => 'en_GB' );
 	echo '<link rel="canonical" href="' . esc_url( ivs_seo_fix_host( $url ) ) . '" />' . "\n";
 	foreach ( array( 'lv' => '/', 'ru' => '/ru/', 'en' => '/en/', 'x-default' => '/' ) as $code => $path ) {
-		echo '<link rel="alternate" hreflang="' . esc_attr( $code ) . '" href="' . esc_url( ivs_seo_fix_host( home_url( $path ) ) ) . '" />' . "\n";
+		echo '<link rel="alternate" hreflang="' . esc_attr( $code ) . '" href="' . esc_url( ivs_seo_fix_host( $root . $path ) ) . '" />' . "\n";
 	}
 	echo '<meta property="og:locale" content="' . esc_attr( $loc[ $l ] ?? 'lv_LV' ) . '" />' . "\n";
 	echo '<meta property="og:type" content="website" />' . "\n";
