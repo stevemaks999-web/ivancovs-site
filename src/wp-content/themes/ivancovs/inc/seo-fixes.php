@@ -84,26 +84,42 @@ add_filter( 'wpseo_robots', function ( $robots ) {
 }, 40 );
 
 /* ---------- 4. Русские страницы на латышском корне получают язык RU ---------- */
-add_action( 'init', function () {
-	if ( get_option( 'ivs_ru_pages_lang_v1' ) || ! function_exists( 'pll_set_post_language' ) || ! function_exists( 'pll_get_post_language' ) ) {
+function ivs_seo_ru_slugs() {
+	return array( 'izmereniya-po-iso-7730', 'izmerenie-metodom-k-faktor' );
+}
+
+// После загрузки Polylang: язык ставим, флаг пишем только когда язык действительно стал RU.
+add_action( 'wp_loaded', function () {
+	if ( get_option( 'ivs_ru_pages_lang_v2' ) || ! function_exists( 'pll_set_post_language' ) || ! function_exists( 'pll_get_post_language' ) ) {
 		return;
 	}
-	foreach ( array( 'izmereniya-po-iso-7730', 'izmerenie-metodom-k-faktor' ) as $slug ) {
+	$ok = true;
+	foreach ( ivs_seo_ru_slugs() as $slug ) {
 		$page = get_page_by_path( $slug );
-		if ( $page && 'ru' !== pll_get_post_language( $page->ID ) ) {
+		if ( ! $page ) {
+			continue;
+		}
+		if ( 'ru' !== pll_get_post_language( $page->ID ) ) {
 			pll_set_post_language( $page->ID, 'ru' );
 		}
+		if ( 'ru' !== pll_get_post_language( $page->ID ) ) {
+			$ok = false;
+		}
 	}
-	update_option( 'ivs_ru_pages_lang_v1', 1, false );
-	flush_rewrite_rules( false );
-}, 99 );
+	if ( $ok ) {
+		update_option( 'ivs_ru_pages_lang_v2', 1, false );
+		flush_rewrite_rules( false );
+	}
+} );
 
+// Старый адрес без /ru/ ведёт на новый, но только если страница уже на RU (иначе получится петля).
 add_action( 'template_redirect', function () {
-	if ( ! get_option( 'ivs_ru_pages_lang_v1' ) ) {
+	$path = strtolower( trim( (string) wp_parse_url( $_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH ), '/' ) ); // phpcs:ignore
+	if ( ! in_array( $path, ivs_seo_ru_slugs(), true ) || ! function_exists( 'pll_get_post_language' ) ) {
 		return;
 	}
-	$path = strtolower( trim( (string) wp_parse_url( $_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH ), '/' ) ); // phpcs:ignore
-	if ( in_array( $path, array( 'izmereniya-po-iso-7730', 'izmerenie-metodom-k-faktor' ), true ) ) {
+	$page = get_page_by_path( $path );
+	if ( $page && 'ru' === pll_get_post_language( $page->ID ) ) {
 		wp_safe_redirect( home_url( '/ru/' . $path . '/' ), 301 );
 		exit;
 	}
@@ -210,7 +226,7 @@ function ivs_seo_filter_html( $html ) {
 		$fallback = trim( preg_replace( '/\s*[|–-]\s*IVANCOVS\s*$/u', '', $fallback ) );
 		$html     = preg_replace_callback( '#<img\b[^>]*>#i', function ( $m ) use ( $fallback ) {
 			$tag = $m[0];
-			if ( ! preg_match( '#\ssrc=(["\'])(.*?)\1#is', $tag, $s ) ) {
+			if ( ! preg_match( '#\s(?:data-src|src)=(["\'])(.*?)\1#is', $tag, $s ) ) {
 				return $tag;
 			}
 			$has = preg_match( '#\salt=(["\'])(.*?)\1#is', $tag, $a );
@@ -220,7 +236,8 @@ function ivs_seo_filter_html( $html ) {
 			if ( preg_match( '#\swidth=(["\']?)1\1[\s>/]#i', $tag ) || false !== stripos( $tag, 'role="presentation"' ) || false !== stripos( $tag, 'aria-hidden' ) ) {
 				return $tag;
 			}
-			$alt = esc_attr( ivs_seo_alt_for_src( html_entity_decode( $s[2] ), $fallback ) );
+			$ttl = preg_match( '#\stitle=(["\'])(.*?)\1#is', $tag, $t ) ? trim( html_entity_decode( $t[2] ) ) : '';
+			$alt = $ttl ? esc_attr( $ttl ) : esc_attr( ivs_seo_alt_for_src( html_entity_decode( $s[2] ), $fallback ) );
 			if ( '' === $alt ) {
 				return $tag;
 			}
