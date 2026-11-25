@@ -224,6 +224,9 @@ function ivs_seo_filter_html( $html ) {
 	if ( false !== stripos( $html, '<img' ) ) {
 		$fallback = ivs_seo_name( wp_strip_all_tags( is_singular() ? get_the_title( get_queried_object_id() ) : wp_get_document_title() ) );
 		$fallback = trim( preg_replace( '/\s*[|–-]\s*IVANCOVS\s*$/u', '', $fallback ) );
+		if ( function_exists( 'ivs_is_any_home' ) && ivs_is_any_home() ) {
+			$fallback = ivs_seo_home_h1();
+		}
 		$html     = preg_replace_callback( '#<img\b[^>]*>#i', function ( $m ) use ( $fallback ) {
 			$tag = $m[0];
 			if ( ! preg_match( '#\s(?:data-src|src)=(["\'])(.*?)\1#is', $tag, $s ) ) {
