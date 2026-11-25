@@ -425,11 +425,12 @@ add_action( 'wp_head', function () {
 		return;
 	}
 	$l   = ivs_lang();
-	$url = home_url( '/' . $l . '/' );
-	$loc = array( 'ru' => 'ru_RU', 'en' => 'en_GB' );
+	$root = untrailingslashit( (string) get_option( 'home' ) ); // не home_url(): Polylang подменяет её на главную текущего языка
+	$url  = $root . '/' . $l . '/';
+	$loc  = array( 'ru' => 'ru_RU', 'en' => 'en_GB' );
 	echo '<link rel="canonical" href="' . esc_url( ivs_seo_fix_host( $url ) ) . '" />' . "\n";
 	foreach ( array( 'lv' => '/', 'ru' => '/ru/', 'en' => '/en/', 'x-default' => '/' ) as $code => $path ) {
-		echo '<link rel="alternate" hreflang="' . esc_attr( $code ) . '" href="' . esc_url( ivs_seo_fix_host( home_url( $path ) ) ) . '" />' . "\n";
+		echo '<link rel="alternate" hreflang="' . esc_attr( $code ) . '" href="' . esc_url( ivs_seo_fix_host( $root . $path ) ) . '" />' . "\n";
 	}
 	echo '<meta property="og:locale" content="' . esc_attr( $loc[ $l ] ?? 'lv_LV' ) . '" />' . "\n";
 	echo '<meta property="og:type" content="website" />' . "\n";
