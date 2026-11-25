@@ -51,10 +51,10 @@ add_action( 'template_redirect', function () {
 
 /* ---------- 3. Лишнее вне карты сайта и вне поиска ---------- */
 function ivs_seo_junk_post_types() {
-	return array( 'portfolio', 'testimonials', 'mwb_booking_cost', 'mwb_booking_service' );
+	return array( 'portfolio', 'testimonials' );
 }
 function ivs_seo_junk_taxonomies() {
-	return array( 'post_tag', 'product_tag', 'product_brand', 'portfolio_category', 'portfolio_type', 'testimonials_category' );
+	return array( 'post_tag', 'product_tag', 'product_brand', 'portfolio_category', 'portfolio_type', 'testimonials_category', 'mwb_booking_cost', 'mwb_booking_service' );
 }
 add_filter( 'wpseo_sitemap_exclude_post_type', function ( $excluded, $type ) {
 	return $excluded || in_array( $type, ivs_seo_junk_post_types(), true );
@@ -63,15 +63,6 @@ add_filter( 'wpseo_sitemap_exclude_taxonomy', function ( $excluded, $tax ) {
 	return $excluded || in_array( $tax, ivs_seo_junk_taxonomies(), true );
 }, 20, 2 );
 add_filter( 'wpseo_sitemap_exclude_author', '__return_empty_array', 20 );
-
-// Подстраховка: убираем лишние карты из общего списка, даже если Yoast их не исключил.
-add_filter( 'wpseo_sitemap_index', function ( $xml ) {
-	$slugs = array_merge( ivs_seo_junk_post_types(), ivs_seo_junk_taxonomies(), array( 'author' ) );
-	foreach ( $slugs as $s ) {
-		$xml = preg_replace( '#<sitemap>\s*<loc>[^<]*/' . preg_quote( $s, '#' ) . '-sitemap\d*\.xml</loc>.*?</sitemap>#s', '', (string) $xml );
-	}
-	return $xml;
-}, 30 );
 
 // noindex для этих страниц (ссылки на них оставляем, вес по ним ходит).
 add_filter( 'wpseo_robots', function ( $robots ) {
@@ -84,18 +75,23 @@ add_filter( 'wpseo_robots', function ( $robots ) {
 }, 40 );
 
 /* ---------- 4. Русские страницы на латышском корне получают язык RU ---------- */
+function ivs_seo_ru_post( $slug ) {
+	$q = get_posts( array( 'name' => $slug, 'post_type' => array( 'post', 'page' ), 'post_status' => 'publish', 'numberposts' => 1, 'suppress_filters' => true ) );
+	return $q ? $q[0] : null;
+}
+
 function ivs_seo_ru_slugs() {
 	return array( 'izmereniya-po-iso-7730', 'izmerenie-metodom-k-faktor' );
 }
 
 // После загрузки Polylang: язык ставим, флаг пишем только когда язык действительно стал RU.
 add_action( 'wp_loaded', function () {
-	if ( get_option( 'ivs_ru_pages_lang_v2' ) || ! function_exists( 'pll_set_post_language' ) || ! function_exists( 'pll_get_post_language' ) ) {
+	if ( get_option( 'ivs_ru_pages_lang_v3' ) || ! function_exists( 'pll_set_post_language' ) || ! function_exists( 'pll_get_post_language' ) ) {
 		return;
 	}
 	$ok = true;
 	foreach ( ivs_seo_ru_slugs() as $slug ) {
-		$page = get_page_by_path( $slug );
+		$page = ivs_seo_ru_post( $slug );
 		if ( ! $page ) {
 			continue;
 		}
@@ -107,7 +103,7 @@ add_action( 'wp_loaded', function () {
 		}
 	}
 	if ( $ok ) {
-		update_option( 'ivs_ru_pages_lang_v2', 1, false );
+		update_option( 'ivs_ru_pages_lang_v3', 1, false );
 		flush_rewrite_rules( false );
 	}
 } );
@@ -118,7 +114,7 @@ add_action( 'template_redirect', function () {
 	if ( ! in_array( $path, ivs_seo_ru_slugs(), true ) || ! function_exists( 'pll_get_post_language' ) ) {
 		return;
 	}
-	$page = get_page_by_path( $path );
+	$page = ivs_seo_ru_post( $path );
 	if ( $page && 'ru' === pll_get_post_language( $page->ID ) ) {
 		wp_safe_redirect( home_url( '/ru/' . $path . '/' ), 301 );
 		exit;
