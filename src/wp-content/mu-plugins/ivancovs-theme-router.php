@@ -132,8 +132,8 @@ function ivs_router_is_legacy() {
 	if ( $parts && in_array( $parts[0], array( 'ru', 'en' ), true ) ) {
 		$lang = array_shift( $parts );
 	}
-	// Главные /ru/ и /en/: у них не было старого дизайна, остаются в новой теме.
-	if ( ! $parts && '' !== $lang ) {
+	// Главные /ru/ и /en/ в старом дизайне, когда созданы их переводы (флаг ставит i18n-pages.php); до этого остаются в новой теме.
+	if ( ! $parts && '' !== $lang && ! get_option( 'ivs_home_i18n_v1' ) ) {
 		return $res;
 	}
 	if ( $parts && in_array( strtolower( $parts[0] ), ivs_router_rental_roots(), true ) ) {

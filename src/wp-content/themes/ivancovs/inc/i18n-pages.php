@@ -175,3 +175,57 @@ add_action( 'init', function () {
 	}
 	update_option( 'ivs_i18n_pages_v4', 1 );
 }, 60 );
+
+/**
+ * Главные /ru/ и /en/ в прежнем дизайне: переводы латышской главной (страница, которую WordPress показывает как главную).
+ * Создаём один раз, как у остальных переводов. Тексты в i18n/pages/home.<язык>.html (их собирает scripts/build_home_i18n.py).
+ * Пока флаг ivs_home_i18n_v1 не стоит, главные RU и EN остаются в новой теме (см. ivancovs-theme-router.php).
+ */
+add_action( 'init', function () {
+	if ( get_option( 'ivs_home_i18n_v1' ) || ! function_exists( 'pll_set_post_language' ) || ! function_exists( 'pll_save_post_translations' ) || wp_doing_ajax() ) {
+		return;
+	}
+	$front = (int) get_option( 'page_on_front' );
+	if ( ! $front || 'page' !== get_option( 'show_on_front' ) ) {
+		return;
+	}
+	$dir = get_theme_file_path( 'i18n/pages/' );
+	$tr  = function_exists( 'pll_get_post_translations' ) ? pll_get_post_translations( $front ) : array();
+	$tr['lv'] = $front;
+	$def = array(
+		'ru' => array( 'Главная', 'glavnaya' ),
+		'en' => array( 'Home', 'home-en' ),
+	);
+	foreach ( $def as $lang => $d ) {
+		if ( ! empty( $tr[ $lang ] ) ) {
+			continue;
+		}
+		$file = $dir . 'home.' . $lang . '.html';
+		if ( ! file_exists( $file ) ) {
+			return; // без текстов ничего не создаём и флаг не ставим
+		}
+		$id = wp_insert_post( array(
+			'post_type'    => 'page',
+			'post_status'  => 'publish',
+			'post_title'   => $d[0],
+			'post_name'    => $d[1],
+			'post_content' => wp_slash( file_get_contents( $file ) ),
+		) );
+		if ( ! $id || is_wp_error( $id ) ) {
+			return;
+		}
+		pll_set_post_language( $id, $lang );
+		// Оформление страницы (шаблон, стили конструктора) берём с латышской главной; SEO-поля и служебные метки не копируем.
+		foreach ( get_post_meta( $front ) as $key => $vals ) {
+			if ( preg_match( '/^(_edit_|_pll|_yoast_wpseo_|_wp_old_slug|_wp_trash)/', $key ) ) {
+				continue;
+			}
+			foreach ( $vals as $v ) {
+				add_post_meta( $id, $key, maybe_unserialize( $v ) );
+			}
+		}
+		$tr[ $lang ] = $id;
+	}
+	pll_save_post_translations( $tr );
+	update_option( 'ivs_home_i18n_v1', 1 );
+}, 70 );
