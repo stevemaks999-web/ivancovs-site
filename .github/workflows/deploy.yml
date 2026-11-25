@@ -3,8 +3,6 @@ name: Deploy
 on:
   push:
     branches: [staging]        # automatic -> dev.ivancovs.com
-  schedule:
-    - cron: '*/30 * * * *'   # refresh status dashboard on dev
   workflow_dispatch:
     inputs:
       target:
