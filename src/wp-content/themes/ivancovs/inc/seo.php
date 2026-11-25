@@ -33,7 +33,7 @@ foreach ( array( 'wpseo_canonical', 'wpseo_opengraph_url', 'wpseo_schema_graph',
 
 /** Главная страница на RU или EN (/ru/ и /en/): это языковая главная Polylang, а не обычная страница. */
 function ivs_is_lang_home() {
-	if ( is_admin() || is_singular() || is_404() ) {
+	if ( is_admin() || is_404() ) {
 		return false;
 	}
 	$q = (string) wp_parse_url( $_SERVER['REQUEST_URI'] ?? '', PHP_URL_QUERY ); // phpcs:ignore

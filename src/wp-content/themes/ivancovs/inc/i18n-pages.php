@@ -242,3 +242,25 @@ add_action( 'init', function () {
 	delete_transient( 'pll_languages_list' );
 	update_option( 'ivs_home_i18n_v2', 1 );
 }, 80 );
+
+/**
+ * Главные /ru/ и /en/ показывают переведённую страницу под своим коротким адресом.
+ * WordPress без этого уводит /ru/ на адрес самой страницы, а адрес страницы дублирует главную: его отправляем на /ru/ и /en/.
+ */
+add_filter( 'redirect_canonical', function ( $url ) {
+	$p = trim( (string) wp_parse_url( $_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH ), '/' ); // phpcs:ignore
+	return in_array( $p, array( 'ru', 'en' ), true ) ? false : $url;
+}, 100 );
+add_action( 'template_redirect', function () {
+	if ( ! get_option( 'ivs_home_i18n_v1' ) ) {
+		return;
+	}
+	$uri = (string) ( $_SERVER['REQUEST_URI'] ?? '' ); // phpcs:ignore
+	$p   = trim( (string) wp_parse_url( $uri, PHP_URL_PATH ), '/' );
+	$map = array( 'ru/glavnaya' => '/ru/', 'en/home-en' => '/en/' );
+	if ( isset( $map[ $p ] ) ) {
+		$qs = (string) wp_parse_url( $uri, PHP_URL_QUERY );
+		wp_safe_redirect( home_url( $map[ $p ] ) . ( '' !== $qs ? '?' . $qs : '' ), 301 );
+		exit;
+	}
+}, 1 );
