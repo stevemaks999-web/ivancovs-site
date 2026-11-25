@@ -102,11 +102,6 @@ function ivs_cod_settings( $o ) {
 add_filter( 'option_woocommerce_cod_settings', 'ivs_cod_settings' );
 add_filter( 'default_option_woocommerce_cod_settings', 'ivs_cod_settings' );
 
-// Заказ «наличными» ждёт подтверждения Дмитрием (как заказ с ожиданием оплаты), даты при этом заняты.
-add_filter( 'woocommerce_cod_process_payment_order_status', function () {
-	return 'on-hold';
-} );
-
 /* ---------- Юридические лица (необязательные поля) ---------- */
 
 // Название организации: необязательное поле в оформлении.
