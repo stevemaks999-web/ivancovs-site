@@ -425,7 +425,7 @@ add_action( 'wp_head', function () {
 		return;
 	}
 	$l   = ivs_lang();
-	$root = untrailingslashit( (string) get_option( 'home' ) ); // не home_url(): Polylang подменяет её на главную текущего языка
+	$root = 'https://' . preg_replace( '/[^a-z0-9.-]/i', '', (string) ( $_SERVER['HTTP_HOST'] ?? 'ivancovs.com' ) ); // phpcs:ignore -- не home_url() и не option home: Polylang подставляет в них адрес языка
 	$url  = $root . '/' . $l . '/';
 	$loc  = array( 'ru' => 'ru_RU', 'en' => 'en_GB' );
 	echo '<link rel="canonical" href="' . esc_url( ivs_seo_fix_host( $url ) ) . '" />' . "\n";

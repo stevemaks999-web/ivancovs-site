@@ -265,17 +265,3 @@ add_action( 'template_redirect', function () {
 	}
 }, 1 );
 
-/** hreflang главных: Polylang не считает переведённую страницу главной латышской, поэтому адреса задаём сами. */
-add_filter( 'pll_rel_hreflang_attributes', function ( $hreflangs ) {
-	$p = trim( (string) wp_parse_url( $_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH ), '/' ); // phpcs:ignore
-	if ( ! in_array( $p, array( 'ru', 'en' ), true ) || ! get_option( 'ivs_home_i18n_v1' ) ) {
-		return $hreflangs;
-	}
-	$root = untrailingslashit( (string) get_option( 'home' ) );
-	return array(
-		'lv'        => $root . '/',
-		'ru'        => $root . '/ru/',
-		'en'        => $root . '/en/',
-		'x-default' => $root . '/',
-	);
-}, 99 );
