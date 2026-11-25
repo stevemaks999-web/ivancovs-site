@@ -229,3 +229,16 @@ add_action( 'init', function () {
 	pll_save_post_translations( $tr );
 	update_option( 'ivs_home_i18n_v1', 1 );
 }, 70 );
+
+/** Polylang помнит главную страницу каждого языка в кеше языков: после создания переводов главной сбрасываем его один раз. */
+add_action( 'init', function () {
+	if ( get_option( 'ivs_home_i18n_v2' ) || ! get_option( 'ivs_home_i18n_v1' ) || ! function_exists( 'PLL' ) || wp_doing_ajax() ) {
+		return;
+	}
+	$pll = PLL();
+	if ( $pll && isset( $pll->model ) && method_exists( $pll->model, 'clean_languages_cache' ) ) {
+		$pll->model->clean_languages_cache();
+	}
+	delete_transient( 'pll_languages_list' );
+	update_option( 'ivs_home_i18n_v2', 1 );
+}, 80 );
