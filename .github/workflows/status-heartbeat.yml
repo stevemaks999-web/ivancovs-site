@@ -1,0 +1,39 @@
+name: Status heartbeat
+
+# Расписание GitHub (cron) срабатывает раз в несколько часов, поэтому дашборд сам запускает себя:
+# обновляет статус (workflow Deploy на staging), ждёт 25 минут и запускает следующий проход.
+# Cron ниже только перезапускает цепочку, если она оборвалась.
+on:
+  schedule:
+    - cron: '7,37 * * * *'
+  workflow_dispatch:
+
+permissions:
+  actions: write
+  contents: read
+
+concurrency:
+  group: status-heartbeat
+  cancel-in-progress: false
+
+jobs:
+  beat:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - name: Refresh dashboard (Deploy to staging), unless it ran recently
+        run: |
+          last=$(gh run list --workflow=deploy.yml --limit 1 --json createdAt --jq '.[0].createdAt // empty')
+          now=$(date +%s)
+          if [ -n "$last" ] && [ $(( now - $(date -d "$last" +%s) )) -lt 1200 ]; then
+            echo "Deploy ran less than 20 minutes ago ($last), skipping"
+          else
+            gh workflow run deploy.yml --ref staging -f target=staging
+          fi
+      - name: Wait, then start the next heartbeat
+        run: |
+          sleep 1500
+          gh workflow run status-heartbeat.yml --ref main

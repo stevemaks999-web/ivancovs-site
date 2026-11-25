@@ -132,7 +132,8 @@ def build(lang_idx):
     c = SRC.read_text(encoding="utf-8")
     for lv in sorted(T, key=len, reverse=True):
         c = c.replace(lv, T[lv][lang_idx])
-    return c
+    # свои копии слайдера с переведёнными надписями (Slider Revolution: home-ru, home-en)
+    return c.replace('alias="home-v1-1"', 'alias="%s"' % ("home-ru", "home-en")[lang_idx])
 
 
 def main():
