@@ -142,6 +142,28 @@ function ivs_seo_price( $product ) {
 	return '' === $p ? '' : rtrim( rtrim( number_format( (float) $p, 2, '.', '' ), '0' ), '.' );
 }
 
+/**
+ * Title до 60 знаков: название + хвост + цена + бренд. Если длинно, сначала убираем цену и бренд,
+ * потом сокращаем перечень приборов комплекта («A + B + …»), в конце режем по слову.
+ */
+function ivs_seo_fit_title( $name, $tail, $price, $brand ) {
+	foreach ( array( $name . $tail . $price . $brand, $name . $tail . $brand, $name . $tail ) as $t ) {
+		if ( mb_strlen( $t ) <= 60 ) {
+			return $t;
+		}
+	}
+	$parts = explode( ' + ', $name );
+	for ( $n = count( $parts ) - 1; $n >= 1; $n-- ) {
+		$nm = implode( ' + ', array_slice( $parts, 0, $n ) ) . ' + …';
+		foreach ( array( $nm . $tail . $brand, $nm . $tail ) as $t ) {
+			if ( mb_strlen( $t ) <= 60 ) {
+				return $t;
+			}
+		}
+	}
+	return ivs_seo_cut( $name, 60 - mb_strlen( $tail ) ) . $tail;
+}
+
 /** Title: приборы, категории, каталог, главная. Лимит 60 знаков. */
 add_filter( 'wpseo_title', function ( $title ) {
 	$brand = ' | IVANCOVS';
@@ -153,21 +175,15 @@ add_filter( 'wpseo_title', function ( $title ) {
 		$name = ivs_seo_name( get_the_title() );
 		$p    = ivs_seo_price( wc_get_product( get_the_ID() ) );
 		$tail = ivs_t( ' noma Rīgā', ' аренда в Риге', ' rental in Riga' );
-		$full = $name . $tail . ( $p ? ivs_t( ' no ' . $p . ' €/dienā', ' от ' . $p . ' €/сутки', ' from €' . $p . '/day' ) : '' ) . $brand;
-		if ( mb_strlen( $full ) > 60 ) {
-			$full = $name . $tail . $brand;
-		}
-		if ( mb_strlen( $full ) > 60 ) {
-			$full = $name . $tail;
-		}
-		return $full;
+		$price = $p ? ivs_t( ' no ' . $p . ' €/dienā', ' от ' . $p . ' €/сутки', ' from €' . $p . '/day' ) : '';
+		return ivs_seo_fit_title( $name, $tail, $price, $brand );
 	}
 	if ( is_post_type_archive( 'product' ) && ! is_tax() ) {
 		return ivs_t( 'Mērinstrumentu noma Rīgā: 46 instrumenti', 'Аренда измерительных приборов в Риге: 46 приборов', 'Measuring instrument rental in Riga: 46 tools' ) . $brand;
 	}
 	if ( is_tax( 'product_cat' ) ) {
 		$cat = ivs_seo_name( single_term_title( '', false ) );
-		return $cat . ivs_t( ' noma Rīgā', ': аренда в Риге', ' rental in Riga' ) . $brand;
+		return ivs_seo_fit_title( $cat, ivs_t( ' noma Rīgā', ': аренда в Риге', ' rental in Riga' ), '', $brand );
 	}
 	// Страницы, записи и рубрики: короткие названия дополняем, длинные сокращаем (30–60 знаков).
 	if ( is_singular() || is_category() || ( is_home() && ! ivs_is_lang_home() ) ) {
@@ -355,8 +371,8 @@ add_action( 'template_redirect', function () {
 		'apmacibas/gaisa_attirisana'                      => '/apmacibas/gaisa-attirisana/',
 		'apmacibas/gaisa_kondicionesana'                  => '/apmacibas/gaisa-kondicionesana/',
 		'apmacibas/ventilacijas_parbaude'                 => '/apmacibas/ventilacijas-parbaude/',
-		'%d0%b8%d0%b7%d0%bc%d0%b5%d1%80%d0%b5%d0%bd%d0%b8%d1%8f-%d0%bf%d0%be-iso-7730' => '/izmereniya-po-iso-7730/',
-		'%d0%b8%d0%b7%d0%bc%d0%b5%d1%80%d0%b5%d0%bd%d0%b8%d0%b5-%d0%bc%d0%b5%d1%82%d0%be%d0%b4%d0%be%d0%bc-%d0%ba-%d1%84%d0%b0%d0%ba%d1%82%d0%be%d1%80' => '/izmerenie-metodom-k-faktor/',
+		'%d0%b8%d0%b7%d0%bc%d0%b5%d1%80%d0%b5%d0%bd%d0%b8%d1%8f-%d0%bf%d0%be-iso-7730' => '/ru/izmereniya-po-iso-7730/',
+		'%d0%b8%d0%b7%d0%bc%d0%b5%d1%80%d0%b5%d0%bd%d0%b8%d0%b5-%d0%bc%d0%b5%d1%82%d0%be%d0%b4%d0%be%d0%bc-%d0%ba-%d1%84%d0%b0%d0%ba%d1%82%d0%be%d1%80' => '/ru/izmerenie-metodom-k-faktor/',
 		'product-category/co%e2%82%82-un-gaisa-kvalitate' => '/product-category/co2-un-gaisa-kvalitate/',
 	);
 	$path = strtolower( trim( (string) wp_parse_url( $_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH ), '/' ) ); // phpcs:ignore
@@ -441,3 +457,5 @@ add_action( 'wp_head', function () {
 	echo '<meta property="og:image" content="' . esc_url( content_url( '/themes/ivancovs/assets/dmitrijs.jpg' ) ) . '" />' . "\n";
 	echo '<meta name="twitter:card" content="summary_large_image" />' . "\n";
 }, 2 );
+
+require_once __DIR__ . '/seo-fixes.php';
