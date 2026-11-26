@@ -483,7 +483,7 @@ add_action( 'ivs_booking_calendar', function ( $product ) {
 			'ret'      => ivs_t( 'Tagad izvēlieties atgriešanas datumu', 'Теперь выберите дату возврата', 'Now choose the return date' ),
 			'days'     => ivs_t( 'dienas', 'суток', 'days' ),
 			'rent'     => ivs_t( 'Noma', 'Аренда', 'Rental' ),
-			'dep'      => ivs_t( 'Drošības nauda', 'Залог', 'Deposit' ),
+			'dep'      => ivs_t( 'Drošības nauda (skaidrā naudā, saņemot)', 'Залог (наличными при получении)', 'Deposit (cash on pickup)' ),
 			'qty'      => ivs_t( 'Skaits', 'Количество', 'Quantity' ),
 			'time_in'  => ivs_t( 'Saņemšanas laiks', 'Время выдачи', 'Pickup time' ),
 			'time_out' => ivs_t( 'Atgriešanas laiks', 'Время возврата', 'Return time' ),
@@ -648,6 +648,11 @@ add_action( 'woocommerce_cart_calculate_fees', function ( $cart ) {
 	if ( is_admin() && ! wp_doing_ajax() ) {
 		return;
 	}
+	// Банк (Citadele/Klix) запретил брать залог с карты: залог только наличными при получении.
+	$method = ( function_exists( 'WC' ) && WC()->session ) ? WC()->session->get( 'chosen_payment_method' ) : '';
+	if ( 'cod' !== $method ) {
+		return;
+	}
 	$sum = 0.0;
 	foreach ( $cart->get_cart() as $item ) {
 		if ( empty( $item['ivs_from'] ) ) {
@@ -715,6 +720,8 @@ add_action( 'woocommerce_checkout_create_order_line_item', function ( $item, $ke
 	$item->add_meta_data( '_ivs_to', $values['ivs_to'], true );
 	$item->add_meta_data( '_ivs_t_from', $values['ivs_t_from'], true );
 	$item->add_meta_data( '_ivs_t_to', $values['ivs_t_to'], true );
+	// Залог по строке: берётся только наличными при получении (для писем, даже если заказ оплачен картой).
+	$item->add_meta_data( '_ivs_deposit', ivs_book_deposit( $values['product_id'] ) * ivs_book_kit_ratio( $values['product_id'], $values['ivs_kit'] ?? null ) * (int) $values['quantity'], true );
 	$item->add_meta_data( ivs_t( 'Saņemšana', 'Выдача', 'Pickup' ), $values['ivs_from'] . ' ' . $values['ivs_t_from'], true );
 	$item->add_meta_data( ivs_t( 'Atgriešana', 'Возврат', 'Return' ), $values['ivs_to'] . ' ' . $values['ivs_t_to'], true );
 	$item->add_meta_data( ivs_t( 'Dienas', 'Суток', 'Days' ), ivs_book_days( $values['ivs_from'], $values['ivs_to'] ), true );
