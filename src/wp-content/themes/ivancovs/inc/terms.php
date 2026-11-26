@@ -16,7 +16,7 @@ function ivs_terms_sections( $lang ) {
 				'Pārdevējs (iznomātājs): SIA “Delumix”, reģistrācijas Nr. 40203480127, PVN Nr. LV40203480127, juridiskā adrese: Lastādijas iela 32, Rīga, LV-1050. Tālrunis: ' . IVS_PHONE . ', e-pasts: ' . IVS_EMAIL . '. Mājaslapa: ivancovs.com.',
 				'Pircējs (nomnieks) ir fiziska vai juridiska persona, kas veic pasūtījumu mājaslapā. Pasūtījumā pircējs norāda savu vārdu, uzvārdu (juridiskai personai: nosaukumu un reģistrācijas numuru), e-pastu, tālruni un personas vārdu, uzvārdu, kas saņems instrumentu.',
 				'Pakalpojums: mērinstrumentu un ierīču noma (īre) uz izvēlētajiem datumiem. Katra instrumenta vai komplekta apraksts un nomas cena par diennakti, nedēļu un mēnesi ir norādīta tā lapā mājaslapā. Cenas ir norādītas eiro (EUR). Pasūtījuma kopsummā tiek parādīts PVN 21%.',
-				'Papildus nomas maksai tiek ņemta atgriežama drošības nauda (depozīts) atsevišķā rindā. Tā ir 15% no instrumenta tirgus vērtības, ne vairāk kā 200 EUR; instrumentiem ar iegādes vērtību zem 500 EUR drošības nauda nav jāmaksā.',
+				'Papildus nomas maksai tiek ņemta atgriežama drošības nauda (depozīts), ko maksā tikai skaidrā naudā, saņemot instrumentu; ar karti drošības nauda netiek ņemta. Tā ir 15% no instrumenta tirgus vērtības, ne vairāk kā 200 EUR; instrumentiem ar iegādes vērtību zem 500 EUR drošības nauda nav jāmaksā.',
 				'Līgums ir noslēgts, kad pircējs ir apstiprinājis pasūtījumu, atzīmējis piekrišanu šiem noteikumiem un pasūtījums ir apmaksāts.',
 			) ),
 			array( '2. Apmaksas noteikumi', array(
@@ -38,7 +38,7 @@ function ivs_terms_sections( $lang ) {
 				'Kas var un nevar tikt atgriezts: nomas instrumenti pēc nomas laika beigām tiek atgriezti vienmēr. Instrumenti, kas atgriezti bojāti, bez piederumiem vai nepilnā komplektācijā, tiek novērtēti; bojājumu remonta vai trūkstošo daļu izmaksas tiek ieturētas no drošības naudas, bet, ja tās to pārsniedz, starpību apmaksā pircējs. Kavējot atgriešanu, par katru kavēto diennakti tiek rēķināta nomas maksa pēc diennakts cenas.',
 			) ),
 			array( '5. Naudas atmaksas noteikumi', array(
-				'Drošības nauda tiek atmaksāta pēc instrumenta atgriešanas un apskates, ne vēlāk kā 14 dienu laikā, atņemot summas par bojājumiem vai kavējumu, ja tādas ir.',
+				'Drošības nauda tiek atdota skaidrā naudā pēc instrumenta atgriešanas un apskates, atņemot summas par bojājumiem vai kavējumu, ja tādas ir.',
 				'Nomas maksa atteikuma gadījumā tiek atmaksāta ne vēlāk kā 14 dienu laikā no atteikuma saņemšanas dienas.',
 				'Atmaksa tiek veikta ar to pašu maksāšanas līdzekli, ar kuru tika veikts maksājums (tai pašai kartei vai uz to pašu bankas kontu), ja pircējs nav vienojies par citu veidu.',
 			) ),
@@ -57,7 +57,7 @@ function ivs_terms_sections( $lang ) {
 				'Продавец (арендодатель): SIA “Delumix”, рег. № 40203480127, номер плательщика PVN LV40203480127, юридический адрес: Lastādijas iela 32, Rīga, LV-1050. Телефон: ' . IVS_PHONE . ', e-mail: ' . IVS_EMAIL . '. Сайт: ivancovs.com.',
 				'Покупатель (арендатор) — физическое или юридическое лицо, оформившее заказ на сайте. В заказе покупатель указывает имя, фамилию (юрлицо: название и регистрационный номер), e-mail, телефон, а также имя и фамилию того, кто заберёт прибор.',
 				'Услуга: аренда измерительных приборов и устройств на выбранные даты. Описание каждого прибора или комплекта и цена аренды за сутки, неделю и месяц указаны на его странице. Цены в евро (EUR). В итоговой сумме заказа показан PVN 21%.',
-				'Помимо арендной платы отдельной строкой берётся возвращаемый залог. Он равен 15% рыночной стоимости прибора, но не более 200 EUR; за приборы со стоимостью закупки до 500 EUR залог не берётся.',
+				'Помимо арендной платы берётся возвращаемый залог, который вносится только наличными при получении прибора; с карты залог не берётся. Он равен 15% рыночной стоимости прибора, но не более 200 EUR; за приборы со стоимостью закупки до 500 EUR залог не берётся.',
 				'Договор считается заключённым, когда покупатель подтвердил заказ, поставил отметку о согласии с этими условиями и заказ оплачен.',
 			) ),
 			array( '2. Условия оплаты', array(
@@ -79,7 +79,7 @@ function ivs_terms_sections( $lang ) {
 				'Что можно и нельзя вернуть: арендованные приборы по окончании аренды возвращаются всегда. Приборы, возвращённые повреждёнными, без принадлежностей или в неполной комплектации, оцениваются; стоимость ремонта или недостающих частей удерживается из залога, а если она больше, разницу оплачивает покупатель. За просрочку возврата за каждые лишние сутки начисляется аренда по суточной цене.',
 			) ),
 			array( '5. Условия возврата денег', array(
-				'Залог возвращается после возврата и осмотра прибора, не позднее чем в течение 14 дней, за вычетом сумм за повреждения или просрочку, если они есть.',
+				'Залог возвращается наличными после возврата и осмотра прибора, за вычетом сумм за повреждения или просрочку, если они есть.',
 				'Арендная плата при отказе возвращается не позднее чем в течение 14 дней со дня получения отказа.',
 				'Возврат производится тем же способом оплаты, которым был сделан платёж (на ту же карту или тот же банковский счёт), если покупатель не договорился о другом.',
 			) ),
@@ -98,7 +98,7 @@ function ivs_terms_sections( $lang ) {
 				'Seller (lessor): SIA “Delumix”, registration No. 40203480127, VAT No. LV40203480127, registered address: Lastādijas iela 32, Rīga, LV-1050. Phone: ' . IVS_PHONE . ', e-mail: ' . IVS_EMAIL . '. Website: ivancovs.com.',
 				'The buyer (renter) is a private person or a company placing an order on the website. In the order the buyer gives their name (a company: its name and registration number), e-mail, phone, and the name of the person who will collect the instrument.',
 				'Service: rental of measuring instruments and devices for the chosen dates. The description of each instrument or kit and its rental price per day, week and month are on its page. Prices are in euro (EUR). The order total shows VAT 21%.',
-				'In addition to the rental fee, a refundable deposit is charged on a separate line. It is 15% of the market value of the instrument, but no more than 200 EUR; no deposit is charged for instruments with a purchase value under 500 EUR.',
+				'In addition to the rental fee, a refundable deposit is taken, paid in cash only when you collect the instrument; no deposit is taken on a card. It is 15% of the market value of the instrument, but no more than 200 EUR; no deposit is charged for instruments with a purchase value under 500 EUR.',
 				'The contract is concluded when the buyer has confirmed the order, ticked the box agreeing to these terms and the order has been paid.',
 			) ),
 			array( '2. Payment terms', array(
@@ -120,7 +120,7 @@ function ivs_terms_sections( $lang ) {
 				'What can and cannot be returned: rented instruments are always returned at the end of the rental. Instruments returned damaged, without accessories or incomplete are assessed; the cost of repair or missing parts is deducted from the deposit, and if it is higher, the buyer pays the difference. For late return, rent at the daily price is charged for each extra day.',
 			) ),
 			array( '5. Refund terms', array(
-				'The deposit is refunded after the instrument is returned and inspected, within 14 days at the latest, less any amounts for damage or delay.',
+				'The deposit is returned in cash after the instrument is returned and inspected, less any amounts for damage or delay.',
 				'In case of withdrawal the rental fee is refunded within 14 days of receiving the withdrawal.',
 				'The refund is made by the same payment method used for the payment (the same card or the same bank account), unless the buyer agrees another way.',
 			) ),

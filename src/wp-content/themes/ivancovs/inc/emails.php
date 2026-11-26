@@ -62,6 +62,15 @@ function ivs_em_date( $ymd ) {
 
 /* ---------- Данные заказа для писем ---------- */
 
+/** Залог по приборам заказа: вносится только наличными при получении. */
+function ivs_order_cash_deposit( $order ) {
+	$sum = 0.0;
+	foreach ( $order->get_items() as $item ) {
+		$sum += (float) $item->get_meta( '_ivs_deposit' );
+	}
+	return round( $sum, 2 );
+}
+
 function ivs_em_data( $order ) {
 	list( $rent, $deposit ) = ivs_order_lines( $order );
 	$total = (float) $order->get_total();
@@ -77,6 +86,7 @@ function ivs_em_data( $order ) {
 		'rent'    => $rent,
 		'deposit' => $deposit,
 		'rentsum' => max( 0, $total - $deposit ),
+		'cash_dep' => ivs_order_cash_deposit( $order ),
 		'kind'    => $kind,
 	);
 }
@@ -270,7 +280,17 @@ function ivs_em_order_notes( $order, $kind ) {
 			'Payment: by bank transfer. We hand over the equipment once the money has reached our account.'
 		);
 	}
-	echo '<li style="margin:0 0 10px">' . ivs_em_lead( $pay ) . '</li></ol>';
+	echo '<li style="margin:0 0 10px">' . ivs_em_lead( $pay ) . '</li>';
+	if ( 'cod' !== $d['kind'] && $d['cash_dep'] > 0 ) {
+		$cd = ivs_money( $d['cash_dep'] );
+		echo '<li style="margin:0 0 10px">' . ivs_em_lead( ivs_em(
+			$order,
+			'Drošības nauda: ' . $cd . ' jāmaksā tikai skaidrā naudā, saņemot instrumentu (ar karti drošības nauda netiek ņemta). Mēs to atdodam skaidrā naudā pēc instrumenta atgriešanas un pārbaudes.',
+			'Залог: ' . $cd . ' вносится только наличными при получении прибора (с карты залог не берём). Мы возвращаем его наличными после возврата и проверки прибора.',
+			'Deposit: ' . $cd . ' is paid in cash only when you collect the equipment (no deposit is taken on a card). We return it in cash after the equipment is returned and checked.'
+		) ) . '</li>';
+	}
+	echo '</ol>';
 
 	if ( $d['deposit'] > 0 ) {
 		if ( 'cod' === $d['kind'] ) {
