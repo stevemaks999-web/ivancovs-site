@@ -160,3 +160,5 @@ body.pp main{padding-bottom:70px}
 .ivs-kit{display:grid;gap:10px;margin:0 0 12px;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--card)}.ivs-kit>b{font-size:14px}.ivs-kit label{display:grid;grid-template-columns:1fr 90px;align-items:center;gap:2px 10px;font-size:14px}.ivs-kit label small{grid-column:1/-1}.ivs-kit input{padding:8px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font-size:15px;width:100%}
 .related .why{display:none}
 @media(max-width:700px){.cross .g1 .card,.cross .kitrow{grid-template-columns:112px 1fr}.cross .why{font-size:13px}}
+
+.kitdisc{display:inline-block;margin-top:6px;padding:3px 10px;border-radius:999px;background:#e6f4ea;color:#1e7a3c;font-size:13px;font-weight:600}.prod .info,.prod .info p,.prod .info li,.entry-body{text-align:justify;hyphens:auto}.prod .info h2,.prod .info h3,.prod .cross{text-align:left}
