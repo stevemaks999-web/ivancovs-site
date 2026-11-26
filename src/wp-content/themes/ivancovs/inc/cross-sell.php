@@ -108,8 +108,9 @@ function ivs_cross_card( $id ) {
 		return '';
 	}
 	$img = $p->get_image_id() ? wp_get_attachment_image( $p->get_image_id(), 'medium_large' ) : '';
+	$why = has_excerpt( $id ) ? wp_trim_words( wp_strip_all_tags( get_the_excerpt( $id ) ), 18, '…' ) : '';
 	return '<a class="card" href="' . esc_url( ivs_lang_url( get_permalink( $id ) ) ) . '"><div class="ph">' . $img . '</div><div class="b"><h3>' // phpcs:ignore
-		. esc_html( get_the_title( $id ) ) . '</h3>' . ivs_price_html( $p ) . '</div></a>'; // phpcs:ignore
+		. esc_html( get_the_title( $id ) ) . '</h3>' . ( $why ? '<p class="mut why">' . esc_html( $why ) . '</p>' : '' ) . ivs_price_html( $p ) . '</div></a>'; // phpcs:ignore
 }
 
 function ivs_cross_kit_row( $kid ) {
@@ -121,7 +122,8 @@ function ivs_cross_kit_row( $kid ) {
 	foreach ( ivs_cross_kits()[ $kid ] ?? array() as $cid => $n ) {
 		$names[] = ( $n > 1 ? $n . '× ' : '' ) . get_the_title( $cid );
 	}
-	return '<a class="card kitrow" href="' . esc_url( ivs_lang_url( get_permalink( $kid ) ) ) . '"><div class="b"><span class="kitb">'
+	$img = $p->get_image_id() ? wp_get_attachment_image( $p->get_image_id(), 'medium_large' ) : '';
+	return '<a class="card kitrow" href="' . esc_url( ivs_lang_url( get_permalink( $kid ) ) ) . '"><div class="ph">' . $img . '</div><div class="b"><span class="kitb">'
 		. esc_html( ivs_t( 'Gatavs komplekts', 'Готовый комплект', 'Ready-made kit' ) ) . '</span><h3>' . esc_html( get_the_title( $kid ) ) . '</h3>'
 		. '<div class="mut">' . esc_html( implode( ', ', $names ) ) . '</div>' . ivs_price_html( $p ) . '</div></a>'; // phpcs:ignore
 }
@@ -133,7 +135,7 @@ function ivs_cross_html( $heading, $sug ) {
 	}
 	$h = '<section class="cross"><h2>' . esc_html( $heading ) . '</h2>';
 	if ( ! empty( $sug['items'] ) ) {
-		$h .= '<div class="grid g3">';
+		$h .= '<div class="grid ' . ( count( $sug['items'] ) > 1 ? 'g3' : 'g1' ) . '">';
 		foreach ( $sug['items'] as $id ) {
 			$h .= ivs_cross_card( $id );
 		}
