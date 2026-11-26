@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-26T19:36:17Z",
+ "generated_at": "2026-11-26T19:41:12Z",
  "commit": "",
  "branch": "staging",
  "metrics": {
@@ -793,6 +793,10 @@
      "text": "Страница прибора: описание, технические данные и «Часто берут вместе» стоят под фото (раньше слева была пустота); «Другие приборы этой категории» теперь карточки с фото и ценой"
     },
     {
+     "done": true,
+     "text": "Календарь брони: названия месяцев на языке страницы (на русской раньше были латышские)"
+    },
+    {
      "done": false,
      "text": "Проверить фото на странице у Дмитрия: HoldPeak HP-DT-10S (вентилятор в кадре), SuperStars ST-B168DL и Tooltop T3/T7 (лишние линии на экране)"
     },
@@ -813,8 +817,8 @@
      "text": "Комплекты берут только целиком: выбор числа приборов внутри комплекта сделали и убрали (цены небольшие, решение владельца)"
     }
    ],
-   "done": 17,
-   "total": 19
+   "done": 18,
+   "total": 20
   }
  ],
  "pulls": [
@@ -1051,6 +1055,13 @@
  ],
  "commits": [
   {
+   "sha": "a213ecb",
+   "message": "Страница прибора: описание и связанные блоки под фото, карточки похожих приборов, выравнивание брони по фото",
+   "author": "Никита Максименко",
+   "date": "2026-11-26T19:39:53Z",
+   "url": "https://github.com/stevemaks999-web/ivancovs-site/commit/a213ecb9f414f88ecaceff328f167ba17bd5b7ff"
+  },
+  {
    "sha": "47d12cc",
    "message": "PLAN: залог только наличными выложен на основной сайт",
    "author": "Никита Максименко",
@@ -1147,16 +1158,29 @@
    "author": "Никита Максименко",
    "date": "2026-11-25T12:01:02Z",
    "url": "https://github.com/stevemaks999-web/ivancovs-site/commit/c45cc5a5869fccd77792c61f5c174e763082f10e"
-  },
-  {
-   "sha": "544315f",
-   "message": "Главные RU и EN: hreflang и canonical от адреса сайта (Polylang подменяет home на адрес языка)",
-   "author": "Никита Максименко",
-   "date": "2026-11-25T11:57:02Z",
-   "url": "https://github.com/stevemaks999-web/ivancovs-site/commit/544315fddb37b7aa7c0465aa56ec6be61694fe8a"
   }
  ],
  "runs": [
+  {
+   "name": "Deploy",
+   "title": "Страница прибора: описание и связанные блоки под фото, карточки похож…",
+   "branch": "staging",
+   "status": "completed",
+   "conclusion": "success",
+   "event": "push",
+   "date": "2026-11-26T19:39:57Z",
+   "url": "https://github.com/stevemaks999-web/ivancovs-site/actions/runs/45885320046"
+  },
+  {
+   "name": "Gatekeeper",
+   "title": "Страница прибора: описание и связанные блоки под фото, карточки похож…",
+   "branch": "staging",
+   "status": "completed",
+   "conclusion": "success",
+   "event": "push",
+   "date": "2026-11-26T19:39:57Z",
+   "url": "https://github.com/stevemaks999-web/ivancovs-site/actions/runs/45885320045"
+  },
   {
    "name": "Deploy",
    "title": "Deploy",
@@ -1256,26 +1280,6 @@
    "event": "workflow_dispatch",
    "date": "2026-11-26T17:41:22Z",
    "url": "https://github.com/stevemaks999-web/ivancovs-site/actions/runs/45869837014"
-  },
-  {
-   "name": "Deploy",
-   "title": "Deploy",
-   "branch": "staging",
-   "status": "completed",
-   "conclusion": "success",
-   "event": "workflow_dispatch",
-   "date": "2026-11-26T17:16:21Z",
-   "url": "https://github.com/stevemaks999-web/ivancovs-site/actions/runs/45866304394"
-  },
-  {
-   "name": "Status heartbeat",
-   "title": "Status heartbeat",
-   "branch": "main",
-   "status": "completed",
-   "conclusion": "success",
-   "event": "workflow_dispatch",
-   "date": "2026-11-26T17:16:12Z",
-   "url": "https://github.com/stevemaks999-web/ivancovs-site/actions/runs/45866281908"
   }
  ]
 }
