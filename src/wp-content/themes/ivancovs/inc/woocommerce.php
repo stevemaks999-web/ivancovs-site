@@ -27,6 +27,20 @@ function ivs_price_html( $product ) {
 	return '<div class="price">' . wp_kses_post( wc_price( $price ) ) . ' <small>/ ' . esc_html( ivs_t( 'diena', 'сутки', 'day' ) ) . '</small></div>';
 }
 
+/** Скидка за комплект в евро (мета _ivs_kit_discount), 0 если не задана. */
+function ivs_kit_discount( $id ) {
+	return max( 0, (float) get_post_meta( $id, '_ivs_kit_discount', true ) );
+}
+
+/** Плашка «Скидка за комплект −5 €». */
+function ivs_kit_discount_html( $id ) {
+	$d = ivs_kit_discount( $id );
+	if ( $d <= 0 ) {
+		return '';
+	}
+	return '<div class="kitdisc">' . esc_html( ivs_t( 'Atlaide par komplektu', 'Скидка за комплект', 'Kit discount' ) ) . ' −' . wp_kses_post( wc_price( $d ) ) . '</div>';
+}
+
 /** Ссылки-чипы для фильтра. */
 function ivs_chip( $url, $label, $on = false ) {
 	printf( '<a href="%s"%s>%s</a>', esc_url( $url ), $on ? ' class="on"' : '', esc_html( $label ) );

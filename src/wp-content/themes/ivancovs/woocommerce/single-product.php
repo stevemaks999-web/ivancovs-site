@@ -44,6 +44,7 @@ while ( have_posts() ) :
 			?>
 			<div class="card book" id="booking">
 				<div class="price-line"><?php echo wp_kses_post( wc_price( $product->get_price() ) ); ?> <small>/ <?php ivs_e( 'diena', 'сутки', 'day' ); ?></small></div>
+				<?php echo ivs_kit_discount_html( get_the_ID() ); // phpcs:ignore ?>
 				<?php if ( $ivs_week > 0 ) : ?>
 					<div class="row"><span><?php ivs_e( 'Nedēļā (7 dienas)', 'Неделя (7 суток)', 'Week (7 days)' ); ?></span><span><?php echo wp_kses_post( wc_price( $ivs_week ) ); ?></span></div>
 				<?php endif; ?>

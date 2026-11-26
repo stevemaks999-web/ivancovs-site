@@ -125,7 +125,7 @@ function ivs_cross_kit_row( $kid ) {
 	$img = $p->get_image_id() ? wp_get_attachment_image( $p->get_image_id(), 'medium_large' ) : '';
 	return '<a class="card kitrow" href="' . esc_url( ivs_lang_url( get_permalink( $kid ) ) ) . '"><div class="ph">' . $img . '</div><div class="b"><span class="kitb">'
 		. esc_html( ivs_t( 'Gatavs komplekts', 'Готовый комплект', 'Ready-made kit' ) ) . '</span><h3>' . esc_html( get_the_title( $kid ) ) . '</h3>'
-		. '<div class="mut">' . esc_html( implode( ', ', $names ) ) . '</div>' . ivs_price_html( $p ) . '</div></a>'; // phpcs:ignore
+		. '<div class="mut">' . esc_html( implode( ', ', $names ) ) . '</div>' . ivs_price_html( $p ) . ivs_kit_discount_html( $kid ) . '</div></a>'; // phpcs:ignore
 }
 
 /** HTML блока. $heading: заголовок, $sug: результат ivs_cross_suggest. */

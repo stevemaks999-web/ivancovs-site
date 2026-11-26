@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-26T20:07:44Z",
+ "generated_at": "2026-11-26T20:52:46Z",
  "commit": "",
  "branch": "staging",
  "metrics": {
@@ -434,10 +434,34 @@
     {
      "done": true,
      "text": "Добавить поиск и фильтры: ряд «Комплекты по задачам» и категории приборов (в каталоге есть)"
+    },
+    {
+     "done": true,
+     "text": "Комплект «Elektrosadales & Jaudas Parametru Audits» (CO601 + Tooltop): 35 € вместо 40 €, на странице и в блоке «Часто берут вместе» стоит плашка «Скидка за комплект −5 €»"
+    },
+    {
+     "done": true,
+     "text": "Текст под карточками на странице прибора выровнен по ширине"
+    },
+    {
+     "done": true,
+     "text": "Цены комплектов пересчитаны: сумма приборов минус 10 % (у уже выгодных скидка осталась прежней, «Склады» не менялся)"
+    },
+    {
+     "done": true,
+     "text": "Комплект №7: добавлен прибор Ultrasonic Transducer, цена 25 €"
+    },
+    {
+     "done": false,
+     "text": "Решить с Дмитрием цену комплекта «Склады» (сейчас 70 € за неделю на 26 регистраторов, это дешевле их суточной аренды)"
+    },
+    {
+     "done": false,
+     "text": "Загрузить обновлённые файлы комплектов на сайт, чтобы новые цены и плашки скидки появились на сайте"
     }
    ],
-   "done": 8,
-   "total": 8
+   "done": 12,
+   "total": 14
   },
   {
    "title": "Фаза 6. Бронирование и оплата онлайн",
@@ -827,6 +851,13 @@
  ],
  "pulls": [
   {
+   "number": 144,
+   "title": "Часто берут вместе: карточка на всю ширину, описание, фото комплекта",
+   "url": "https://github.com/stevemaks999-web/ivancovs-site/pull/144",
+   "state": "merged",
+   "checks": "success"
+  },
+  {
    "number": 143,
    "title": "Страница прибора: вёрстка под фото, карточки похожих приборов, месяцы календаря",
    "url": "https://github.com/stevemaks999-web/ivancovs-site/pull/143",
@@ -1028,13 +1059,6 @@
    "url": "https://github.com/stevemaks999-web/ivancovs-site/pull/114",
    "state": "merged",
    "checks": "success"
-  },
-  {
-   "number": 113,
-   "title": "Исправить 500 на RU/EN категориях аренды",
-   "url": "https://github.com/stevemaks999-web/ivancovs-site/pull/113",
-   "state": "merged",
-   "checks": "success"
   }
  ],
  "issues": [
@@ -1058,6 +1082,13 @@
   }
  ],
  "commits": [
+  {
+   "sha": "87b7858",
+   "message": "Часто берут вместе: карточка на всю ширину, описание прибора, фото комплекта",
+   "author": "Никита Максименко",
+   "date": "2026-11-26T20:07:51Z",
+   "url": "https://github.com/stevemaks999-web/ivancovs-site/commit/87b78585df5e96e0f4d573a7a3b864693e473097"
+  },
   {
    "sha": "3cd9cad",
    "message": "Календарь брони: месяцы на языке страницы",
@@ -1155,16 +1186,89 @@
    "author": "Никита Максименко",
    "date": "2026-11-25T12:14:55Z",
    "url": "https://github.com/stevemaks999-web/ivancovs-site/commit/81b63fb10ab72a0ae20b0c01a6c3b5c590caf15d"
-  },
-  {
-   "sha": "5017f6c",
-   "message": "Merge pull request #138 from stevemaks999-web/staging",
-   "author": "stevemaks999-web",
-   "date": "2026-11-25T12:01:41Z",
-   "url": "https://github.com/stevemaks999-web/ivancovs-site/commit/5017f6c13b1f91bc20190a8eba8c3cba37687be8"
   }
  ],
  "runs": [
+  {
+   "name": "Deploy",
+   "title": "Deploy",
+   "branch": "staging",
+   "status": "completed",
+   "conclusion": "success",
+   "event": "workflow_dispatch",
+   "date": "2026-11-26T20:37:35Z",
+   "url": "https://github.com/stevemaks999-web/ivancovs-site/actions/runs/45892402554"
+  },
+  {
+   "name": "Status heartbeat",
+   "title": "Status heartbeat",
+   "branch": "main",
+   "status": "in_progress",
+   "conclusion": null,
+   "event": "workflow_dispatch",
+   "date": "2026-11-26T20:37:26Z",
+   "url": "https://github.com/stevemaks999-web/ivancovs-site/actions/runs/45892386455"
+  },
+  {
+   "name": "Deploy",
+   "title": "Deploy",
+   "branch": "main",
+   "status": "completed",
+   "conclusion": "success",
+   "event": "workflow_dispatch",
+   "date": "2026-11-26T20:17:30Z",
+   "url": "https://github.com/stevemaks999-web/ivancovs-site/actions/runs/45889965730"
+  },
+  {
+   "name": "Gatekeeper",
+   "title": "Merge pull request #144 from stevemaks999-web/staging",
+   "branch": "main",
+   "status": "completed",
+   "conclusion": "success",
+   "event": "push",
+   "date": "2026-11-26T20:17:30Z",
+   "url": "https://github.com/stevemaks999-web/ivancovs-site/actions/runs/45889965194"
+  },
+  {
+   "name": "Status heartbeat",
+   "title": "Status heartbeat",
+   "branch": "main",
+   "status": "completed",
+   "conclusion": "success",
+   "event": "workflow_dispatch",
+   "date": "2026-11-26T20:12:18Z",
+   "url": "https://github.com/stevemaks999-web/ivancovs-site/actions/runs/45889306476"
+  },
+  {
+   "name": "Gatekeeper",
+   "title": "Часто берут вместе: карточка на всю ширину, описание, фото комплекта",
+   "branch": "staging",
+   "status": "completed",
+   "conclusion": "success",
+   "event": "pull_request",
+   "date": "2026-11-26T20:07:59Z",
+   "url": "https://github.com/stevemaks999-web/ivancovs-site/actions/runs/45888767657"
+  },
+  {
+   "name": "Deploy",
+   "title": "Часто берут вместе: карточка на всю ширину, описание прибора, фото ко…",
+   "branch": "staging",
+   "status": "completed",
+   "conclusion": "success",
+   "event": "push",
+   "date": "2026-11-26T20:07:55Z",
+   "url": "https://github.com/stevemaks999-web/ivancovs-site/actions/runs/45888759690"
+  },
+  {
+   "name": "Gatekeeper",
+   "title": "Часто берут вместе: карточка на всю ширину, описание прибора, фото ко…",
+   "branch": "staging",
+   "status": "completed",
+   "conclusion": "success",
+   "event": "push",
+   "date": "2026-11-26T20:07:55Z",
+   "url": "https://github.com/stevemaks999-web/ivancovs-site/actions/runs/45888759625"
+  },
   {
    "name": "Deploy",
    "title": "Deploy",
@@ -1199,91 +1303,11 @@
    "name": "Status heartbeat",
    "title": "Status heartbeat",
    "branch": "main",
-   "status": "in_progress",
-   "conclusion": null,
+   "status": "completed",
+   "conclusion": "success",
    "event": "workflow_dispatch",
    "date": "2026-11-26T19:47:10Z",
    "url": "https://github.com/stevemaks999-web/ivancovs-site/actions/runs/45886211914"
-  },
-  {
-   "name": "Gatekeeper",
-   "title": "Календарь брони: месяцы на языке страницы",
-   "branch": "staging",
-   "status": "completed",
-   "conclusion": "success",
-   "event": "push",
-   "date": "2026-11-26T19:41:17Z",
-   "url": "https://github.com/stevemaks999-web/ivancovs-site/actions/runs/45885489095"
-  },
-  {
-   "name": "Deploy",
-   "title": "Календарь брони: месяцы на языке страницы",
-   "branch": "staging",
-   "status": "completed",
-   "conclusion": "success",
-   "event": "push",
-   "date": "2026-11-26T19:41:17Z",
-   "url": "https://github.com/stevemaks999-web/ivancovs-site/actions/runs/45885489037"
-  },
-  {
-   "name": "Deploy",
-   "title": "Страница прибора: описание и связанные блоки под фото, карточки похож…",
-   "branch": "staging",
-   "status": "completed",
-   "conclusion": "success",
-   "event": "push",
-   "date": "2026-11-26T19:39:57Z",
-   "url": "https://github.com/stevemaks999-web/ivancovs-site/actions/runs/45885320046"
-  },
-  {
-   "name": "Gatekeeper",
-   "title": "Страница прибора: описание и связанные блоки под фото, карточки похож…",
-   "branch": "staging",
-   "status": "completed",
-   "conclusion": "success",
-   "event": "push",
-   "date": "2026-11-26T19:39:57Z",
-   "url": "https://github.com/stevemaks999-web/ivancovs-site/actions/runs/45885320045"
-  },
-  {
-   "name": "Deploy",
-   "title": "Deploy",
-   "branch": "staging",
-   "status": "completed",
-   "conclusion": "success",
-   "event": "workflow_dispatch",
-   "date": "2026-11-26T19:22:09Z",
-   "url": "https://github.com/stevemaks999-web/ivancovs-site/actions/runs/45883127785"
-  },
-  {
-   "name": "Status heartbeat",
-   "title": "Status heartbeat",
-   "branch": "main",
-   "status": "completed",
-   "conclusion": "success",
-   "event": "workflow_dispatch",
-   "date": "2026-11-26T19:22:01Z",
-   "url": "https://github.com/stevemaks999-web/ivancovs-site/actions/runs/45883111747"
-  },
-  {
-   "name": "Deploy",
-   "title": "Deploy",
-   "branch": "staging",
-   "status": "completed",
-   "conclusion": "success",
-   "event": "workflow_dispatch",
-   "date": "2026-11-26T18:57:00Z",
-   "url": "https://github.com/stevemaks999-web/ivancovs-site/actions/runs/45879900324"
-  },
-  {
-   "name": "Status heartbeat",
-   "title": "Status heartbeat",
-   "branch": "main",
-   "status": "completed",
-   "conclusion": "success",
-   "event": "workflow_dispatch",
-   "date": "2026-11-26T18:56:52Z",
-   "url": "https://github.com/stevemaks999-web/ivancovs-site/actions/runs/45879885851"
   }
  ]
 }
