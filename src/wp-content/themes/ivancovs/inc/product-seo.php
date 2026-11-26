@@ -171,12 +171,12 @@ add_action( 'ivs_after_content', function ( $product ) {
 			'no_found_rows'  => true,
 		) );
 		if ( $q->have_posts() ) {
-			echo '<h2 style="margin-top:24px">' . esc_html( ivs_t( 'Citi instrumenti šajā kategorijā', 'Другие приборы этой категории', 'Other instruments in this category' ) ) . '</h2><ul>';
+			echo '<h2 style="margin-top:24px">' . esc_html( ivs_t( 'Citi instrumenti šajā kategorijā', 'Другие приборы этой категории', 'Other instruments in this category' ) ) . '</h2><div class="grid g3 related">';
 			while ( $q->have_posts() ) {
 				$q->the_post();
-				echo '<li><a href="' . esc_url( ivs_lang_url( get_permalink() ) ) . '">' . esc_html( ivs_seo_name( get_the_title() ) ) . '</a></li>';
+				echo function_exists( 'ivs_cross_card' ) ? ivs_cross_card( get_the_ID() ) : ''; // phpcs:ignore
 			}
-			echo '</ul>';
+			echo '</div>';
 			wp_reset_postdata();
 		}
 	}
