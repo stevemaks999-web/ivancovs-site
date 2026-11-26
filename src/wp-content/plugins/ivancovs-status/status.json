@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-26T19:41:12Z",
+ "generated_at": "2026-11-26T20:07:44Z",
  "commit": "",
  "branch": "staging",
  "metrics": {
@@ -797,6 +797,10 @@
      "text": "Календарь брони: названия месяцев на языке страницы (на русской раньше были латышские)"
     },
     {
+     "done": true,
+     "text": "«Часто берут вместе»: карточка на всю ширину, у прибора короткое описание «для чего нужен», у готового комплекта есть фото"
+    },
+    {
      "done": false,
      "text": "Проверить фото на странице у Дмитрия: HoldPeak HP-DT-10S (вентилятор в кадре), SuperStars ST-B168DL и Tooltop T3/T7 (лишние линии на экране)"
     },
@@ -817,11 +821,18 @@
      "text": "Комплекты берут только целиком: выбор числа приборов внутри комплекта сделали и убрали (цены небольшие, решение владельца)"
     }
    ],
-   "done": 18,
-   "total": 20
+   "done": 19,
+   "total": 21
   }
  ],
  "pulls": [
+  {
+   "number": 143,
+   "title": "Страница прибора: вёрстка под фото, карточки похожих приборов, месяцы календаря",
+   "url": "https://github.com/stevemaks999-web/ivancovs-site/pull/143",
+   "state": "merged",
+   "checks": "success"
+  },
   {
    "number": 142,
    "title": "Залог только наличными (требование банка)",
@@ -1024,13 +1035,6 @@
    "url": "https://github.com/stevemaks999-web/ivancovs-site/pull/113",
    "state": "merged",
    "checks": "success"
-  },
-  {
-   "number": 112,
-   "title": "Комплекты и категории на RU/EN больше не зависают",
-   "url": "https://github.com/stevemaks999-web/ivancovs-site/pull/112",
-   "state": "closed",
-   "checks": "success"
   }
  ],
  "issues": [
@@ -1054,6 +1058,13 @@
   }
  ],
  "commits": [
+  {
+   "sha": "3cd9cad",
+   "message": "Календарь брони: месяцы на языке страницы",
+   "author": "Никита Максименко",
+   "date": "2026-11-26T19:41:14Z",
+   "url": "https://github.com/stevemaks999-web/ivancovs-site/commit/3cd9cad8254053da9b10daf3dce3262d0c639509"
+  },
   {
    "sha": "a213ecb",
    "message": "Страница прибора: описание и связанные блоки под фото, карточки похожих приборов, выравнивание брони по фото",
@@ -1151,16 +1162,69 @@
    "author": "stevemaks999-web",
    "date": "2026-11-25T12:01:41Z",
    "url": "https://github.com/stevemaks999-web/ivancovs-site/commit/5017f6c13b1f91bc20190a8eba8c3cba37687be8"
-  },
-  {
-   "sha": "c45cc5a",
-   "message": "План: главные RU и EN в старом стиле",
-   "author": "Никита Максименко",
-   "date": "2026-11-25T12:01:02Z",
-   "url": "https://github.com/stevemaks999-web/ivancovs-site/commit/c45cc5a5869fccd77792c61f5c174e763082f10e"
   }
  ],
  "runs": [
+  {
+   "name": "Deploy",
+   "title": "Deploy",
+   "branch": "main",
+   "status": "completed",
+   "conclusion": "success",
+   "event": "workflow_dispatch",
+   "date": "2026-11-26T20:03:24Z",
+   "url": "https://github.com/stevemaks999-web/ivancovs-site/actions/runs/45888199015"
+  },
+  {
+   "name": "Gatekeeper",
+   "title": "Merge pull request #143 from stevemaks999-web/staging",
+   "branch": "main",
+   "status": "completed",
+   "conclusion": "success",
+   "event": "push",
+   "date": "2026-11-26T19:53:10Z",
+   "url": "https://github.com/stevemaks999-web/ivancovs-site/actions/runs/45886947214"
+  },
+  {
+   "name": "Gatekeeper",
+   "title": "Страница прибора: вёрстка под фото, карточки похожих приборов, месяцы календаря",
+   "branch": "staging",
+   "status": "completed",
+   "conclusion": "success",
+   "event": "pull_request",
+   "date": "2026-11-26T19:49:39Z",
+   "url": "https://github.com/stevemaks999-web/ivancovs-site/actions/runs/45886513095"
+  },
+  {
+   "name": "Status heartbeat",
+   "title": "Status heartbeat",
+   "branch": "main",
+   "status": "in_progress",
+   "conclusion": null,
+   "event": "workflow_dispatch",
+   "date": "2026-11-26T19:47:10Z",
+   "url": "https://github.com/stevemaks999-web/ivancovs-site/actions/runs/45886211914"
+  },
+  {
+   "name": "Gatekeeper",
+   "title": "Календарь брони: месяцы на языке страницы",
+   "branch": "staging",
+   "status": "completed",
+   "conclusion": "success",
+   "event": "push",
+   "date": "2026-11-26T19:41:17Z",
+   "url": "https://github.com/stevemaks999-web/ivancovs-site/actions/runs/45885489095"
+  },
+  {
+   "name": "Deploy",
+   "title": "Календарь брони: месяцы на языке страницы",
+   "branch": "staging",
+   "status": "completed",
+   "conclusion": "success",
+   "event": "push",
+   "date": "2026-11-26T19:41:17Z",
+   "url": "https://github.com/stevemaks999-web/ivancovs-site/actions/runs/45885489037"
+  },
   {
    "name": "Deploy",
    "title": "Страница прибора: описание и связанные блоки под фото, карточки похож…",
@@ -1195,8 +1259,8 @@
    "name": "Status heartbeat",
    "title": "Status heartbeat",
    "branch": "main",
-   "status": "in_progress",
-   "conclusion": null,
+   "status": "completed",
+   "conclusion": "success",
    "event": "workflow_dispatch",
    "date": "2026-11-26T19:22:01Z",
    "url": "https://github.com/stevemaks999-web/ivancovs-site/actions/runs/45883111747"
@@ -1220,66 +1284,6 @@
    "event": "workflow_dispatch",
    "date": "2026-11-26T18:56:52Z",
    "url": "https://github.com/stevemaks999-web/ivancovs-site/actions/runs/45879885851"
-  },
-  {
-   "name": "Deploy",
-   "title": "Deploy",
-   "branch": "staging",
-   "status": "completed",
-   "conclusion": "success",
-   "event": "workflow_dispatch",
-   "date": "2026-11-26T18:31:50Z",
-   "url": "https://github.com/stevemaks999-web/ivancovs-site/actions/runs/45876660288"
-  },
-  {
-   "name": "Status heartbeat",
-   "title": "Status heartbeat",
-   "branch": "main",
-   "status": "completed",
-   "conclusion": "success",
-   "event": "workflow_dispatch",
-   "date": "2026-11-26T18:31:41Z",
-   "url": "https://github.com/stevemaks999-web/ivancovs-site/actions/runs/45876642334"
-  },
-  {
-   "name": "Deploy",
-   "title": "Deploy",
-   "branch": "staging",
-   "status": "completed",
-   "conclusion": "success",
-   "event": "workflow_dispatch",
-   "date": "2026-11-26T18:06:40Z",
-   "url": "https://github.com/stevemaks999-web/ivancovs-site/actions/runs/45873270406"
-  },
-  {
-   "name": "Status heartbeat",
-   "title": "Status heartbeat",
-   "branch": "main",
-   "status": "completed",
-   "conclusion": "success",
-   "event": "workflow_dispatch",
-   "date": "2026-11-26T18:06:32Z",
-   "url": "https://github.com/stevemaks999-web/ivancovs-site/actions/runs/45873253244"
-  },
-  {
-   "name": "Deploy",
-   "title": "Deploy",
-   "branch": "staging",
-   "status": "completed",
-   "conclusion": "success",
-   "event": "workflow_dispatch",
-   "date": "2026-11-26T17:41:31Z",
-   "url": "https://github.com/stevemaks999-web/ivancovs-site/actions/runs/45869854879"
-  },
-  {
-   "name": "Status heartbeat",
-   "title": "Status heartbeat",
-   "branch": "main",
-   "status": "completed",
-   "conclusion": "success",
-   "event": "workflow_dispatch",
-   "date": "2026-11-26T17:41:22Z",
-   "url": "https://github.com/stevemaks999-web/ivancovs-site/actions/runs/45869837014"
   }
  ]
 }
