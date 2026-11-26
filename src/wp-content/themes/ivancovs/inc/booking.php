@@ -475,9 +475,11 @@ add_action( 'ivs_booking_calendar', function ( $product ) {
 		'horizon' => IVS_BOOK_HORIZON,
 		'cur'     => get_woocommerce_currency_symbol(),
 		'lang'    => ivs_lang(),
-		'months'  => array_map( function ( $m ) {
-			return wp_date( 'F', mktime( 0, 0, 0, $m, 1, 2024 ) );
-		}, range( 1, 12 ) ),
+		'months'  => ivs_t(
+			array( 'janvāris', 'februāris', 'marts', 'aprīlis', 'maijs', 'jūnijs', 'jūlijs', 'augusts', 'septembris', 'oktobris', 'novembris', 'decembris' ),
+			array( 'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь' ),
+			array( 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' )
+		),
 		't'       => array(
 			'pick'     => ivs_t( 'Izvēlieties saņemšanas datumu', 'Выберите дату выдачи', 'Choose the pickup date' ),
 			'ret'      => ivs_t( 'Tagad izvēlieties atgriešanas datumu', 'Теперь выберите дату возврата', 'Now choose the return date' ),

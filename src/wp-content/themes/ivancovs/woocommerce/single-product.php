@@ -22,6 +22,9 @@ while ( have_posts() ) :
 <div class="wrap">
 	<div class="crumbs"><a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php ivs_e( 'Sākums', 'Главная', 'Home' ); ?></a> › <a href="<?php echo esc_url( ivs_lang_url( $shop ) ); ?>"><?php ivs_e( 'Noma', 'Аренда', 'Rental' ); ?></a><?php if ( $cat ) : ?> › <a href="<?php echo esc_url( ivs_lang_url( get_term_link( $cat ) ) ); ?>"><?php echo esc_html( $cat->name ); ?></a><?php endif; ?> › <?php the_title(); ?></div>
 	<div class="prod">
+		<div class="ptitle">
+			<h1 style="margin:0"><?php the_title(); ?> <?php ivs_e( 'noma Rīgā', 'аренда в Риге', 'rental in Riga' ); ?></h1>
+		</div>
 		<div class="gal">
 			<div class="ph" style="aspect-ratio:4/3;border-radius:12px;border:1px solid var(--line)"><?php echo $ids ? wp_get_attachment_image( $ids[0], 'large' ) : esc_html( ivs_t( 'foto', 'фото', 'photo' ) ); // phpcs:ignore ?></div>
 			<?php if ( count( $ids ) > 1 ) : ?>
@@ -32,8 +35,7 @@ while ( have_posts() ) :
 			</div>
 			<?php endif; ?>
 		</div>
-		<div>
-			<h1><?php the_title(); ?> <?php ivs_e( 'noma Rīgā', 'аренда в Риге', 'rental in Riga' ); ?></h1>
+		<div class="bookcol">
 
 			<?php
 			$ivs_week    = (float) get_post_meta( get_the_ID(), '_ivs_price_week', true );
@@ -61,10 +63,12 @@ while ( have_posts() ) :
 				</ul>
 				<a class="btn wa block" href="<?php echo ivs_wa_link( $wa_text ); // phpcs:ignore ?>"><?php ivs_e( 'Jautāt WhatsApp', 'Спросить в WhatsApp', 'Ask on WhatsApp' ); ?></a>
 			</div>
+		</div>
+		<div class="info">
 			<?php do_action( 'ivs_after_booking', $product ); ?>
 
 			<?php if ( has_excerpt() ) : ?>
-				<h2 style="margin-top:24px"><?php ivs_e( 'Kam nepieciešams', 'Для чего нужен', 'What it is for' ); ?></h2>
+				<h2 style="margin-top:0"><?php ivs_e( 'Kam nepieciešams', 'Для чего нужен', 'What it is for' ); ?></h2>
 				<p class="mut"><?php echo wp_kses_post( get_the_excerpt() ); ?></p>
 			<?php endif; ?>
 			<?php if ( get_the_content() ) : ?>
