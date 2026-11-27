@@ -162,3 +162,4 @@ body.pp main{padding-bottom:70px}
 @media(max-width:700px){.cross .g1 .card,.cross .kitrow{grid-template-columns:112px 1fr}.cross .why{font-size:13px}}
 
 .kitdisc{display:inline-block;margin-top:6px;padding:3px 10px;border-radius:999px;background:#e6f4ea;color:#1e7a3c;font-size:13px;font-weight:600}.prod .info,.prod .info p,.prod .info li,.entry-body{text-align:justify;hyphens:auto}.prod .info h2,.prod .info h3,.prod .cross{text-align:left}
+.ivs-terms-near { margin: 4px 0 12px 32px; font-size: .9em; }

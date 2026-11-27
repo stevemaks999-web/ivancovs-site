@@ -44,6 +44,24 @@
   run();
   new MutationObserver(run).observe(document.body, { childList: true, subtree: true, characterData: true });
 
+  /* Ссылка на договор прямо под галочкой согласия (просьба банка Citadele, 27.11.2026). */
+  function addTermsLink() {
+    if (!T.termsUrl) return;
+    var inputs = document.querySelectorAll('input[id$="ivancovs-terms"], input[id*="ivancovs-terms"]');
+    for (var i = 0; i < inputs.length; i++) {
+      var box = inputs[i].closest('.wc-block-components-checkbox') || inputs[i].parentNode;
+      if (!box || !box.parentNode || box.parentNode.querySelector('.ivs-terms-near')) continue;
+      var p = document.createElement('p');
+      p.className = 'ivs-terms-near';
+      var a = document.createElement('a');
+      a.href = T.termsUrl; a.target = '_blank'; a.rel = 'noopener'; a.textContent = T.termsLink;
+      p.appendChild(a);
+      box.parentNode.insertBefore(p, box.nextSibling);
+    }
+  }
+  addTermsLink();
+  new MutationObserver(addTermsLink).observe(document.body, { childList: true, subtree: true });
+
   /* Кнопка «Заполнить реквизиты» рядом с полем «Фирма»: берёт рег. номер и подставляет название, адрес, PVN. */
   function setVal(input, value) {
     var setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;

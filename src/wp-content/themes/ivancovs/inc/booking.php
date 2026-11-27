@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 const IVS_BOOK_DB_VERSION = '2';
-const IVS_BOOK_HORIZON    = 365; // на сколько дней вперёд можно бронировать
+const IVS_BOOK_HORIZON    = 60; // на сколько дней вперёд можно бронировать (и макс. срок аренды); просьба банка Citadele 27.11.2026: не дольше 1–2 месяцев
 const IVS_BOOK_TIME_FROM  = 9;
 const IVS_BOOK_TIME_TO    = 18;
 
