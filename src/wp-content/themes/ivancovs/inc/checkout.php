@@ -66,6 +66,8 @@ add_action( 'wp_enqueue_scripts', function () {
 		'total'    => ivs_t( 'Kopā par', 'Всего за', 'Total for' ),
 		'proceed'  => ivs_t( 'Turpināt uz pasūtījumu', 'Перейти к оформлению', 'Proceed to checkout' ),
 		'estimate' => ivs_t( 'Kopā', 'Итого', 'Total' ),
+		'termsUrl'   => function_exists( 'ivs_terms_url' ) ? esc_url_raw( ivs_terms_url() ) : '',
+		'termsLink'  => ivs_t( 'Lasīt Distances līgumu (lietošanas noteikumus)', 'Читать договор (условия использования)', 'Read the Distance contract (terms of use)' ),
 		'lookupUrl'  => esc_url_raw( rest_url( 'ivancovs/v1/company' ) ),
 		'lookupBtn'  => ivs_t( 'Aizpildīt rekvizītus pēc reģ. Nr.', 'Заполнить реквизиты по рег. номеру', 'Fill in company details by reg. no.' ),
 		'lookupBusy' => ivs_t( 'Meklējam…', 'Ищем…', 'Searching…' ),
